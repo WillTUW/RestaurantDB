@@ -25,6 +25,7 @@ CREATE TABLE CONTACT
     PRIMARY KEY (UID)
 );
 
+-- When creating data we only need 5 cities and their corresponding states
 CREATE TABLE CITY
 (
     NAME VARCHAR(30) NOT NULL,
