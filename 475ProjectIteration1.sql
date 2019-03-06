@@ -18,11 +18,12 @@ CREATE TABLE USER
 
 CREATE TABLE CONTACT
 (
-    EMAIL VARCHAR(30) NOT NULL,
-    PhoneNumber INT NOT NULL,
-    UID INT UNIQUE NOT NULL,
+    EMAIL VARCHAR(30) UNIQUE NOT NULL,
+    PhoneNumber INT UNIQUE NOT NULL,
+    UID INT NOT NULL,
+    Counter INT UNIQUE NOT NULL,
     FOREIGN KEY (UID) REFERENCES USER (UserID),
-    PRIMARY KEY (UID)
+    PRIMARY KEY (Counter)
 );
 
 -- When creating data we only need 5 cities and their corresponding states
@@ -99,11 +100,11 @@ values(
 
 INSERT INTO CONTACT
 values(
-        "wot@uw.edu" , 425311777, 1
+        "wot@uw.edu" , 425311777, 1, 1
 );
 INSERT INTO CONTACT 
 values(
-    "email@email.email", 43231177, 1
+    "email@email.email", 43231177, 1, 2
 );
 
 INSERT INTO CITY
