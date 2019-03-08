@@ -81,8 +81,8 @@ CREATE TABLE MENU
 CREATE TABLE FOOD_ENTRIES
 (
     price DECIMAL(13,2) NOT NULL,
-    name VARCHAR(60) NOT NULL,
     r_menu_id INT NOT NULL,
+    name VARCHAR(60) NOT NULL,
     PRIMARY KEY (name),
     FOREIGN KEY (r_menu_id) REFERENCES MENU(r_id)
 );
