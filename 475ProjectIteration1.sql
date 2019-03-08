@@ -133,7 +133,7 @@ values(
 
 INSERT INTO MENU
 values(
-"Lunch", 1
+"Lunch", 1, "English"
 );
 
 INSERT INTO FOOD_ENTRIES
