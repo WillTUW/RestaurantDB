@@ -92,9 +92,19 @@ CREATE TABLE FOOD_ENTRIES
 );
 
 
-INSERT INTO rUser
+INSERT INTO RUSER
 values(
         1 , "Will", 1
+);
+
+INSERT INTO RUSER
+values(
+        2 , "Willie Eato", 1
+);
+
+INSERT INTO RUSER
+values(
+        3 , "Dan Burger", 3
 );
 
 INSERT INTO CONTACT
@@ -111,15 +121,50 @@ values(
         "Lynnwood" , "Washington"
 );
 
+INSERT INTO CITY
+values(
+        "BagelsHaven" , "Washington"
+);
+
+INSERT INTO CITY
+values(
+        "FallingLeaves" , "Washington"
+);
+
+--Dates follow 'YYYY-MM-DD' format
+
 INSERT INTO REVIEW
 values(
-        5, 1, 1
+        4, 3, 1, date('2019-03-07'), 'Good restaurant'
 );
+
+INSERT INTO REVIEW
+values(
+        5, 2, 2, date('2019-03-01'), 'Great restaurant'
+);
+
+INSERT INTO REVIEW
+values(
+        3, 1, 3, date('2019-03-06'), 'Terrible restaurant'
+);
+
 
 INSERT INTO RESTAURANT
 values(
         1, "1232 A Food Place", "Lynnwood", "Mexican", "El Diablo"
 );
+
+INSERT INTO RESTAURANT
+values(
+        2, "1581 Better Foods", "BagelsHaven", "Japanese", "Sushi"
+);
+
+
+INSERT INTO RESTAURANT
+values(
+        3, "2569 Fast Foods", "FallingLeaves", "Grease", "BurgerGreasy"
+);
+
 
 INSERT INTO HOURS
 values(
@@ -129,6 +174,16 @@ values(
 INSERT INTO RCONTACT
 values(
         "ElDiabblo@food.yum", 4254322345, 1
+);
+
+INSERT INTO RCONTACT
+values(
+        "sushi@yum.rice", 4251234444, 2
+);
+
+INSERT INTO RCONTACT
+values(
+        "burgresa@grease.yum", 4251235555, 3
 );
 
 INSERT INTO MENU
@@ -157,10 +212,45 @@ values(
     "$30.00", "Steak", 1, "Lunch"
 );
 
--- Display's all food entires for a certian rest named "BLANK"
+-- Display's all food entires for a certian rest named "El Diablo"
 SELECT *
 FROM FOOD_ENTRIES
 WHERE(R_MENUID = (SELECT RID FROM RESTAURANT WHERE NAME = "El Diablo"));
+
+SELECT *
+FROM REVIEW
+WHERE rating >= 1;
+-- Joins
+SELECT *
+FROM   RCONTACT
+LEFT JOIN REVIEW ON
+RCONTACT.REST_ID = REVIEW.rid;
+
+
+-- Convoluted join example
+SELECT *
+FROM  RCONTACT,CITY
+LEFT JOIN REVIEW ON
+RCONTACT.REST_ID = REVIEW.rid
+INNER JOIN RESTAURANT ON
+CITY.name = RESTAURANT.city
+ORDER BY REVIEW.rating DESC;
+
+-- Nested
+SELECT *
+FROM  RCONTACT
+WHERE RCONTACT.REST_ID =
+    (SELECT RESTAURANT.rid
+    FROM RESTAURANT
+    WHERE RESTAURANT.rid = 
+        (SELECT MENU.R_ID
+        FROM MENU));
+
+-- Simple
+SELECT *
+FROM  CITY
+LEFT JOIN RESTAURANT ON
+CITY.name = RESTAURANT.city;
 
 -- TODO Display cheapest food
 
@@ -182,7 +272,7 @@ WHERE(R_MENUID = (SELECT RID FROM RESTAURANT WHERE NAME = "El Diablo"));
 
 -- TODO add more functionality 
 
-DROP TABLE rUser;
+DROP TABLE RUSER;
 DROP TABLE CONTACT;
 DROP TABLE CITY;
 DROP TABLE REVIEW;
