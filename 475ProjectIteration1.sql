@@ -21,7 +21,7 @@ CREATE TABLE CONTACT
 );
 
 -- When creating data we only need 5 cities and their corresponding states
-CREATE TABLE city
+CREATE TABLE CITY
 (
     name VARCHAR(30) NOT NULL,
     state VARCHAR(30) NOT NULL,
@@ -45,11 +45,11 @@ CREATE TABLE RESTAURANT
 (
     rID INT UNIQUE NOT NULL,
     address VARCHAR(50) NOT NULL,
-    city VARCHAR(30) NOT NULL,
+    rCity VARCHAR(30) NOT NULL,
     cuisine VARCHAR(20) NOT NULL,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (rID),
-    FOREIGN KEY (city) REFERENCES city(name)
+    FOREIGN KEY (rCity) REFERENCES CITY(name)
 );
 
 CREATE TABLE HOURS
@@ -72,7 +72,7 @@ CREATE TABLE RCONTACT
 );
 
 CREATE TABLE MENU
-(
+(   
     m_name VARCHAR(30) NOT NULL,
     r_id INT UNIQUE NOT NULL,
     LANGUAGE VARCHAR(30) DEFAULT 'English',
@@ -91,6 +91,7 @@ CREATE TABLE FOOD_ENTRIES
     FOREIGN KEY (m_name) REFERENCES MENU(m_name)
 );
 
+------------------- BEGINNING OF RUSER INSERTIONS--------------------=====
 
 INSERT INTO RUSER
 values(
@@ -106,6 +107,9 @@ INSERT INTO RUSER
 values(
         3 , "Dan Burger", 3
 );
+------------------- END OF RUSER INSERTIONS-------------------------------
+
+------------------- BEGINNING OF CONTACT INSERTIONS-----------------------
 
 INSERT INTO CONTACT
 values(
@@ -115,22 +119,28 @@ INSERT INTO CONTACT
 values(
     "email@email.email", 43231177, 1, 2
 );
+------------------- END OF CONTACT INSERTIONS-----------------------------
 
-INSERT INTO city
+------------------- BEGINNING OF CITY INSERTIONS--------------------------
+
+INSERT INTO CITY
 values(
         "Lynnwood" , "Washington"
 );
 
-INSERT INTO city
+INSERT INTO CITY
 values(
         "BagelsHaven" , "Washington"
 );
 
-INSERT INTO city
+INSERT INTO CITY
 values(
         "FallingLeaves" , "Washington"
 );
+------------------- END OF RESTAURANT INSERTIONS--------------------------
 
+
+------------------- BEGINNING OF REVIEW INSERTIONS------------------------
 --Dates follow 'YYYY-MM-DD' format
 
 INSERT INTO REVIEW
@@ -147,8 +157,9 @@ INSERT INTO REVIEW
 values(
         3, 1, 3, date('2019-03-06'), 'Terrible restaurant'
 );
+------------------- END OF REVIEWS INSERTIONS-----------------------------
 
-
+------------------- BEGINNING OF RESTAURANT INSERTIONS--------------------
 INSERT INTO RESTAURANT
 values(
         1, "1232 A Food Place", "Lynnwood", "Mexican", "El Diablo"
@@ -165,12 +176,15 @@ values(
         3, "2569 Fast Foods", "FallingLeaves", "Grease", "BurgerGreasy"
 );
 
+------------------- END OF RESTAURANT INSERTIONS-------------------------
 
+------------------- BEGINNING OF HOURS INSERTIONS-------------------------
 INSERT INTO HOURS
 values(
         "8:00 AM", "4:00 PM", "Operating Hours", 1
 );
-
+------------------- END OF HOURS INSERTIONS-------------------------------
+------------------- BEGINNING OF RCONTACT INSERTIONS----------------------
 INSERT INTO RCONTACT
 values(
         "ElDiabblo@food.yum", 4254322345, 1
@@ -185,12 +199,31 @@ INSERT INTO RCONTACT
 values(
         "burgresa@grease.yum", 4251235555, 3
 );
+------------------- END OF RCONTACT INSERTIONS-----------------------------
 
+------------------- BEGINNING OF MENU INSERTIONS---------------------------
 INSERT INTO MENU
 values(
-"Lunch", 1, "English"
+"Lunch", 10000, "English"
 );
 
+insert into MENU (m_name, r_id, LANGUAGE) values ('IPromiseItIsFresh', 1, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('TheFood', 2, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Yummy', 3, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Foodish2', 4, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Foodish3', 5, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Foodish4', 6, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('IPromiseItIsFresh2', 7, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Foodish', 8, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Yummy2', 9, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('Yummy3', 10, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('IPromiseItIsFresh3', 11, 'English');
+insert into MENU (m_name, r_id, LANGUAGE) values ('IPromiseItIsFresh4', 12, 'English');
+
+
+------------------- END OF MENU INSERTIONS--------------------------------
+
+------------------- BEGINNING OF FOOD_ENTRIES INSERTIONS-------------------
 INSERT INTO FOOD_ENTRIES
 values(
     "$10.00", "Tamales", 1, "Lunch"
@@ -211,7 +244,9 @@ INSERT INTO FOOD_ENTRIES
 values(
     "$30.00", "Steak", 1, "Lunch"
 );
+------------------- END OF FOOD_ENTRIES INSERTIONS------------------------
 
+------------------- QUERIES ----------------------------------------------
 -- Display's all food entires for a certian rest named "El Diablo"
 SELECT *
 FROM FOOD_ENTRIES
@@ -229,11 +264,11 @@ RCONTACT.rest_id = REVIEW.rid;
 
 -- Convoluted join example
 SELECT *
-FROM  RCONTACT,city
+FROM  RCONTACT,CITY
 LEFT JOIN REVIEW ON
 RCONTACT.rest_id = REVIEW.rid
 INNER JOIN RESTAURANT ON
-city.name = RESTAURANT.city
+CITY.name = RESTAURANT.rCity
 ORDER BY REVIEW.rating DESC;
 
 -- Nested
@@ -248,11 +283,14 @@ WHERE RCONTACT.rest_id =
 
 -- Simple
 SELECT *
-FROM  city
+FROM  CITY
 LEFT JOIN RESTAURANT ON
-city.name = RESTAURANT.city;
+CITY.name = RESTAURANT.rCity;
 
 -- TODO Display cheapest food
+SELECT *
+FROM FOOD_ENTRIES
+ORDER BY FOOD_ENTRIES.price ASC;
 
 -- TODO Display most expensive food
 
@@ -264,7 +302,7 @@ city.name = RESTAURANT.city;
 
 -- TODO Display the most expensive food in each town 
 
--- TODO Display highest rated restaurant in each city 
+-- TODO Display highest rated restaurant in each CITY 
 
 -- TODO Display highest rated restaurant in each state
 
@@ -274,7 +312,7 @@ city.name = RESTAURANT.city;
 
 DROP TABLE RUSER;
 DROP TABLE CONTACT;
-DROP TABLE city;
+DROP TABLE CITY;
 DROP TABLE REVIEW;
 DROP TABLE RESTAURANT;
 DROP TABLE HOURS;
