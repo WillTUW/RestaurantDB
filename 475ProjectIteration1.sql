@@ -34,6 +34,7 @@ CREATE TABLE REVIEW
     UID INT UNIQUE NOT NULL,
     RID INT UNIQUE NOT NULL,
     ReviewDay DATE NOT NULL,
+    Message TEXT,
     FOREIGN KEY(UID) REFERENCES rUser
 
 (UserID),
@@ -45,12 +46,10 @@ CREATE TABLE RESTAURANT
     RID INT UNIQUE NOT NULL,
     ADDRESS VARCHAR(50) NOT NULL,
     CITY VARCHAR(30) NOT NULL,
-    STATE VARCHAR(30) NOT NULL,
     CUISINE VARCHAR(20) NOT NULL,
     NAME VARCHAR(50) NOT NULL,
     PRIMARY KEY (RID),
-    FOREIGN KEY (CITY) REFERENCES CITY(NAME),
-    FOREIGN KEY (STATE) REFERENCES CITY(STATE)
+    FOREIGN KEY (CITY) REFERENCES CITY(NAME)
 );
 
 CREATE TABLE HOURS
@@ -74,19 +73,22 @@ CREATE TABLE RCONTACT
 
 CREATE TABLE MENU
 (
-    LANGUAGES VARCHAR(30),
-    R_ID INT UNIQuE NOT NULL,
-    PRIMARY KEY (LANGUAGES),
+    M_NAME VARCHAR(30) NOT NULL,
+    R_ID INT UNIQUE NOT NULL,
+    LANGUAGE VARCHAR(30) DEFAULT 'English',
+    PRIMARY KEY (M_NAME),
     FOREIGN KEY (R_ID) REFERENCES RESTAURANT(RID)
 );
 
 CREATE TABLE FOOD_ENTRIES
 (
-    PRICES DECIMAL(13,2) NOT NULL,
+    PRICE DECIMAL(13,2) NOT NULL,
     NAME VARCHAR(60) NOT NULL,
     R_MENUID INT NOT NULL,
+    M_NAME VARCHAR(30) NOT NULL,
     PRIMARY KEY (NAME),
-    FOREIGN KEY (R_MENUID) REFERENCES MENU(R_ID)
+    FOREIGN KEY (R_MENUID) REFERENCES MENU(R_ID),
+    FOREIGN KEY (M_NAME) REFERENCES MENU(M_NAME)
 );
 
 
@@ -116,7 +118,7 @@ values(
 
 INSERT INTO RESTAURANT
 values(
-        1, "1232 A Food Place", "Lynwood", "Washington", "Mexican", "El Diablo"
+        1, "1232 A Food Place", "Lynnwood", "Mexican", "El Diablo"
 );
 
 INSERT INTO HOURS
@@ -131,28 +133,28 @@ values(
 
 INSERT INTO MENU
 values(
-"English", 1
+"Lunch", 1
 );
 
 INSERT INTO FOOD_ENTRIES
 values(
-    "$10.00", "Tamales", 1
+    "$10.00", "Tamales", 1, "Lunch"
 );
 INSERT INTO FOOD_ENTRIES
 values(
-    "$12.00", "Tacos", 1
+    "$12.00", "Tacos", 1, "Lunch"
 );
 INSERT INTO FOOD_ENTRIES
 values(
-    "$3.00", "Pork", 1
+    "$3.00", "Pork", 1, "Lunch"
 );
 INSERT INTO FOOD_ENTRIES
 values(
-    "$6.00", "Tortillas", 1
+    "$6.00", "Tortillas", 1, "Lunch"
 );
 INSERT INTO FOOD_ENTRIES
 values(
-    "$30.00", "Steak", 1
+    "$30.00", "Steak", 1, "Lunch"
 );
 
 -- Display's all food entires for a certian rest named "BLANK"
