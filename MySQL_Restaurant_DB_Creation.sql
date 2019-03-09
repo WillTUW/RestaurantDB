@@ -1,44 +1,27 @@
+CREATE DATABASE IF NOT EXISTS Restaurant_DB;
+USE Restaurant_DB;
+-- Drop the tables if it exists
 
-CREATE TABLE RUSER
-(
-    userID int UNIQUE NOT NULL,
-    name VARCHAR(30) NOT NULL,
-    favorite_restaurant INT,
-    PRIMARY KEY (userID),
-    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID)
-);
+DROP TABLE IF EXISTS FOOD_ENTRIES;
+DROP TABLE IF EXISTS CONTACT;
+DROP TABLE IF EXISTS REVIEW;
+DROP TABLE IF EXISTS RUSER;
+DROP TABLE IF EXISTS HOURS;
+DROP TABLE IF EXISTS RCONTACT;
+DROP TABLE IF EXISTS MENU;
+DROP TABLE IF EXISTS RESTAURANT;
+DROP TABLE IF EXISTS CITY;
 
-CREATE TABLE CONTACT
-(
-    email VARCHAR(30) UNIQUE NOT NULL,
-    phone_number VARCHAR(10) UNIQUE NOT NULL,
-    uID INT NOT NULL,
-    counter INT NOT NULL ,
-    FOREIGN KEY (uID) REFERENCES RUSER(userID),
-    PRIMARY KEY (counter, uID)
-);
-
--- When creating data we only need 5 cities and their corresponding states
-CREATE TABLE CITY
+ -- new tables
+ -- When creating data we only need 5 cities and their corresponding states
+CREATE TABLE IF NOT EXISTS CITY
 (
     name VARCHAR(30) NOT NULL,
     state VARCHAR(30) NOT NULL,
     PRIMARY KEY (name, state)
 );
 
-
-CREATE TABLE REVIEW
-(
-    rating INT NOT NULL,
-    uID INT UNIQUE NOT NULL,
-    rID INT UNIQUE NOT NULL,
-    review_day DATE NOT NULL,
-    message TEXT,
-    FOREIGN KEY(uID) REFERENCES RUSER(userID),
-    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID)
-);
-
-CREATE TABLE RESTAURANT
+CREATE TABLE IF NOT EXISTS RESTAURANT
 (
     rID INT UNIQUE NOT NULL,
     address VARCHAR(50) NOT NULL,
@@ -49,7 +32,37 @@ CREATE TABLE RESTAURANT
     FOREIGN KEY (rCity) REFERENCES CITY(name)
 );
 
-CREATE TABLE HOURS
+CREATE TABLE IF NOT EXISTS RUSER
+(
+    userID int UNIQUE NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    favorite_restaurant INT,
+    PRIMARY KEY (userID),
+    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID)
+);
+
+CREATE TABLE IF NOT EXISTS CONTACT
+(
+    email VARCHAR(30) UNIQUE NOT NULL,
+    phone_number VARCHAR(10) UNIQUE NOT NULL,
+    uID INT NOT NULL,
+    counter INT NOT NULL ,
+    FOREIGN KEY (uID) REFERENCES RUSER(userID),
+    PRIMARY KEY (counter, uID)
+);
+
+CREATE TABLE IF NOT EXISTS REVIEW
+(
+    rating INT NOT NULL,
+    uID INT NOT NULL,
+    rID INT NOT NULL,
+    review_day DATE NOT NULL,
+    message TEXT,
+    FOREIGN KEY(uID) REFERENCES RUSER(userID),
+    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID)
+);
+
+CREATE TABLE IF NOT EXISTS HOURS
 (
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
@@ -59,7 +72,7 @@ CREATE TABLE HOURS
     FOREIGN KEY (rest_id) REFERENCES RESTAURANT(rID)
 );
 
-CREATE TABLE RCONTACT
+CREATE TABLE IF NOT EXISTS RCONTACT
 (
     email VARCHAR (50) UNIQUE NOT NULL,
     phone_number VARCHAR(10) UNIQUE NOT NULL,
@@ -68,7 +81,7 @@ CREATE TABLE RCONTACT
     FOREIGN KEY (rest_id) REFERENCES RESTAURANT(rID)
 );
 
-CREATE TABLE MENU
+CREATE TABLE IF NOT EXISTS MENU
 (   
     m_name VARCHAR(30) NOT NULL,
     r_id INT UNIQUE NOT NULL,
@@ -77,7 +90,270 @@ CREATE TABLE MENU
     FOREIGN KEY (r_id) REFERENCES RESTAURANT(rID)
 );
 
-CREATE TABLE FOOD_ENTRIES
+-- ----------------- BEGINNING OF CITY INSERTIONS--------------------------
+-- insert into City
+
+insert into CITY (name, state) values ('Seattle', 'Washington');
+insert into CITY (name, state) values ('Bellevue', 'Washington');
+insert into CITY (name, state) values ('Lynnwood', 'Washington');
+insert into CITY (name, state) values ('Los Angeles', 'California');
+insert into CITY (name, state) values ('San Francisco', 'California');
+-- ----------------- END OF CITY INSERTIONS--------------------------
+-- ----------------- BEGINNING OF RESTAURANT INSERTIONS--------------------
+
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (1, '3519 Gateway Center', 'Bellevue', 'Mexican', 'Lubowitz, Franecki and Little');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (2, '73 Marcy Drive', 'San Francisco', 'Mexican', 'Ullrich, Wintheiser and Gleason');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (3, '8 Florence Point', 'Los Angeles ', 'Mexican', 'Lang LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (4, '771 Dayton Way', 'Bellevue', 'Mexican', 'Wolff, Gibson and Conroy');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (5, '7 Sloan Alley', 'San Francisco', 'Mexican', 'Gleason and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (6, '517 Southridge Trail', 'Lynnwood ', 'Mexican', 'Corwin Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (7, '80263 Morning Parkway', 'Bellevue', 'Mexican', 'Baumbach-Keebler');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (8, '51 Barnett Junction', 'Seattle', 'Mexican', 'Hilll-Turner');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (9, '4872 Kipling Alley', 'Bellevue', 'Mexican', 'Wiegand and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (10, '2492 Elgar Pass', 'Seattle', 'Mexican', 'Senger, Bernier and McDermott');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (11, '40 Kings Hill', 'Los Angeles ', 'Mexican', 'Gaylord-Kunde');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (12, '754 Stang Drive', 'Seattle', 'Mexican', 'Kihn, Kerluke and Kling');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (13, '2 Northland Circle', 'Bellevue', 'Mexican', 'Ankunding, Romaguera and Schneider');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (14, '7051 Shasta Terrace', 'San Francisco', 'Mexican', 'Klein, Cole and Kiehn');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (15, '4481 Utah Place', 'Los Angeles ', 'Mexican', 'Doyle LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (16, '5 Spaight Parkway', 'Seattle', 'Mexican', 'Kiehn, Bauch and Osinski');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (17, '96 Lake View Avenue', 'Bellevue', 'Mexican', 'Streich Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (18, '3 Toban Drive', 'San Francisco', 'Mexican', 'Fahey-Schuppe');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (19, '6 Green Ridge Plaza', 'Los Angeles ', 'Mexican', 'Spencer and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (20, '59 Magdeline Parkway', 'Los Angeles ', 'Mexican', 'Pagac, Conroy and Schmidt');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (21, '39838 Ludington Plaza', 'Los Angeles ', 'Mexican', 'Gleichner-Ziemann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (22, '32 Washington Way', 'Los Angeles ', 'Mexican', 'Goldner and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (23, '15631 Manley Plaza', 'Seattle', 'Mexican', 'Gleason-Schiller');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (24, '0038 Debra Place', 'Los Angeles ', 'Mexican', 'Hoeger, Ziemann and Hettinger');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (25, '76658 Ronald Regan Crossing', 'Los Angeles ', 'Mexican', 'Fadel, Abshire and Borer');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (26, '5 Hayes Terrace', 'Los Angeles ', 'Mexican', 'Williamson, Williamson and Orn');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (27, '86 Homewood Junction', 'Bellevue', 'Mexican', 'Collier-Will');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (28, '8269 Grim Court', 'Bellevue', 'Mexican', 'Kovacek Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (29, '28019 Packers Terrace', 'Lynnwood ', 'Mexican', 'Bogisich LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (30, '6958 Nelson Crossing', 'Seattle', 'Mexican', 'Johns, Murphy and Weimann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (31, '732 Goodland Avenue', 'Seattle', 'Mexican', 'Kihn and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (32, '7652 Bultman Street', 'Seattle', 'Mexican', 'Bergnaum Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (33, '777 Lyons Terrace', 'Lynnwood ', 'Mexican', 'Bartoletti LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (34, '6121 Dexter Pass', 'San Francisco', 'Mexican', 'Hammes Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (35, '74 Main Junction', 'Los Angeles ', 'Mexican', 'Carroll-Lockman');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (36, '50 Redwing Avenue', 'Bellevue', 'Mexican', 'Flatley and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (37, '42359 Independence Crossing', 'Seattle', 'Mexican', 'Rogahn, O''Conner and Morar');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (38, '59 Waxwing Trail', 'Lynnwood ', 'Mexican', 'Gibson Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (39, '012 Summit Circle', 'Bellevue', 'Mexican', 'Stracke, Dibbert and Stracke');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (40, '3851 Vera Plaza', 'Seattle', 'Mexican', 'Marvin, Schuster and Schroeder');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (41, '25742 6th Park', 'Lynnwood ', 'Mexican', 'Hauck, Friesen and Hyatt');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (42, '917 Mayer Parkway', 'San Francisco', 'Mexican', 'Trantow, Connelly and Bernhard');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (43, '032 Stuart Plaza', 'San Francisco', 'Mexican', 'Boehm-Streich');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (44, '0209 Talisman Avenue', 'San Francisco', 'Mexican', 'Stracke-Nolan');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (45, '60 Truax Center', 'San Francisco', 'Mexican', 'Barton-Turcotte');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (46, '04089 Hanover Point', 'Seattle', 'Mexican', 'Hilll, Conroy and Lubowitz');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (47, '8 Lindbergh Court', 'Lynnwood ', 'Mexican', 'Renner, Goldner and Witting');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (48, '5104 Nelson Point', 'Seattle', 'Mexican', 'O''Hara, Abshire and Bruen');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (49, '06 Coleman Point', 'Lynnwood ', 'Mexican', 'Orn, Osinski and Smitham');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (50, '81688 Fairview Point', 'San Francisco', 'Mexican', 'Adams, Tremblay and Pacocha');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (51, '08 Superior Hill', 'Seattle', 'Italian', 'Corkery, Bode and Trantow');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (52, '578 Jana Park', 'Seattle', 'Italian', 'Klocko, Corkery and Ratke');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (53, '23 Dennis Avenue', 'Lynnwood ', 'Italian', 'Koch Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (54, '59408 Farmco Avenue', 'Seattle', 'Italian', 'Bernier Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (55, '46500 Farragut Terrace', 'San Francisco', 'Italian', 'Johnston, Orn and Tremblay');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (56, '93 Mendota Crossing', 'Los Angeles ', 'Italian', 'Koch Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (57, '74152 Graceland Junction', 'Bellevue', 'Italian', 'Reilly Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (58, '26 Sunbrook Place', 'Lynnwood ', 'Italian', 'Ferry and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (59, '21 4th Terrace', 'Bellevue', 'Italian', 'Nitzsche, Collins and Trantow');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (60, '504 Stang Road', 'Bellevue', 'Italian', 'Welch-Wolff');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (61, '6688 Warner Avenue', 'San Francisco', 'Italian', 'Frami LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (62, '843 Caliangt Way', 'Bellevue', 'Italian', 'Orn Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (63, '06 Talisman Circle', 'Los Angeles ', 'Italian', 'Mitchell Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (64, '9 Dryden Park', 'Lynnwood ', 'Italian', 'Greenholt Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (65, '8146 Moland Plaza', 'Bellevue', 'Italian', 'Beahan, Rutherford and Hagenes');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (66, '195 Ridge Oak Crossing', 'Bellevue', 'Italian', 'Bradtke, Robel and Ebert');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (67, '841 Spaight Alley', 'Bellevue', 'Italian', 'Bogan and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (68, '26 Anthes Court', 'San Francisco', 'Italian', 'Wolff Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (69, '93323 Scott Point', 'Los Angeles ', 'Italian', 'Terry and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (70, '237 Arrowood Parkway', 'San Francisco', 'Italian', 'Kshlerin and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (71, '2813 Oak Valley Center', 'San Francisco', 'Italian', 'Schulist and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (72, '6 Vernon Park', 'Los Angeles ', 'Italian', 'Flatley and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (73, '9511 Harper Crossing', 'Seattle', 'Italian', 'Smith Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (74, '955 Colorado Alley', 'Bellevue', 'Italian', 'Dooley, Kuhic and Haley');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (75, '482 Annamark Place', 'Seattle', 'Italian', 'Leuschke LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (76, '5877 Springview Way', 'Lynnwood ', 'Italian', 'Hagenes-Lakin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (77, '1 Hoffman Junction', 'Seattle', 'Italian', 'Schinner LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (78, '984 Raven Trail', 'Lynnwood ', 'Italian', 'Turner-Heathcote');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (79, '87998 Tennessee Way', 'Lynnwood ', 'Italian', 'Spinka, Hilpert and Langosh');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (80, '372 Lighthouse Bay Drive', 'Bellevue', 'Italian', 'Gerhold LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (81, '81 Barby Point', 'Seattle', 'Italian', 'Hilpert Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (82, '1818 Basil Avenue', 'Bellevue', 'Italian', 'Zboncak, Dibbert and Kuhlman');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (83, '66043 Florence Place', 'San Francisco', 'Italian', 'Kuphal LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (84, '92203 Kingsford Point', 'Bellevue', 'Italian', 'Bins and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (85, '9 Mockingbird Trail', 'Bellevue', 'Italian', 'Bergstrom, Schmidt and Pouros');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (86, '69803 Randy Park', 'Los Angeles ', 'Italian', 'Hettinger-Stanton');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (87, '8402 Eastwood Lane', 'San Francisco', 'Italian', 'Zemlak Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (88, '2 Oakridge Terrace', 'San Francisco', 'Italian', 'Hartmann LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (89, '630 1st Lane', 'San Francisco', 'Italian', 'O''Kon, Will and Bauch');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (90, '643 Hooker Way', 'Bellevue', 'Italian', 'O''Hara-Rath');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (91, '7 Anhalt Terrace', 'Lynnwood ', 'Italian', 'Monahan-Cummerata');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (92, '07 Northridge Plaza', 'Bellevue', 'Italian', 'Dach, Jenkins and Cummerata');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (93, '8 Sage Junction', 'Bellevue', 'Italian', 'Gaylord, Strosin and Lind');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (94, '14486 Dexter Court', 'Bellevue', 'Italian', 'Rohan, Langworth and Kshlerin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (95, '47 Bartillon Hill', 'Seattle', 'Italian', 'Padberg Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (96, '26 Comanche Street', 'Lynnwood ', 'Italian', 'Krajcik-Dach');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (97, '37520 2nd Drive', 'Lynnwood ', 'Italian', 'O''Reilly, Feeney and Mann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (98, '505 Vahlen Park', 'Lynnwood ', 'Italian', 'Schultz-Champlin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (99, '84093 Independence Park', 'Los Angeles ', 'Italian', 'Runolfsson-Fadel');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (100, '0 Redwing Plaza', 'Lynnwood ', 'Italian', 'Rolfson-Gibson');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (101, '7 Jenna Lane', 'Lynnwood ', 'American', 'Hickle Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (102, '686 Victoria Parkway', 'Bellevue', 'American', 'Feeney-Macejkovic');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (103, '6 Lakewood Gardens Trail', 'San Francisco', 'American', 'Koch Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (104, '0 Bayside Circle', 'Los Angeles ', 'American', 'Zieme Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (105, '2256 2nd Court', 'Seattle', 'American', 'Bahringer, Kertzmann and Dicki');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (106, '08 Basil Plaza', 'Seattle', 'American', 'Schaefer Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (107, '52 Di Loreto Terrace', 'Los Angeles ', 'American', 'Roberts-Lynch');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (108, '63 Grasskamp Center', 'Bellevue', 'American', 'Oberbrunner-Kautzer');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (109, '1499 Steensland Lane', 'Lynnwood ', 'American', 'Rolfson, Metz and Erdman');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (110, '36 Loomis Drive', 'Seattle', 'American', 'Bednar and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (111, '2915 Meadow Vale Park', 'San Francisco', 'American', 'Huels and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (112, '42346 Utah Place', 'San Francisco', 'American', 'Weissnat-Johnson');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (113, '69 Gulseth Court', 'Los Angeles ', 'American', 'Von, Johns and Sawayn');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (114, '59 Red Cloud Park', 'Bellevue', 'American', 'Johns, Goyette and Aufderhar');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (115, '581 Elgar Parkway', 'Los Angeles ', 'American', 'Schulist-Bogisich');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (116, '26 Lotheville Circle', 'Los Angeles ', 'American', 'Waelchi, Jaskolski and Rutherford');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (117, '448 Evergreen Parkway', 'Seattle', 'American', 'Vandervort Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (118, '45 Comanche Point', 'Los Angeles ', 'American', 'Bins and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (119, '7870 Heath Point', 'Seattle', 'American', 'Harris, Gutmann and Beer');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (120, '7607 Leroy Crossing', 'Seattle', 'American', 'Nader Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (121, '73681 Buell Parkway', 'Seattle', 'American', 'Wilkinson, Champlin and Gerlach');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (122, '19925 Nova Center', 'San Francisco', 'American', 'Shields, Stokes and Borer');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (123, '9 Chinook Avenue', 'San Francisco', 'American', 'O''Hara, Legros and Legros');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (124, '18 Moland Street', 'San Francisco', 'American', 'Schumm-Gulgowski');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (125, '26331 6th Terrace', 'Bellevue', 'American', 'Ruecker Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (126, '11242 Cody Center', 'Bellevue', 'American', 'Lind and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (127, '7236 Bellgrove Terrace', 'San Francisco', 'American', 'Daugherty, Klein and Harvey');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (128, '8819 Scott Terrace', 'Los Angeles ', 'American', 'Adams-Batz');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (129, '582 Milwaukee Park', 'Bellevue', 'American', 'Gerlach LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (130, '52201 Dennis Street', 'San Francisco', 'American', 'Beer, Rowe and Nikolaus');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (131, '9796 Havey Court', 'Lynnwood ', 'American', 'Bahringer-Hayes');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (132, '49598 Evergreen Terrace', 'San Francisco', 'American', 'Hilpert, Howell and Aufderhar');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (133, '0 American Parkway', 'Lynnwood ', 'American', 'Mayer-Goodwin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (134, '9 7th Drive', 'Los Angeles ', 'American', 'Shields and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (135, '106 Shelley Plaza', 'Lynnwood ', 'American', 'Brakus Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (136, '1 Dapin Court', 'Seattle', 'American', 'Turcotte Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (137, '063 Linden Way', 'San Francisco', 'American', 'Waelchi, Bogan and Larkin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (138, '4 Blue Bill Park Road', 'San Francisco', 'American', 'Hammes, Kling and Batz');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (139, '4569 Namekagon Pass', 'Bellevue', 'American', 'Bechtelar-Cruickshank');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (140, '488 Londonderry Plaza', 'Seattle', 'American', 'Mertz Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (141, '3 Red Cloud Parkway', 'Lynnwood ', 'American', 'Becker, Willms and Schuppe');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (142, '06 Jenna Pass', 'Los Angeles ', 'American', 'Volkman, Wisoky and Donnelly');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (143, '05312 Fair Oaks Avenue', 'San Francisco', 'American', 'Barton Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (144, '97249 Thompson Drive', 'Los Angeles ', 'American', 'MacGyver Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (145, '43752 Boyd Plaza', 'San Francisco', 'American', 'Steuber, Moen and Torp');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (146, '51706 Gulseth Terrace', 'Lynnwood ', 'American', 'Olson LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (147, '12 Bowman Alley', 'Seattle', 'American', 'Little-Miller');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (148, '56710 Buena Vista Street', 'Bellevue', 'American', 'Graham, Gorczany and Treutel');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (149, '968 Milwaukee Lane', 'Seattle', 'American', 'Sporer Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (150, '40 Dryden Drive', 'Los Angeles ', 'American', 'Moore, Marquardt and Zulauf');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (151, '23 Pearson Road', 'San Francisco', 'Chinese', 'Bailey, Heaney and Zboncak');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (152, '517 Fisk Place', 'Los Angeles ', 'Chinese', 'Abernathy-Hessel');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (153, '95783 Dennis Hill', 'Bellevue', 'Chinese', 'Morar, Kuphal and Bernhard');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (154, '6391 Stephen Crossing', 'San Francisco', 'Chinese', 'Waelchi-Friesen');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (155, '1454 Sage Trail', 'Los Angeles ', 'Chinese', 'Rolfson LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (156, '194 Vidon Parkway', 'Seattle', 'Chinese', 'Powlowski, Stiedemann and Botsford');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (157, '7586 Vahlen Park', 'Lynnwood ', 'Chinese', 'Quitzon-Feeney');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (158, '4 Shelley Drive', 'Lynnwood ', 'Chinese', 'Little, Nitzsche and Gutmann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (159, '27185 Kings Crossing', 'San Francisco', 'Chinese', 'Purdy-Leffler');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (160, '230 Chinook Hill', 'Lynnwood ', 'Chinese', 'Zboncak-Brown');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (161, '90 Delladonna Pass', 'Seattle', 'Chinese', 'Ebert Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (162, '1561 Doe Crossing Lane', 'Los Angeles ', 'Chinese', 'Heller-Graham');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (163, '68 Logan Circle', 'Los Angeles ', 'Chinese', 'Jaskolski, Goldner and Legros');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (164, '00 Daystar Crossing', 'San Francisco', 'Chinese', 'Bradtke and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (165, '0736 2nd Point', 'San Francisco', 'Chinese', 'Kreiger, Rohan and Koch');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (166, '8 Milwaukee Lane', 'Seattle', 'Chinese', 'Lakin and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (167, '0043 John Wall Place', 'San Francisco', 'Chinese', 'Grady LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (168, '683 Longview Pass', 'Bellevue', 'Chinese', 'Schaden-Thiel');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (169, '080 Cottonwood Street', 'San Francisco', 'Chinese', 'Mann and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (170, '0 Packers Avenue', 'Seattle', 'Chinese', 'Witting LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (171, '99 Northwestern Trail', 'Lynnwood ', 'Chinese', 'Cole Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (172, '1079 Anderson Park', 'Los Angeles ', 'Chinese', 'Schinner Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (173, '27 Melrose Park', 'Los Angeles ', 'Chinese', 'Kohler-Emard');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (174, '5672 Green Ridge Junction', 'Los Angeles ', 'Chinese', 'Brekke, Mayer and Miller');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (175, '346 Anthes Court', 'Los Angeles ', 'Chinese', 'Spinka LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (176, '56 Birchwood Plaza', 'Los Angeles ', 'Chinese', 'Dietrich-Kunde');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (177, '33767 Huxley Pass', 'Bellevue', 'Chinese', 'Jacobs, Schaefer and Oberbrunner');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (178, '885 Farmco Trail', 'Lynnwood ', 'Chinese', 'Langworth and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (179, '058 Cascade Lane', 'Bellevue', 'Chinese', 'Kuhic-Cole');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (180, '7233 Monterey Lane', 'Bellevue', 'Chinese', 'Predovic, Runolfsson and Koss');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (181, '57281 Bayside Lane', 'Bellevue', 'Chinese', 'Greenfelder, Marquardt and Toy');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (182, '3 Canary Place', 'Seattle', 'Chinese', 'Marvin Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (183, '277 Gulseth Crossing', 'Lynnwood ', 'Chinese', 'Reinger LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (184, '6 Haas Lane', 'Lynnwood ', 'Chinese', 'Reinger, King and Labadie');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (185, '2471 Bayside Drive', 'Los Angeles ', 'Chinese', 'Brakus, Lakin and Roberts');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (186, '45535 Pierstorff Junction', 'Bellevue', 'Chinese', 'Borer, Sporer and Gleason');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (187, '2 Anderson Point', 'Bellevue', 'Chinese', 'Kohler LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (188, '3 Huxley Point', 'Lynnwood ', 'Chinese', 'Farrell-Will');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (189, '4574 Heath Pass', 'Los Angeles ', 'Chinese', 'Koepp-Roob');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (190, '88 Pond Place', 'Lynnwood ', 'Chinese', 'Wolf, Lockman and Kuhlman');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (191, '18 Caliangt Point', 'Los Angeles ', 'Chinese', 'Moen-Hahn');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (192, '84350 Banding Center', 'Seattle', 'Chinese', 'Jacobs, Trantow and Treutel');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (193, '034 Rigney Terrace', 'Los Angeles ', 'Chinese', 'Donnelly, Mann and Cormier');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (194, '61865 Jay Parkway', 'Bellevue', 'Chinese', 'Hodkiewicz and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (195, '710 Arkansas Alley', 'Lynnwood ', 'Chinese', 'Marks Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (196, '2788 Eagle Crest Trail', 'San Francisco', 'Chinese', 'Stracke and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (197, '0827 Dunning Junction', 'Bellevue', 'Chinese', 'Haley-Prohaska');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (198, '15 Holmberg Road', 'Seattle', 'Chinese', 'Fahey-Gleason');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (199, '72224 Kim Park', 'Lynnwood ', 'Chinese', 'Gorczany, Graham and Fisher');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (200, '39657 Fisk Plaza', 'San Francisco', 'Chinese', 'Kuhlman-Hermann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (201, '84 Algoma Plaza', 'Bellevue', 'Greek', 'Hettinger, Quigley and Hartmann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (202, '1309 Haas Avenue', 'Seattle', 'Greek', 'Crist and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (203, '060 Independence Lane', 'Los Angeles ', 'Greek', 'Bruen, Christiansen and Koss');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (204, '59103 Dexter Terrace', 'Seattle', 'Greek', 'Bins, Bergstrom and Mraz');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (205, '1960 Valley Edge Street', 'Lynnwood ', 'Greek', 'Powlowski Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (206, '05 Fuller Avenue', 'San Francisco', 'Greek', 'Bartoletti, Nienow and Kirlin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (207, '0 High Crossing Terrace', 'Seattle', 'Greek', 'Luettgen, Boyle and Mante');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (208, '3 Jenifer Center', 'Seattle', 'Greek', 'Bode, Muller and Von');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (209, '055 Johnson Lane', 'Seattle', 'Greek', 'Johnson-Zboncak');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (210, '292 Texas Park', 'Los Angeles ', 'Greek', 'Beatty-Greenholt');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (211, '046 Bartillon Road', 'San Francisco', 'Greek', 'Hodkiewicz-Lebsack');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (212, '3 Sherman Junction', 'Los Angeles ', 'Greek', 'King and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (213, '16988 Shelley Circle', 'Los Angeles ', 'Greek', 'Kemmer, Barton and Dickens');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (214, '49880 Lunder Trail', 'San Francisco', 'Greek', 'Towne LLC');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (215, '129 Merchant Road', 'Bellevue', 'Greek', 'Morissette-Dare');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (216, '152 American Ash Point', 'Seattle', 'Greek', 'Rowe, Beer and Kilback');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (217, '87008 Brentwood Court', 'Seattle', 'Greek', 'Schmitt Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (218, '590 Killdeer Terrace', 'Bellevue', 'Greek', 'Luettgen, Halvorson and Gottlieb');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (219, '60 Sunfield Park', 'Los Angeles ', 'Greek', 'Ryan, Schulist and Pouros');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (220, '310 Meadow Vale Way', 'San Francisco', 'Greek', 'Ledner-Hackett');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (221, '1 Fallview Park', 'Bellevue', 'Greek', 'Bradtke Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (222, '05 International Avenue', 'Lynnwood ', 'Greek', 'Ritchie-Willms');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (223, '538 Mosinee Alley', 'Los Angeles ', 'Greek', 'Baumbach-Mayert');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (224, '1252 Kinsman Point', 'Lynnwood ', 'Greek', 'Swift-Stiedemann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (225, '5939 Hoffman Point', 'Los Angeles ', 'Greek', 'Gaylord Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (226, '13 Daystar Trail', 'Seattle', 'Greek', 'Eichmann Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (227, '09 Parkside Way', 'San Francisco', 'Greek', 'Reichel and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (228, '59785 Forster Pass', 'Lynnwood ', 'Greek', 'Shanahan-Schamberger');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (229, '619 Lotheville Drive', 'Los Angeles ', 'Greek', 'Schultz, Rice and Schmeler');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (230, '110 Dixon Place', 'Bellevue', 'Greek', 'Pagac, Feil and Hyatt');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (231, '168 Schlimgen Park', 'San Francisco', 'Greek', 'Goyette-Nicolas');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (232, '208 Welch Terrace', 'San Francisco', 'Greek', 'Leffler-Kuhlman');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (233, '131 School Court', 'Lynnwood ', 'Greek', 'Hoeger, Monahan and Batz');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (234, '5 Johnson Center', 'Lynnwood ', 'Greek', 'Effertz Inc');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (235, '8911 Aberg Trail', 'San Francisco', 'Greek', 'Turcotte, Kulas and Hammes');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (236, '73 Kensington Avenue', 'Seattle', 'Greek', 'Herman-Friesen');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (237, '0 Maple Trail', 'San Francisco', 'Greek', 'Rempel Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (238, '61252 Twin Pines Way', 'Seattle', 'Greek', 'Jakubowski, Cruickshank and Torphy');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (239, '5 Gale Alley', 'Los Angeles ', 'Greek', 'Grimes, Jast and Prohaska');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (240, '97937 Corscot Avenue', 'Lynnwood ', 'Greek', 'Herman, Padberg and Walker');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (241, '77 Commercial Parkway', 'Lynnwood ', 'Greek', 'Satterfield, Wunsch and Corwin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (242, '3858 Rockefeller Court', 'Bellevue', 'Greek', 'Lang-Auer');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (243, '566 Anthes Avenue', 'San Francisco', 'Greek', 'Fay, Hilpert and Marvin');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (244, '650 Swallow Drive', 'San Francisco', 'Greek', 'Gusikowski and Sons');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (245, '99476 Burning Wood Junction', 'Los Angeles ', 'Greek', 'Connelly, Kunde and Lynch');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (246, '6 Coleman Crossing', 'Los Angeles ', 'Greek', 'Green-Rutherford');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (247, '9 Monument Road', 'Seattle', 'Greek', 'Thompson, Reynolds and Bartell');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (248, '51098 Spenser Center', 'San Francisco', 'Greek', 'Labadie-Stiedemann');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (249, '093 Westport Point', 'Los Angeles ', 'Greek', 'Little, Senger and Konopelski');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (250, '2991 Colorado Park', 'San Francisco', 'Greek', 'King, Ward and Beer');
+
+-- ----------------- END OF RESTAURANT INSERTIONS-------------------------
+CREATE TABLE IF NOT EXISTS FOOD_ENTRIES
 (
     price DECIMAL(13,2) NOT NULL,
     r_menu_id INT NOT NULL,
@@ -86,7 +362,7 @@ CREATE TABLE FOOD_ENTRIES
     FOREIGN KEY (r_menu_id) REFERENCES MENU(r_id)
 );
 
-------------------- BEGINNING OF RUSER INSERTIONS--------------------=====
+-- ----------------- BEGINNING OF RUSER INSERTIONS--------------------=====
 
 insert into RUSER (userID, name, favorite_restaurant) values (1, 'Jammie', 86);
 insert into RUSER (userID, name, favorite_restaurant) values (2, 'Rafa', 219);
@@ -588,785 +864,621 @@ insert into RUSER (userID, name, favorite_restaurant) values (497, 'Clementine',
 insert into RUSER (userID, name, favorite_restaurant) values (498, 'Ber', 117);
 insert into RUSER (userID, name, favorite_restaurant) values (499, 'Celestine', 97);
 insert into RUSER (userID, name, favorite_restaurant) values (500, 'Nedda', 91);
-------------------- END OF RUSER INSERTIONS-------------------------------
+-- ----------------- END OF RUSER INSERTIONS-------------------------------
 
-------------------- BEGINNING OF CONTACT INSERTIONS-----------------------
-insert into Contact (email, phone_number, uID, counter) values ('dseymark0@webmd.com', '9916199853', 1, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rkubach1@diigo.com', '9083609679', 2, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wmcgilroy2@amazon.de', '3198948485', 3, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kbackshell3@xrea.com', '9824342042', 4, 1);
-insert into Contact (email, phone_number, uID, counter) values ('emedway4@goodreads.com', '9372937077', 5, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jranahan5@va.gov', '1974884261', 6, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sdrynan6@telegraph.co.uk', '1738371878', 7, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jcollins7@redcross.org', '2409304636', 8, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mmendus8@china.com.cn', '3386107321', 9, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rpodd9@etsy.com', '3016058684', 10, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ctabbernora@scientificamerican.com', '3717655108', 11, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kmacdunlevyb@intel.com', '1157002317', 12, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lplewrightc@pcworld.com', '4942308213', 13, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ewitlingd@wiley.com', '3404643054', 14, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cabrame@istockphoto.com', '8098129870', 15, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sotsonf@marketwatch.com', '8988966777', 16, 1);
-insert into Contact (email, phone_number, uID, counter) values ('twealleansg@go.com', '2218222054', 17, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rchristoforh@yandex.ru', '5402354278', 18, 1);
-insert into Contact (email, phone_number, uID, counter) values ('yciobotarui@rambler.ru', '9481253375', 19, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hpennickj@arizona.edu', '4707857661', 20, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kakramk@alibaba.com', '2123756215', 21, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kcrottyl@bloglines.com', '7008040785', 22, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mgreenstockm@hp.com', '5504301042', 23, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fponten@tinypic.com', '7172475071', 24, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jgoundsyo@cyberchimps.com', '3756487837', 25, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rwoolesp@hp.com', '6076098687', 26, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rseadonq@oakley.com', '6647415002', 27, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sjandourekr@paypal.com', '7252759625', 28, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ccordalls@plala.or.jp', '8326531685', 29, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ddyett@mysql.com', '8892347563', 30, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bconeybeareu@nytimes.com', '4846304588', 31, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ejosev@biblegateway.com', '9968882974', 32, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tschultzew@ihg.com', '6665001135', 33, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cjinax@theguardian.com', '8266098077', 34, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cmilleryy@mac.com', '3414407575', 35, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dschwanderz@usatoday.com', '1377710006', 36, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dboyan10@mayoclinic.com', '2059444803', 37, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nsywell11@sbwire.com', '4975274640', 38, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ddrinkale12@sitemeter.com', '9338236013', 39, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nhrinchenko13@ucsd.edu', '8845517435', 40, 1);
-insert into Contact (email, phone_number, uID, counter) values ('emccaughren14@samsung.com', '8805303172', 41, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wdeaconson15@columbia.edu', '9321623132', 42, 1);
-insert into Contact (email, phone_number, uID, counter) values ('atwigger16@squidoo.com', '2304401440', 43, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aschuck17@omniture.com', '3395039366', 44, 1);
-insert into Contact (email, phone_number, uID, counter) values ('schastagnier18@constantcontact.com', '8998086027', 45, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jworld19@msu.edu', '4571564500', 46, 1);
-insert into Contact (email, phone_number, uID, counter) values ('yionnisian1a@rediff.com', '1664821198', 47, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lloiterton1b@amazon.co.uk', '6553277917', 48, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ddegue1c@whitehouse.gov', '5436992713', 49, 1);
-insert into Contact (email, phone_number, uID, counter) values ('celfleet1d@gravatar.com', '7909526863', 50, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kboot1e@miitbeian.gov.cn', '3178566307', 51, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vgarrique1f@prnewswire.com', '5667681760', 52, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rsyder1g@berkeley.edu', '7125482823', 53, 1);
-insert into Contact (email, phone_number, uID, counter) values ('radvani1h@mozilla.com', '2267103141', 54, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sisbell1i@arstechnica.com', '8205780607', 55, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mfreegard1j@zdnet.com', '7134882853', 56, 1);
-insert into Contact (email, phone_number, uID, counter) values ('phenkens1k@harvard.edu', '6032577713', 57, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tblacktin1l@xing.com', '7806744983', 58, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ibedin1m@oracle.com', '9501738651', 59, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rlabrone1n@telegraph.co.uk', '3517638044', 60, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dstocking1o@dropbox.com', '4977695934', 61, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rmattheissen1p@washingtonpost.com', '2042302731', 62, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jbatham1q@google.com', '2968280048', 63, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bshipton1r@prnewswire.com', '5121447849', 64, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gchasney1s@ameblo.jp', '6202621022', 65, 1);
-insert into Contact (email, phone_number, uID, counter) values ('plaity1t@storify.com', '1168129127', 66, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hurridge1u@shinystat.com', '2566503303', 67, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vtesto1v@a8.net', '1836872434', 68, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aneller1w@w3.org', '1277058598', 69, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hsorton1x@cnet.com', '3497677892', 70, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rhurkett1y@dion.ne.jp', '1184206725', 71, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gprobey1z@mac.com', '6557294210', 72, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sfollows20@senate.gov', '4675287800', 73, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ccleveley21@macromedia.com', '6199496052', 74, 1);
-insert into Contact (email, phone_number, uID, counter) values ('shallock22@comcast.net', '3774994110', 75, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lmaltster23@narod.ru', '9017021610', 76, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jtytterton24@opensource.org', '8157054630', 77, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fraffin25@toplist.cz', '8574563913', 78, 1);
-insert into Contact (email, phone_number, uID, counter) values ('blovemore26@narod.ru', '1556931941', 79, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mwhittuck27@wufoo.com', '2969254936', 80, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bclapham28@weibo.com', '7908538189', 81, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lklejna29@aol.com', '7601642440', 82, 1);
-insert into Contact (email, phone_number, uID, counter) values ('itallon2a@gravatar.com', '8506909453', 83, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fdicky2b@webeden.co.uk', '2037626285', 84, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cwoolager2c@globo.com', '5316324628', 85, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tshipway2d@nymag.com', '3999265609', 86, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ncornhill2e@patch.com', '2301116405', 87, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mhellen2f@cisco.com', '6628281994', 88, 1);
-insert into Contact (email, phone_number, uID, counter) values ('akimpton2g@zdnet.com', '4489129202', 89, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kdumphry2h@51.la', '5032948071', 90, 1);
-insert into Contact (email, phone_number, uID, counter) values ('morrin2i@google.com', '6282729241', 91, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lhockell2j@spiegel.de', '7939533501', 92, 1);
-insert into Contact (email, phone_number, uID, counter) values ('syokelman2k@mlb.com', '3692626290', 93, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cblethyn2l@shareasale.com', '2845863787', 94, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cmckiernan2m@fc2.com', '3574286423', 95, 1);
-insert into Contact (email, phone_number, uID, counter) values ('asalvadori2n@delicious.com', '2961909339', 96, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tferres2o@dedecms.com', '9256474877', 97, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dcoleborn2p@soup.io', '5459831657', 98, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mgrimmert2q@si.edu', '3466032408', 99, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sprobey2r@bizjournals.com', '1502273541', 100, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lmcelwee2s@theglobeandmail.com', '1418878425', 101, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cpasquale2t@posterous.com', '1344132136', 102, 1);
-insert into Contact (email, phone_number, uID, counter) values ('klynskey2u@github.com', '2929651967', 103, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vaggott2v@yellowbook.com', '3107875892', 104, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cavrahamian2w@ibm.com', '5611922665', 105, 1);
-insert into Contact (email, phone_number, uID, counter) values ('zdunton2x@oracle.com', '1057215113', 106, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sguitel2y@soup.io', '7566056776', 107, 1);
-insert into Contact (email, phone_number, uID, counter) values ('criddell2z@simplemachines.org', '2324439423', 108, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ttear30@umn.edu', '3812276273', 109, 1);
-insert into Contact (email, phone_number, uID, counter) values ('paymerich31@simplemachines.org', '3333263092', 110, 1);
-insert into Contact (email, phone_number, uID, counter) values ('strump32@stumbleupon.com', '6197287250', 111, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nmasterson33@nbcnews.com', '3102311275', 112, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fbehling34@dmoz.org', '5899285242', 113, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lgladdolph35@jalbum.net', '3088990557', 114, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ltullis36@behance.net', '2989104505', 115, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ggreenman37@gizmodo.com', '4829893045', 116, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pkohen38@japanpost.jp', '5955840390', 117, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdraijer39@cdc.gov', '8162606943', 118, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mcouche3a@scientificamerican.com', '2659088039', 119, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aflorentine3b@tinyurl.com', '5712842228', 120, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ablaisdale3c@examiner.com', '3426417575', 121, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bshimmans3d@answers.com', '9879444739', 122, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rpresdee3e@bbc.co.uk', '8275307593', 123, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ojacobsen3f@tripadvisor.com', '4721679271', 124, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hbryett3g@utexas.edu', '4768204407', 125, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jcamelli3h@fema.gov', '5516312822', 126, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vgauler3i@qq.com', '8504190520', 127, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cbadsworth3j@samsung.com', '7139677509', 128, 1);
-insert into Contact (email, phone_number, uID, counter) values ('agreenstead3k@ebay.com', '9178526992', 129, 1);
-insert into Contact (email, phone_number, uID, counter) values ('acotesford3l@posterous.com', '8222642712', 130, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cchampionnet3m@mail.ru', '8718409727', 131, 1);
-insert into Contact (email, phone_number, uID, counter) values ('epolly3n@addthis.com', '1996579605', 132, 1);
-insert into Contact (email, phone_number, uID, counter) values ('abeggini3o@mail.ru', '8862531531', 133, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aodriscoll3p@soundcloud.com', '5011145113', 134, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jgissing3q@sitemeter.com', '4787094170', 135, 1);
-insert into Contact (email, phone_number, uID, counter) values ('phustler3r@chron.com', '4738270767', 136, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sglayzer3s@zimbio.com', '6334912253', 137, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fkacheler3t@jiathis.com', '7517974215', 138, 1);
-insert into Contact (email, phone_number, uID, counter) values ('scaddy3u@wikipedia.org', '6263125300', 139, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dgoard3v@cornell.edu', '2091988731', 140, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ehub3w@gnu.org', '4081435206', 141, 1);
-insert into Contact (email, phone_number, uID, counter) values ('eheineking3x@weather.com', '2762859243', 142, 1);
-insert into Contact (email, phone_number, uID, counter) values ('akeyzor3y@npr.org', '8479164117', 143, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sdavydochkin3z@java.com', '1599689367', 144, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gwinley40@blinklist.com', '4724580321', 145, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lofield41@businesswire.com', '2802780010', 146, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lrameaux42@usa.gov', '3876249361', 147, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gmckilroe43@geocities.com', '5643474301', 148, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdemalchar44@cbc.ca', '9397577089', 149, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ttrevett45@deviantart.com', '5343089596', 150, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ekleinzweig46@simplemachines.org', '5331157750', 151, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbritney47@netvibes.com', '6371464291', 152, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jrioch48@ted.com', '7062556473', 153, 1);
-insert into Contact (email, phone_number, uID, counter) values ('omillsap49@gmpg.org', '7387049342', 154, 1);
-insert into Contact (email, phone_number, uID, counter) values ('csamwaye4a@phoca.cz', '7549329203', 155, 1);
-insert into Contact (email, phone_number, uID, counter) values ('idavidovitch4b@dmoz.org', '9527893536', 156, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mmccolley4c@discovery.com', '4063545470', 157, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ccirlos4d@slate.com', '2863038471', 158, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rdiviny4e@eepurl.com', '8931415674', 159, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ktonbye4f@issuu.com', '4199926999', 160, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vmulqueeny4g@ebay.com', '2963725312', 161, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rhansman4h@myspace.com', '2774928959', 162, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lcosley4i@slideshare.net', '8683328819', 163, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ljansens4j@bandcamp.com', '6274596780', 164, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mrowan4k@myspace.com', '3189049599', 165, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sgowthrop4l@reuters.com', '5656749620', 166, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bcaville4m@gravatar.com', '8691842251', 167, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbenedetti4n@sina.com.cn', '3237937612', 168, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bswainger4o@ed.gov', '1141083567', 169, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vdirr4p@abc.net.au', '4703078725', 170, 1);
-insert into Contact (email, phone_number, uID, counter) values ('djosephson4q@macromedia.com', '1451548885', 171, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rhargerie4r@sciencedirect.com', '3862814128', 172, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bweighell4s@buzzfeed.com', '2246202928', 173, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jerrol4t@si.edu', '5641193417', 174, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gbatrim4u@prnewswire.com', '6155818902', 175, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dthrossell4v@lulu.com', '4562236632', 176, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cveighey4w@zdnet.com', '8795331307', 177, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kgwyer4x@wiley.com', '5942761192', 178, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ccogzell4y@gmpg.org', '5522953568', 179, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pmedlin4z@time.com', '4364667692', 180, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kbizzey50@list-manage.com', '4514261243', 181, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cricks51@berkeley.edu', '5049355702', 182, 1);
-insert into Contact (email, phone_number, uID, counter) values ('orobbe52@tamu.edu', '3073718747', 183, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kfarrey53@unblog.fr', '7149881268', 184, 1);
-insert into Contact (email, phone_number, uID, counter) values ('elush54@loc.gov', '8813886299', 185, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nwhitehorn55@wsj.com', '4436603904', 186, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bgiovannelli56@devhub.com', '8968018667', 187, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kgulliford57@tmall.com', '3944682586', 188, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cbleddon58@com.com', '6501248775', 189, 1);
-insert into Contact (email, phone_number, uID, counter) values ('heyre59@goodreads.com', '5555004955', 190, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pdibben5a@scientificamerican.com', '7443404386', 191, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbaillie5b@opera.com', '2795791530', 192, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mclute5c@harvard.edu', '4176990912', 193, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dawcock5d@lulu.com', '1171497242', 194, 1);
-insert into Contact (email, phone_number, uID, counter) values ('igallemore5e@sfgate.com', '6407846090', 195, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bmaccallam5f@fastcompany.com', '4782087546', 196, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bvolke5g@newyorker.com', '6207366948', 197, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdidsbury5h@google.nl', '7017124555', 198, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gdesquesnes5i@huffingtonpost.com', '5269447079', 199, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aclaesens5j@hubpages.com', '2381634508', 200, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tinglese5k@foxnews.com', '5848928382', 201, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dtruce5l@icq.com', '8437820559', 202, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdufty5m@dagondesign.com', '4034538783', 203, 1);
-insert into Contact (email, phone_number, uID, counter) values ('agianulli5n@biblegateway.com', '1352146202', 204, 1);
-insert into Contact (email, phone_number, uID, counter) values ('adigby5o@tuttocitta.it', '7774406147', 205, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bgallop5p@google.fr', '3527235580', 206, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ltollow5q@wired.com', '4306770498', 207, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hceyssen5r@theguardian.com', '8211481409', 208, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kodonegan5s@barnesandnoble.com', '5359713036', 209, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cwybrew5t@samsung.com', '8485322863', 210, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bgepheart5u@umich.edu', '6409710217', 211, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kdockray5v@tinypic.com', '4645076613', 212, 1);
-insert into Contact (email, phone_number, uID, counter) values ('meagles5w@admin.ch', '8332160002', 213, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cschlagtmans5x@1und1.de', '2084266570', 214, 1);
-insert into Contact (email, phone_number, uID, counter) values ('staylot5y@deviantart.com', '2348524694', 215, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ktyre5z@cbslocal.com', '5587150844', 216, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jtonepohl60@sitemeter.com', '1028505485', 217, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kmatushenko61@loc.gov', '6537825783', 218, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdrew62@deliciousdays.com', '6873026610', 219, 1);
-insert into Contact (email, phone_number, uID, counter) values ('charce63@whitehouse.gov', '8522952104', 220, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jfraine64@samsung.com', '3083650649', 221, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nnadin65@delicious.com', '1005905243', 222, 1);
-insert into Contact (email, phone_number, uID, counter) values ('adeakins66@sakura.ne.jp', '4039267443', 223, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mrothert67@apache.org', '4582264277', 224, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tpinnigar68@oaic.gov.au', '8353471985', 225, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rworgan69@dropbox.com', '4976947629', 226, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aflorentine6a@cargocollective.com', '8531960807', 227, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mwhitlam6b@examiner.com', '9443054041', 228, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tsimmins6c@prlog.org', '5459354732', 229, 1);
-insert into Contact (email, phone_number, uID, counter) values ('asponer6d@sourceforge.net', '4046307741', 230, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tseamarke6e@hao123.com', '7886235521', 231, 1);
-insert into Contact (email, phone_number, uID, counter) values ('drobison6f@printfriendly.com', '3241400565', 232, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kmcmurty6g@instagram.com', '1559709713', 233, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gtongs6h@ovh.net', '6518496710', 234, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ecowgill6i@nsw.gov.au', '7431722489', 235, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ewyett6j@ihg.com', '5308052183', 236, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tlyttle6k@sohu.com', '7352516752', 237, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gkippax6l@toplist.cz', '3836793358', 238, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lmacnockater6m@discovery.com', '2267652593', 239, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mplinck6n@reverbnation.com', '6562815476', 240, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ebrassill6o@woothemes.com', '4335739651', 241, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hphilipart6p@sciencedaily.com', '6754808045', 242, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cdon6q@amazon.co.jp', '3714645996', 243, 1);
-insert into Contact (email, phone_number, uID, counter) values ('arothert6r@histats.com', '5384213255', 244, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fshilton6s@ehow.com', '5733322711', 245, 1);
-insert into Contact (email, phone_number, uID, counter) values ('eholbarrow6t@redcross.org', '6538682992', 246, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rlavis6u@dyndns.org', '1331024912', 247, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbedrosian6v@google.pl', '7227257699', 248, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dgauden6w@answers.com', '2091917608', 249, 1);
-insert into Contact (email, phone_number, uID, counter) values ('onealon6x@youtube.com', '3695933245', 250, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mstedman6y@geocities.com', '4221051134', 251, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nposer6z@deviantart.com', '5007160638', 252, 1);
-insert into Contact (email, phone_number, uID, counter) values ('crowett70@chicagotribune.com', '9477951564', 253, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bmarlen71@smh.com.au', '4642983281', 254, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dburwin72@lycos.com', '4215262448', 255, 1);
-insert into Contact (email, phone_number, uID, counter) values ('qfarnes73@wikia.com', '1755410883', 256, 1);
-insert into Contact (email, phone_number, uID, counter) values ('zrollett74@trellian.com', '4594002217', 257, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bhuebner75@redcross.org', '3207515672', 258, 1);
-insert into Contact (email, phone_number, uID, counter) values ('deastment76@fda.gov', '9168920478', 259, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jmatussow77@weather.com', '1597070681', 260, 1);
-insert into Contact (email, phone_number, uID, counter) values ('csherringham78@cbsnews.com', '1969345661', 261, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lgrowy79@apple.com', '7144109718', 262, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tgrahlmans7a@google.nl', '5306266713', 263, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ekelberman7b@nsw.gov.au', '3229222701', 264, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lshilstone7c@washington.edu', '3308490165', 265, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cnoden7d@sfgate.com', '4677117206', 266, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mcrutcher7e@sciencedirect.com', '9476919959', 267, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jlefever7f@trellian.com', '3292946617', 268, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cugolini7g@princeton.edu', '5798742562', 269, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wsigart7h@theatlantic.com', '5566770512', 270, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jbrood7i@csmonitor.com', '8655662564', 271, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lpergens7j@omniture.com', '3535450717', 272, 1);
-insert into Contact (email, phone_number, uID, counter) values ('candreas7k@cdc.gov', '7317192454', 273, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fvedyasov7l@g.co', '4897022949', 274, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fbiggadyke7m@ucla.edu', '5825215740', 275, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ldemaine7n@aboutads.info', '2082716124', 276, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fphilcock7o@wufoo.com', '5939804114', 277, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kewence7p@e-recht24.de', '7245207589', 278, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pswatten7q@timesonline.co.uk', '1102478443', 279, 1);
-insert into Contact (email, phone_number, uID, counter) values ('galhirsi7r@sakura.ne.jp', '5561506198', 280, 1);
-insert into Contact (email, phone_number, uID, counter) values ('edunbavin7s@bandcamp.com', '2943743785', 281, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dfoote7t@bbc.co.uk', '4997359228', 282, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hdonaway7u@fda.gov', '7824116400', 283, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ncleef7v@mediafire.com', '5457738420', 284, 1);
-insert into Contact (email, phone_number, uID, counter) values ('barkle7w@unblog.fr', '6153991780', 285, 1);
-insert into Contact (email, phone_number, uID, counter) values ('emacias7x@elegantthemes.com', '8867511032', 286, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hchivers7y@usgs.gov', '6354261173', 287, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kjacqueme7z@dailymail.co.uk', '7606794260', 288, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bstolberg80@tumblr.com', '5794700014', 289, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hgoodbanne81@oracle.com', '4392561018', 290, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rcollelton82@discovery.com', '2341452899', 291, 1);
-insert into Contact (email, phone_number, uID, counter) values ('csudy83@whitehouse.gov', '6468621445', 292, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gellerington84@examiner.com', '3187258711', 293, 1);
-insert into Contact (email, phone_number, uID, counter) values ('icarrol85@theguardian.com', '6079428028', 294, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gcosslett86@hostgator.com', '8637875264', 295, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lvandenoord87@istockphoto.com', '2145097117', 296, 1);
-insert into Contact (email, phone_number, uID, counter) values ('drosenbloom88@feedburner.com', '9639228985', 297, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbaddeley89@w3.org', '4575685458', 298, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tgianullo8a@google.com.br', '2717257035', 299, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mkesby8b@nydailynews.com', '4706967269', 300, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bbendelow8c@cocolog-nifty.com', '1744707797', 301, 1);
-insert into Contact (email, phone_number, uID, counter) values ('clinnell8d@adobe.com', '4219423135', 302, 1);
-insert into Contact (email, phone_number, uID, counter) values ('edeguise8e@hubpages.com', '4622357825', 303, 1);
-insert into Contact (email, phone_number, uID, counter) values ('drodenburg8f@ezinearticles.com', '5266341126', 304, 1);
-insert into Contact (email, phone_number, uID, counter) values ('alehrmann8g@intel.com', '2131067206', 305, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gquant8h@usnews.com', '6366499662', 306, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mlonsdale8i@salon.com', '8674895772', 307, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sstollen8j@hp.com', '2412900470', 308, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cbonsall8k@deviantart.com', '8619233434', 309, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cruller8l@clickbank.net', '9413576569', 310, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gferrero8m@blogs.com', '3771622159', 311, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dglynn8n@army.mil', '3472347445', 312, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tgemson8o@yandex.ru', '2879969974', 313, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbawles8p@techcrunch.com', '3462784741', 314, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nhopewell8q@bing.com', '3059975675', 315, 1);
-insert into Contact (email, phone_number, uID, counter) values ('asnawdon8r@rambler.ru', '5615117455', 316, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gjuarez8s@drupal.org', '6607085402', 317, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lhumburton8t@vkontakte.ru', '7048666617', 318, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gollenbuttel8u@elpais.com', '5388472561', 319, 1);
-insert into Contact (email, phone_number, uID, counter) values ('msummerscales8v@slate.com', '3393769754', 320, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kfourcade8w@usatoday.com', '7119179781', 321, 1);
-insert into Contact (email, phone_number, uID, counter) values ('zgillyatt8x@bing.com', '2829119895', 322, 1);
-insert into Contact (email, phone_number, uID, counter) values ('asambidge8y@g.co', '7597637470', 323, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cingleston8z@technorati.com', '1977504290', 324, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gpikett90@sphinn.com', '8706213437', 325, 1);
-insert into Contact (email, phone_number, uID, counter) values ('jhubble91@webeden.co.uk', '7045680257', 326, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aharbinson92@i2i.jp', '7596778190', 327, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gshafto93@tmall.com', '9076310904', 328, 1);
-insert into Contact (email, phone_number, uID, counter) values ('slieber94@utexas.edu', '6093507918', 329, 1);
-insert into Contact (email, phone_number, uID, counter) values ('acoveney95@goo.ne.jp', '2606635758', 330, 1);
-insert into Contact (email, phone_number, uID, counter) values ('schaloner96@bluehost.com', '9517067704', 331, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gsteljes97@wikipedia.org', '7387998705', 332, 1);
-insert into Contact (email, phone_number, uID, counter) values ('celener98@constantcontact.com', '7417330510', 333, 1);
-insert into Contact (email, phone_number, uID, counter) values ('civannikov99@unblog.fr', '3297624218', 334, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gcarlino9a@bloglovin.com', '2359496959', 335, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mdutton9b@google.com.au', '7222661835', 336, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bprestage9c@blogspot.com', '9945624010', 337, 1);
-insert into Contact (email, phone_number, uID, counter) values ('teamer9d@4shared.com', '1546258056', 338, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gpopplewell9e@tinyurl.com', '6497235675', 339, 1);
-insert into Contact (email, phone_number, uID, counter) values ('church9f@tinyurl.com', '9939868158', 340, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mlittle9g@paginegialle.it', '1521505420', 341, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vkaiser9h@smh.com.au', '2816306559', 342, 1);
-insert into Contact (email, phone_number, uID, counter) values ('umargiotta9i@cbsnews.com', '2117658595', 343, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cwalthew9j@stanford.edu', '6721399725', 344, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cschoolcroft9k@weebly.com', '3355928365', 345, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mattestone9l@time.com', '5118499069', 346, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wmurra9m@quantcast.com', '6036556687', 347, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tvardon9n@hostgator.com', '6561030117', 348, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gdumberrill9o@cargocollective.com', '8232356933', 349, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rbrim9p@google.cn', '7042016690', 350, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mpesak9q@simplemachines.org', '6371272681', 351, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sastupenas9r@oracle.com', '6655520031', 352, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lpeasey9s@mail.ru', '5245489674', 353, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aalabaster9t@mapquest.com', '1972421578', 354, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pronchetti9u@japanpost.jp', '6711093176', 355, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fmerali9v@posterous.com', '3409437206', 356, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cgeist9w@paginegialle.it', '5884849766', 357, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gulyatt9x@chicagotribune.com', '4398827365', 358, 1);
-insert into Contact (email, phone_number, uID, counter) values ('emccombe9y@netlog.com', '2097027924', 359, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dlanmeid9z@weebly.com', '1168896224', 360, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vheisa0@eepurl.com', '8307163145', 361, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dkyberda1@phoca.cz', '5437267132', 362, 1);
-insert into Contact (email, phone_number, uID, counter) values ('iivanilova2@adobe.com', '1229469693', 363, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gbuckmastera3@cbsnews.com', '6535581514', 364, 1);
-insert into Contact (email, phone_number, uID, counter) values ('odawberya4@opera.com', '3189690272', 365, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sbickerstaffea5@psu.edu', '5316631639', 366, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tpurvera6@forbes.com', '1368866712', 367, 1);
-insert into Contact (email, phone_number, uID, counter) values ('smumbersona7@typepad.com', '3886260827', 368, 1);
-insert into Contact (email, phone_number, uID, counter) values ('deshelbya8@flavors.me', '9813743642', 369, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cgallandersa9@howstuffworks.com', '4957262114', 370, 1);
-insert into Contact (email, phone_number, uID, counter) values ('esieghartaa@godaddy.com', '6293783409', 371, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hwayonab@wikia.com', '8425202361', 372, 1);
-insert into Contact (email, phone_number, uID, counter) values ('eharrodac@fc2.com', '9925948424', 373, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vcaterad@sourceforge.net', '4969871278', 374, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lwhitrodae@weather.com', '3322784628', 375, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gkumaraf@bbb.org', '8293784120', 376, 1);
-insert into Contact (email, phone_number, uID, counter) values ('scornsag@ftc.gov', '4287145378', 377, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rdumbartonah@dion.ne.jp', '2264805538', 378, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hnewcombai@miitbeian.gov.cn', '5619116111', 379, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aotoweyaj@parallels.com', '3537970625', 380, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rnorvilleak@yelp.com', '7959721589', 381, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbealeal@clickbank.net', '9235827004', 382, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cmaffeyam@indiatimes.com', '8164986172', 383, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ccesconan@state.gov', '5334999955', 384, 1);
-insert into Contact (email, phone_number, uID, counter) values ('iangusao@51.la', '7864335636', 385, 1);
-insert into Contact (email, phone_number, uID, counter) values ('imcbratneyap@theglobeandmail.com', '8275853249', 386, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dfullaq@dropbox.com', '6287742792', 387, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ecaspellar@answers.com', '4667041332', 388, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rburmasteras@amazon.de', '7257458399', 389, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rfarrowat@go.com', '4976466144', 390, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dwynterau@google.com.hk', '5412971461', 391, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rcottieav@vkontakte.ru', '7485985564', 392, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ayaldenaw@craigslist.org', '6456421820', 393, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kfyfieldax@chronoengine.com', '5443386978', 394, 1);
-insert into Contact (email, phone_number, uID, counter) values ('zmcramseyay@addthis.com', '5568237082', 395, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rcowernaz@home.pl', '1005389111', 396, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gmellingb0@bravesites.com', '1947381411', 397, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sbudnkb1@quantcast.com', '3325887409', 398, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bbertieb2@yellowpages.com', '8602882122', 399, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bheiningb3@independent.co.uk', '4574314695', 400, 1);
-insert into Contact (email, phone_number, uID, counter) values ('agarfirthb4@flickr.com', '1731270233', 401, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kmcleoidb5@zdnet.com', '5664762764', 402, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lduggenb6@usda.gov', '6626939098', 403, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mhymusb7@aboutads.info', '1396365832', 404, 1);
-insert into Contact (email, phone_number, uID, counter) values ('astockportb8@bbb.org', '3307711566', 405, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tarnholtzb9@github.io', '1313139980', 406, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fbutcherba@loc.gov', '1059037963', 407, 1);
-insert into Contact (email, phone_number, uID, counter) values ('csurgenorbb@sbwire.com', '5031722579', 408, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cchelleybc@taobao.com', '3619523751', 409, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pjossbd@tinypic.com', '7779415121', 410, 1);
-insert into Contact (email, phone_number, uID, counter) values ('afesbybe@mapquest.com', '9504640809', 411, 1);
-insert into Contact (email, phone_number, uID, counter) values ('roshevlanbf@oaic.gov.au', '5453600109', 412, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lbuttelbg@devhub.com', '7821299794', 413, 1);
-insert into Contact (email, phone_number, uID, counter) values ('onowaczykbh@wikimedia.org', '6155441674', 414, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gtrasebi@usatoday.com', '6841795157', 415, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rperhambj@domainmarket.com', '5709495546', 416, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rlivezleybk@opensource.org', '9906788031', 417, 1);
-insert into Contact (email, phone_number, uID, counter) values ('yabrashkinbl@w3.org', '5518257698', 418, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wreditbm@jalbum.net', '6338095960', 419, 1);
-insert into Contact (email, phone_number, uID, counter) values ('owalkeybn@simplemachines.org', '9438967853', 420, 1);
-insert into Contact (email, phone_number, uID, counter) values ('urhucroftbo@amazon.com', '5214771408', 421, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ghexambp@sohu.com', '2104538215', 422, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tbogartbq@wired.com', '1591777672', 423, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lroffbr@nbcnews.com', '1738637608', 424, 1);
-insert into Contact (email, phone_number, uID, counter) values ('veblebs@cloudflare.com', '7991084256', 425, 1);
-insert into Contact (email, phone_number, uID, counter) values ('hbolesbt@dot.gov', '1102609016', 426, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dsnoxallbu@theguardian.com', '4622312051', 427, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kkeldbv@accuweather.com', '2777025505', 428, 1);
-insert into Contact (email, phone_number, uID, counter) values ('rallderidgebw@indiatimes.com', '7594802426', 429, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tfrickbx@jiathis.com', '3155532072', 430, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bdudeneyby@gmpg.org', '1154331816', 431, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kquinevanbz@wordpress.org', '2033644830', 432, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sfulleylovec0@etsy.com', '3544400623', 433, 1);
-insert into Contact (email, phone_number, uID, counter) values ('agolledgec1@reverbnation.com', '2338448934', 434, 1);
-insert into Contact (email, phone_number, uID, counter) values ('spreistc2@indiegogo.com', '8066876429', 435, 1);
-insert into Contact (email, phone_number, uID, counter) values ('iquinetc3@icio.us', '3031271634', 436, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fbernadotc4@geocities.com', '1327210819', 437, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gbourgesc5@state.tx.us', '9052829325', 438, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ftustinc6@yahoo.com', '2172747395', 439, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pswatradgec7@newyorker.com', '5573796570', 440, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ybaynesc8@mit.edu', '4899109585', 441, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cpetronisc9@miitbeian.gov.cn', '8483911983', 442, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bpayzeca@xing.com', '4259974048', 443, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cpauleycb@discovery.com', '1602396898', 444, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bodarecc@yale.edu', '2715932435', 445, 1);
-insert into Contact (email, phone_number, uID, counter) values ('thadcockcd@creativecommons.org', '7625682203', 446, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ggebhardce@livejournal.com', '1525943259', 447, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ghenrietcf@microsoft.com', '4427643876', 448, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cparrishcg@gizmodo.com', '2628449005', 449, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dousbiech@comsenz.com', '7897093669', 450, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mhuntallci@shinystat.com', '5537832973', 451, 1);
-insert into Contact (email, phone_number, uID, counter) values ('iabbotscj@smugmug.com', '8703497092', 452, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wallawyck@telegraph.co.uk', '4312804848', 453, 1);
-insert into Contact (email, phone_number, uID, counter) values ('opeerscl@scribd.com', '3443441955', 454, 1);
-insert into Contact (email, phone_number, uID, counter) values ('alochecm@economist.com', '5505120669', 455, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cweycn@blog.com', '8706396251', 456, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kguittco@pen.io', '4654921810', 457, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mmyderscoughcp@xing.com', '3381597321', 458, 1);
-insert into Contact (email, phone_number, uID, counter) values ('krougiercq@newyorker.com', '8997819306', 459, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wmattockcr@reverbnation.com', '8506453549', 460, 1);
-insert into Contact (email, phone_number, uID, counter) values ('eesmondecs@google.nl', '9855940037', 461, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cmitchallct@so-net.ne.jp', '2716984352', 462, 1);
-insert into Contact (email, phone_number, uID, counter) values ('holyhanecu@nasa.gov', '2758545230', 463, 1);
-insert into Contact (email, phone_number, uID, counter) values ('tlarchercv@tumblr.com', '8223525472', 464, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wcloakecw@over-blog.com', '4957139825', 465, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pphizackleacx@mozilla.com', '5234542107', 466, 1);
-insert into Contact (email, phone_number, uID, counter) values ('kconeybearecy@abc.net.au', '9076754014', 467, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pjandakcz@wisc.edu', '4092591825', 468, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fbrosnand0@is.gd', '1709851303', 469, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mteesdaled1@etsy.com', '5081327000', 470, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wmerkeld2@posterous.com', '8576259047', 471, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vskillettd3@bandcamp.com', '1194651936', 472, 1);
-insert into Contact (email, phone_number, uID, counter) values ('eaffrond4@google.ru', '1027850556', 473, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pbofieldd5@nba.com', '8318259795', 474, 1);
-insert into Contact (email, phone_number, uID, counter) values ('candricd6@sourceforge.net', '9543463216', 475, 1);
-insert into Contact (email, phone_number, uID, counter) values ('anewcomend7@theglobeandmail.com', '4734640068', 476, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dprierd8@g.co', '2656158717', 477, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mtailbyd9@blinklist.com', '5961157524', 478, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mabbittda@goo.ne.jp', '6952507545', 479, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dpepyedb@sun.com', '8821943642', 480, 1);
-insert into Contact (email, phone_number, uID, counter) values ('bsandarsdc@vimeo.com', '4171329122', 481, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mabbeydd@google.co.uk', '2007736165', 482, 1);
-insert into Contact (email, phone_number, uID, counter) values ('gtucknottde@jalbum.net', '6957135601', 483, 1);
-insert into Contact (email, phone_number, uID, counter) values ('wleghorndf@gnu.org', '1894975425', 484, 1);
-insert into Contact (email, phone_number, uID, counter) values ('fcolyerdg@ucsd.edu', '4826057718', 485, 1);
-insert into Contact (email, phone_number, uID, counter) values ('pborreldh@plala.or.jp', '6845378508', 486, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vshetliffdi@oaic.gov.au', '1408357914', 487, 1);
-insert into Contact (email, phone_number, uID, counter) values ('agoodbodydj@wp.com', '2226880708', 488, 1);
-insert into Contact (email, phone_number, uID, counter) values ('aquinnelldk@trellian.com', '5931904306', 489, 1);
-insert into Contact (email, phone_number, uID, counter) values ('vtaylderdl@usnews.com', '4472570616', 490, 1);
-insert into Contact (email, phone_number, uID, counter) values ('nfortmandm@aboutads.info', '5234352167', 491, 1);
-insert into Contact (email, phone_number, uID, counter) values ('ikaydn@blogtalkradio.com', '3751255115', 492, 1);
-insert into Contact (email, phone_number, uID, counter) values ('sdwelleydo@marriott.com', '5485486555', 493, 1);
-insert into Contact (email, phone_number, uID, counter) values ('mivanichevdp@shop-pro.jp', '6669984946', 494, 1);
-insert into Contact (email, phone_number, uID, counter) values ('clippdq@examiner.com', '3173075023', 495, 1);
-insert into Contact (email, phone_number, uID, counter) values ('lthorbydr@blogspot.com', '7597773733', 496, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cdancerds@java.com', '9696025781', 497, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dmolfinodt@nydailynews.com', '1352744583', 498, 1);
-insert into Contact (email, phone_number, uID, counter) values ('cwroutdu@ocn.ne.jp', '8517435093', 499, 1);
-insert into Contact (email, phone_number, uID, counter) values ('dgravettdv@taobao.com', '6438986604', 500, 1);
+-- ----------------- BEGINNING OF CONTACT INSERTIONS-----------------------
+-- ----------------- BEGINNING OF CONTACT INSERTIONS-----------------------
+insert into CONTACT (email, phone_number, uID, counter) values ('dseymark0@webmd.com', '9916199853', 1, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rkubach1@diigo.com', '9083609679', 2, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wmcgilroy2@amazon.de', '3198948485', 3, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kbackshell3@xrea.com', '9824342042', 4, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('emedway4@goodreads.com', '9372937077', 5, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jranahan5@va.gov', '1974884261', 6, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sdrynan6@telegraph.co.uk', '1738371878', 7, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jcollins7@redcross.org', '2409304636', 8, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mmendus8@china.com.cn', '3386107321', 9, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rpodd9@etsy.com', '3016058684', 10, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ctabbernora@scientificamerican.com', '3717655108', 11, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kmacdunlevyb@intel.com', '1157002317', 12, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lplewrightc@pcworld.com', '4942308213', 13, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ewitlingd@wiley.com', '3404643054', 14, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cabrame@istockphoto.com', '8098129870', 15, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sotsonf@marketwatch.com', '8988966777', 16, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('twealleansg@go.com', '2218222054', 17, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rchristoforh@yandex.ru', '5402354278', 18, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('yciobotarui@rambler.ru', '9481253375', 19, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hpennickj@arizona.edu', '4707857661', 20, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kakramk@alibaba.com', '2123756215', 21, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kcrottyl@bloglines.com', '7008040785', 22, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mgreenstockm@hp.com', '5504301042', 23, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fponten@tinypic.com', '7172475071', 24, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jgoundsyo@cyberchimps.com', '3756487837', 25, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rwoolesp@hp.com', '6076098687', 26, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rseadonq@oakley.com', '6647415002', 27, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sjandourekr@paypal.com', '7252759625', 28, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ccordalls@plala.or.jp', '8326531685', 29, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ddyett@mysql.com', '8892347563', 30, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bconeybeareu@nytimes.com', '4846304588', 31, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ejosev@biblegateway.com', '9968882974', 32, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tschultzew@ihg.com', '6665001135', 33, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cjinax@theguardian.com', '8266098077', 34, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cmilleryy@mac.com', '3414407575', 35, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dschwanderz@usatoday.com', '1377710006', 36, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dboyan10@mayoclinic.com', '2059444803', 37, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nsywell11@sbwire.com', '4975274640', 38, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ddrinkale12@sitemeter.com', '9338236013', 39, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nhrinchenko13@ucsd.edu', '8845517435', 40, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('emccaughren14@samsung.com', '8805303172', 41, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wdeaconson15@columbia.edu', '9321623132', 42, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('atwigger16@squidoo.com', '2304401440', 43, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aschuck17@omniture.com', '3395039366', 44, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('schastagnier18@constantcontact.com', '8998086027', 45, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jworld19@msu.edu', '4571564500', 46, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('yionnisian1a@rediff.com', '1664821198', 47, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lloiterton1b@amazon.co.uk', '6553277917', 48, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ddegue1c@whitehouse.gov', '5436992713', 49, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('celfleet1d@gravatar.com', '7909526863', 50, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kboot1e@miitbeian.gov.cn', '3178566307', 51, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vgarrique1f@prnewswire.com', '5667681760', 52, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rsyder1g@berkeley.edu', '7125482823', 53, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('radvani1h@mozilla.com', '2267103141', 54, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sisbell1i@arstechnica.com', '8205780607', 55, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mfreegard1j@zdnet.com', '7134882853', 56, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('phenkens1k@harvard.edu', '6032577713', 57, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tblacktin1l@xing.com', '7806744983', 58, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ibedin1m@oracle.com', '9501738651', 59, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rlabrone1n@telegraph.co.uk', '3517638044', 60, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dstocking1o@dropbox.com', '4977695934', 61, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rmattheissen1p@washingtonpost.com', '2042302731', 62, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jbatham1q@google.com', '2968280048', 63, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bshipton1r@prnewswire.com', '5121447849', 64, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gchasney1s@ameblo.jp', '6202621022', 65, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('plaity1t@storify.com', '1168129127', 66, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hurridge1u@shinystat.com', '2566503303', 67, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vtesto1v@a8.net', '1836872434', 68, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aneller1w@w3.org', '1277058598', 69, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hsorton1x@cnet.com', '3497677892', 70, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rhurkett1y@dion.ne.jp', '1184206725', 71, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gprobey1z@mac.com', '6557294210', 72, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sfollows20@senate.gov', '4675287800', 73, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ccleveley21@macromedia.com', '6199496052', 74, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('shallock22@comcast.net', '3774994110', 75, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lmaltster23@narod.ru', '9017021610', 76, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jtytterton24@opensource.org', '8157054630', 77, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fraffin25@toplist.cz', '8574563913', 78, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('blovemore26@narod.ru', '1556931941', 79, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mwhittuck27@wufoo.com', '2969254936', 80, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bclapham28@weibo.com', '7908538189', 81, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lklejna29@aol.com', '7601642440', 82, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('itallon2a@gravatar.com', '8506909453', 83, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fdicky2b@webeden.co.uk', '2037626285', 84, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cwoolager2c@globo.com', '5316324628', 85, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tshipway2d@nymag.com', '3999265609', 86, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ncornhill2e@patch.com', '2301116405', 87, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mhellen2f@cisco.com', '6628281994', 88, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('akimpton2g@zdnet.com', '4489129202', 89, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kdumphry2h@51.la', '5032948071', 90, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('morrin2i@google.com', '6282729241', 91, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lhockell2j@spiegel.de', '7939533501', 92, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('syokelman2k@mlb.com', '3692626290', 93, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cblethyn2l@shareasale.com', '2845863787', 94, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cmckiernan2m@fc2.com', '3574286423', 95, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('asalvadori2n@delicious.com', '2961909339', 96, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tferres2o@dedecms.com', '9256474877', 97, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dcoleborn2p@soup.io', '5459831657', 98, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mgrimmert2q@si.edu', '3466032408', 99, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sprobey2r@bizjournals.com', '1502273541', 100, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lmcelwee2s@theglobeandmail.com', '1418878425', 101, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cpasquale2t@posterous.com', '1344132136', 102, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('klynskey2u@github.com', '2929651967', 103, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vaggott2v@yellowbook.com', '3107875892', 104, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cavrahamian2w@ibm.com', '5611922665', 105, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('zdunton2x@oracle.com', '1057215113', 106, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sguitel2y@soup.io', '7566056776', 107, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('criddell2z@simplemachines.org', '2324439423', 108, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ttear30@umn.edu', '3812276273', 109, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('paymerich31@simplemachines.org', '3333263092', 110, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('strump32@stumbleupon.com', '6197287250', 111, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nmasterson33@nbcnews.com', '3102311275', 112, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fbehling34@dmoz.org', '5899285242', 113, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lgladdolph35@jalbum.net', '3088990557', 114, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ltullis36@behance.net', '2989104505', 115, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ggreenman37@gizmodo.com', '4829893045', 116, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pkohen38@japanpost.jp', '5955840390', 117, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdraijer39@cdc.gov', '8162606943', 118, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mcouche3a@scientificamerican.com', '2659088039', 119, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aflorentine3b@tinyurl.com', '5712842228', 120, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ablaisdale3c@examiner.com', '3426417575', 121, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bshimmans3d@answers.com', '9879444739', 122, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rpresdee3e@bbc.co.uk', '8275307593', 123, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ojacobsen3f@tripadvisor.com', '4721679271', 124, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hbryett3g@utexas.edu', '4768204407', 125, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jcamelli3h@fema.gov', '5516312822', 126, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vgauler3i@qq.com', '8504190520', 127, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cbadsworth3j@samsung.com', '7139677509', 128, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('agreenstead3k@ebay.com', '9178526992', 129, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('acotesford3l@posterous.com', '8222642712', 130, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cchampionnet3m@mail.ru', '8718409727', 131, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('epolly3n@addthis.com', '1996579605', 132, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('abeggini3o@mail.ru', '8862531531', 133, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aodriscoll3p@soundcloud.com', '5011145113', 134, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jgissing3q@sitemeter.com', '4787094170', 135, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('phustler3r@chron.com', '4738270767', 136, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sglayzer3s@zimbio.com', '6334912253', 137, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fkacheler3t@jiathis.com', '7517974215', 138, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('scaddy3u@wikipedia.org', '6263125300', 139, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dgoard3v@cornell.edu', '2091988731', 140, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ehub3w@gnu.org', '4081435206', 141, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('eheineking3x@weather.com', '2762859243', 142, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('akeyzor3y@npr.org', '8479164117', 143, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sdavydochkin3z@java.com', '1599689367', 144, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gwinley40@blinklist.com', '4724580321', 145, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lofield41@businesswire.com', '2802780010', 146, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lrameaux42@usa.gov', '3876249361', 147, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gmckilroe43@geocities.com', '5643474301', 148, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdemalchar44@cbc.ca', '9397577089', 149, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ttrevett45@deviantart.com', '5343089596', 150, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ekleinzweig46@simplemachines.org', '5331157750', 151, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbritney47@netvibes.com', '6371464291', 152, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jrioch48@ted.com', '7062556473', 153, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('omillsap49@gmpg.org', '7387049342', 154, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('csamwaye4a@phoca.cz', '7549329203', 155, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('idavidovitch4b@dmoz.org', '9527893536', 156, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mmccolley4c@discovery.com', '4063545470', 157, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ccirlos4d@slate.com', '2863038471', 158, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rdiviny4e@eepurl.com', '8931415674', 159, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ktonbye4f@issuu.com', '4199926999', 160, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vmulqueeny4g@ebay.com', '2963725312', 161, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rhansman4h@myspace.com', '2774928959', 162, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lcosley4i@slideshare.net', '8683328819', 163, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ljansens4j@bandcamp.com', '6274596780', 164, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mrowan4k@myspace.com', '3189049599', 165, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sgowthrop4l@reuters.com', '5656749620', 166, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bcaville4m@gravatar.com', '8691842251', 167, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbenedetti4n@sina.com.cn', '3237937612', 168, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bswainger4o@ed.gov', '1141083567', 169, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vdirr4p@abc.net.au', '4703078725', 170, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('djosephson4q@macromedia.com', '1451548885', 171, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rhargerie4r@sciencedirect.com', '3862814128', 172, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bweighell4s@buzzfeed.com', '2246202928', 173, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jerrol4t@si.edu', '5641193417', 174, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gbatrim4u@prnewswire.com', '6155818902', 175, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dthrossell4v@lulu.com', '4562236632', 176, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cveighey4w@zdnet.com', '8795331307', 177, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kgwyer4x@wiley.com', '5942761192', 178, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ccogzell4y@gmpg.org', '5522953568', 179, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pmedlin4z@time.com', '4364667692', 180, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kbizzey50@list-manage.com', '4514261243', 181, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cricks51@berkeley.edu', '5049355702', 182, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('orobbe52@tamu.edu', '3073718747', 183, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kfarrey53@unblog.fr', '7149881268', 184, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('elush54@loc.gov', '8813886299', 185, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nwhitehorn55@wsj.com', '4436603904', 186, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bgiovannelli56@devhub.com', '8968018667', 187, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kgulliford57@tmall.com', '3944682586', 188, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cbleddon58@com.com', '6501248775', 189, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('heyre59@goodreads.com', '5555004955', 190, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pdibben5a@scientificamerican.com', '7443404386', 191, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbaillie5b@opera.com', '2795791530', 192, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mclute5c@harvard.edu', '4176990912', 193, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dawcock5d@lulu.com', '1171497242', 194, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('igallemore5e@sfgate.com', '6407846090', 195, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bmaccallam5f@fastcompany.com', '4782087546', 196, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bvolke5g@newyorker.com', '6207366948', 197, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdidsbury5h@google.nl', '7017124555', 198, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gdesquesnes5i@huffingtonpost.com', '5269447079', 199, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aclaesens5j@hubpages.com', '2381634508', 200, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tinglese5k@foxnews.com', '5848928382', 201, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dtruce5l@icq.com', '8437820559', 202, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdufty5m@dagondesign.com', '4034538783', 203, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('agianulli5n@biblegateway.com', '1352146202', 204, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('adigby5o@tuttocitta.it', '7774406147', 205, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bgallop5p@google.fr', '3527235580', 206, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ltollow5q@wired.com', '4306770498', 207, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hceyssen5r@theguardian.com', '8211481409', 208, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kodonegan5s@barnesandnoble.com', '5359713036', 209, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cwybrew5t@samsung.com', '8485322863', 210, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bgepheart5u@umich.edu', '6409710217', 211, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kdockray5v@tinypic.com', '4645076613', 212, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('meagles5w@admin.ch', '8332160002', 213, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cschlagtmans5x@1und1.de', '2084266570', 214, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('staylot5y@deviantart.com', '2348524694', 215, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ktyre5z@cbslocal.com', '5587150844', 216, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jtonepohl60@sitemeter.com', '1028505485', 217, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kmatushenko61@loc.gov', '6537825783', 218, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdrew62@deliciousdays.com', '6873026610', 219, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('charce63@whitehouse.gov', '8522952104', 220, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jfraine64@samsung.com', '3083650649', 221, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nnadin65@delicious.com', '1005905243', 222, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('adeakins66@sakura.ne.jp', '4039267443', 223, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mrothert67@apache.org', '4582264277', 224, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tpinnigar68@oaic.gov.au', '8353471985', 225, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rworgan69@dropbox.com', '4976947629', 226, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aflorentine6a@cargocollective.com', '8531960807', 227, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mwhitlam6b@examiner.com', '9443054041', 228, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tsimmins6c@prlog.org', '5459354732', 229, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('asponer6d@sourceforge.net', '4046307741', 230, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tseamarke6e@hao123.com', '7886235521', 231, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('drobison6f@printfriendly.com', '3241400565', 232, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kmcmurty6g@instagram.com', '1559709713', 233, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gtongs6h@ovh.net', '6518496710', 234, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ecowgill6i@nsw.gov.au', '7431722489', 235, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ewyett6j@ihg.com', '5308052183', 236, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tlyttle6k@sohu.com', '7352516752', 237, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gkippax6l@toplist.cz', '3836793358', 238, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lmacnockater6m@discovery.com', '2267652593', 239, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mplinck6n@reverbnation.com', '6562815476', 240, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ebrassill6o@woothemes.com', '4335739651', 241, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hphilipart6p@sciencedaily.com', '6754808045', 242, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cdon6q@amazon.co.jp', '3714645996', 243, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('arothert6r@histats.com', '5384213255', 244, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fshilton6s@ehow.com', '5733322711', 245, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('eholbarrow6t@redcross.org', '6538682992', 246, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rlavis6u@dyndns.org', '1331024912', 247, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbedrosian6v@google.pl', '7227257699', 248, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dgauden6w@answers.com', '2091917608', 249, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('onealon6x@youtube.com', '3695933245', 250, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mstedman6y@geocities.com', '4221051134', 251, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nposer6z@deviantart.com', '5007160638', 252, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('crowett70@chicagotribune.com', '9477951564', 253, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bmarlen71@smh.com.au', '4642983281', 254, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dburwin72@lycos.com', '4215262448', 255, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('qfarnes73@wikia.com', '1755410883', 256, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('zrollett74@trellian.com', '4594002217', 257, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bhuebner75@redcross.org', '3207515672', 258, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('deastment76@fda.gov', '9168920478', 259, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jmatussow77@weather.com', '1597070681', 260, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('csherringham78@cbsnews.com', '1969345661', 261, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lgrowy79@apple.com', '7144109718', 262, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tgrahlmans7a@google.nl', '5306266713', 263, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ekelberman7b@nsw.gov.au', '3229222701', 264, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lshilstone7c@washington.edu', '3308490165', 265, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cnoden7d@sfgate.com', '4677117206', 266, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mcrutcher7e@sciencedirect.com', '9476919959', 267, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jlefever7f@trellian.com', '3292946617', 268, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cugolini7g@princeton.edu', '5798742562', 269, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wsigart7h@theatlantic.com', '5566770512', 270, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jbrood7i@csmonitor.com', '8655662564', 271, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lpergens7j@omniture.com', '3535450717', 272, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('candreas7k@cdc.gov', '7317192454', 273, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fvedyasov7l@g.co', '4897022949', 274, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fbiggadyke7m@ucla.edu', '5825215740', 275, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ldemaine7n@aboutads.info', '2082716124', 276, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fphilcock7o@wufoo.com', '5939804114', 277, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kewence7p@e-recht24.de', '7245207589', 278, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pswatten7q@timesonline.co.uk', '1102478443', 279, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('galhirsi7r@sakura.ne.jp', '5561506198', 280, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('edunbavin7s@bandcamp.com', '2943743785', 281, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dfoote7t@bbc.co.uk', '4997359228', 282, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hdonaway7u@fda.gov', '7824116400', 283, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ncleef7v@mediafire.com', '5457738420', 284, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('barkle7w@unblog.fr', '6153991780', 285, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('emacias7x@elegantthemes.com', '8867511032', 286, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hchivers7y@usgs.gov', '6354261173', 287, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kjacqueme7z@dailymail.co.uk', '7606794260', 288, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bstolberg80@tumblr.com', '5794700014', 289, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hgoodbanne81@oracle.com', '4392561018', 290, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rcollelton82@discovery.com', '2341452899', 291, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('csudy83@whitehouse.gov', '6468621445', 292, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gellerington84@examiner.com', '3187258711', 293, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('icarrol85@theguardian.com', '6079428028', 294, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gcosslett86@hostgator.com', '8637875264', 295, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lvandenoord87@istockphoto.com', '2145097117', 296, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('drosenbloom88@feedburner.com', '9639228985', 297, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbaddeley89@w3.org', '4575685458', 298, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tgianullo8a@google.com.br', '2717257035', 299, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mkesby8b@nydailynews.com', '4706967269', 300, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bbendelow8c@cocolog-nifty.com', '1744707797', 301, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('clinnell8d@adobe.com', '4219423135', 302, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('edeguise8e@hubpages.com', '4622357825', 303, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('drodenburg8f@ezinearticles.com', '5266341126', 304, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('alehrmann8g@intel.com', '2131067206', 305, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gquant8h@usnews.com', '6366499662', 306, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mlonsdale8i@salon.com', '8674895772', 307, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sstollen8j@hp.com', '2412900470', 308, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cbonsall8k@deviantart.com', '8619233434', 309, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cruller8l@clickbank.net', '9413576569', 310, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gferrero8m@blogs.com', '3771622159', 311, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dglynn8n@army.mil', '3472347445', 312, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tgemson8o@yandex.ru', '2879969974', 313, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbawles8p@techcrunch.com', '3462784741', 314, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nhopewell8q@bing.com', '3059975675', 315, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('asnawdon8r@rambler.ru', '5615117455', 316, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gjuarez8s@drupal.org', '6607085402', 317, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lhumburton8t@vkontakte.ru', '7048666617', 318, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gollenbuttel8u@elpais.com', '5388472561', 319, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('msummerscales8v@slate.com', '3393769754', 320, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kfourcade8w@usatoday.com', '7119179781', 321, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('zgillyatt8x@bing.com', '2829119895', 322, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('asambidge8y@g.co', '7597637470', 323, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cingleston8z@technorati.com', '1977504290', 324, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gpikett90@sphinn.com', '8706213437', 325, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('jhubble91@webeden.co.uk', '7045680257', 326, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aharbinson92@i2i.jp', '7596778190', 327, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gshafto93@tmall.com', '9076310904', 328, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('slieber94@utexas.edu', '6093507918', 329, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('acoveney95@goo.ne.jp', '2606635758', 330, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('schaloner96@bluehost.com', '9517067704', 331, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gsteljes97@wikipedia.org', '7387998705', 332, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('celener98@constantcontact.com', '7417330510', 333, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('civannikov99@unblog.fr', '3297624218', 334, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gcarlino9a@bloglovin.com', '2359496959', 335, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mdutton9b@google.com.au', '7222661835', 336, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bprestage9c@blogspot.com', '9945624010', 337, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('teamer9d@4shared.com', '1546258056', 338, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gpopplewell9e@tinyurl.com', '6497235675', 339, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('church9f@tinyurl.com', '9939868158', 340, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mlittle9g@paginegialle.it', '1521505420', 341, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vkaiser9h@smh.com.au', '2816306559', 342, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('umargiotta9i@cbsnews.com', '2117658595', 343, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cwalthew9j@stanford.edu', '6721399725', 344, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cschoolcroft9k@weebly.com', '3355928365', 345, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mattestone9l@time.com', '5118499069', 346, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wmurra9m@quantcast.com', '6036556687', 347, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tvardon9n@hostgator.com', '6561030117', 348, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gdumberrill9o@cargocollective.com', '8232356933', 349, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rbrim9p@google.cn', '7042016690', 350, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mpesak9q@simplemachines.org', '6371272681', 351, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sastupenas9r@oracle.com', '6655520031', 352, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lpeasey9s@mail.ru', '5245489674', 353, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aalabaster9t@mapquest.com', '1972421578', 354, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pronchetti9u@japanpost.jp', '6711093176', 355, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fmerali9v@posterous.com', '3409437206', 356, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cgeist9w@paginegialle.it', '5884849766', 357, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gulyatt9x@chicagotribune.com', '4398827365', 358, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('emccombe9y@netlog.com', '2097027924', 359, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dlanmeid9z@weebly.com', '1168896224', 360, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vheisa0@eepurl.com', '8307163145', 361, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dkyberda1@phoca.cz', '5437267132', 362, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('iivanilova2@adobe.com', '1229469693', 363, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gbuckmastera3@cbsnews.com', '6535581514', 364, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('odawberya4@opera.com', '3189690272', 365, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sbickerstaffea5@psu.edu', '5316631639', 366, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tpurvera6@forbes.com', '1368866712', 367, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('smumbersona7@typepad.com', '3886260827', 368, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('deshelbya8@flavors.me', '9813743642', 369, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cgallandersa9@howstuffworks.com', '4957262114', 370, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('esieghartaa@godaddy.com', '6293783409', 371, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hwayonab@wikia.com', '8425202361', 372, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('eharrodac@fc2.com', '9925948424', 373, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vcaterad@sourceforge.net', '4969871278', 374, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lwhitrodae@weather.com', '3322784628', 375, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gkumaraf@bbb.org', '8293784120', 376, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('scornsag@ftc.gov', '4287145378', 377, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rdumbartonah@dion.ne.jp', '2264805538', 378, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hnewcombai@miitbeian.gov.cn', '5619116111', 379, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aotoweyaj@parallels.com', '3537970625', 380, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rnorvilleak@yelp.com', '7959721589', 381, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbealeal@clickbank.net', '9235827004', 382, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cmaffeyam@indiatimes.com', '8164986172', 383, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ccesconan@state.gov', '5334999955', 384, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('iangusao@51.la', '7864335636', 385, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('imcbratneyap@theglobeandmail.com', '8275853249', 386, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dfullaq@dropbox.com', '6287742792', 387, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ecaspellar@answers.com', '4667041332', 388, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rburmasteras@amazon.de', '7257458399', 389, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rfarrowat@go.com', '4976466144', 390, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dwynterau@google.com.hk', '5412971461', 391, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rcottieav@vkontakte.ru', '7485985564', 392, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ayaldenaw@craigslist.org', '6456421820', 393, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kfyfieldax@chronoengine.com', '5443386978', 394, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('zmcramseyay@addthis.com', '5568237082', 395, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rcowernaz@home.pl', '1005389111', 396, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gmellingb0@bravesites.com', '1947381411', 397, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sbudnkb1@quantcast.com', '3325887409', 398, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bbertieb2@yellowpages.com', '8602882122', 399, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bheiningb3@independent.co.uk', '4574314695', 400, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('agarfirthb4@flickr.com', '1731270233', 401, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kmcleoidb5@zdnet.com', '5664762764', 402, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lduggenb6@usda.gov', '6626939098', 403, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mhymusb7@aboutads.info', '1396365832', 404, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('astockportb8@bbb.org', '3307711566', 405, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tarnholtzb9@github.io', '1313139980', 406, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fbutcherba@loc.gov', '1059037963', 407, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('csurgenorbb@sbwire.com', '5031722579', 408, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cchelleybc@taobao.com', '3619523751', 409, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pjossbd@tinypic.com', '7779415121', 410, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('afesbybe@mapquest.com', '9504640809', 411, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('roshevlanbf@oaic.gov.au', '5453600109', 412, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lbuttelbg@devhub.com', '7821299794', 413, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('onowaczykbh@wikimedia.org', '6155441674', 414, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gtrasebi@usatoday.com', '6841795157', 415, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rperhambj@domainmarket.com', '5709495546', 416, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rlivezleybk@opensource.org', '9906788031', 417, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('yabrashkinbl@w3.org', '5518257698', 418, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wreditbm@jalbum.net', '6338095960', 419, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('owalkeybn@simplemachines.org', '9438967853', 420, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('urhucroftbo@amazon.com', '5214771408', 421, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ghexambp@sohu.com', '2104538215', 422, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tbogartbq@wired.com', '1591777672', 423, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lroffbr@nbcnews.com', '1738637608', 424, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('veblebs@cloudflare.com', '7991084256', 425, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('hbolesbt@dot.gov', '1102609016', 426, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dsnoxallbu@theguardian.com', '4622312051', 427, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kkeldbv@accuweather.com', '2777025505', 428, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('rallderidgebw@indiatimes.com', '7594802426', 429, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tfrickbx@jiathis.com', '3155532072', 430, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bdudeneyby@gmpg.org', '1154331816', 431, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kquinevanbz@wordpress.org', '2033644830', 432, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sfulleylovec0@etsy.com', '3544400623', 433, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('agolledgec1@reverbnation.com', '2338448934', 434, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('spreistc2@indiegogo.com', '8066876429', 435, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('iquinetc3@icio.us', '3031271634', 436, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fbernadotc4@geocities.com', '1327210819', 437, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gbourgesc5@state.tx.us', '9052829325', 438, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ftustinc6@yahoo.com', '2172747395', 439, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pswatradgec7@newyorker.com', '5573796570', 440, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ybaynesc8@mit.edu', '4899109585', 441, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cpetronisc9@miitbeian.gov.cn', '8483911983', 442, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bpayzeca@xing.com', '4259974048', 443, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cpauleycb@discovery.com', '1602396898', 444, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bodarecc@yale.edu', '2715932435', 445, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('thadcockcd@creativecommons.org', '7625682203', 446, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ggebhardce@livejournal.com', '1525943259', 447, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ghenrietcf@microsoft.com', '4427643876', 448, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cparrishcg@gizmodo.com', '2628449005', 449, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dousbiech@comsenz.com', '7897093669', 450, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mhuntallci@shinystat.com', '5537832973', 451, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('iabbotscj@smugmug.com', '8703497092', 452, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wallawyck@telegraph.co.uk', '4312804848', 453, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('opeerscl@scribd.com', '3443441955', 454, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('alochecm@economist.com', '5505120669', 455, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cweycn@blog.com', '8706396251', 456, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kguittco@pen.io', '4654921810', 457, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mmyderscoughcp@xing.com', '3381597321', 458, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('krougiercq@newyorker.com', '8997819306', 459, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wmattockcr@reverbnation.com', '8506453549', 460, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('eesmondecs@google.nl', '9855940037', 461, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cmitchallct@so-net.ne.jp', '2716984352', 462, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('holyhanecu@nasa.gov', '2758545230', 463, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('tlarchercv@tumblr.com', '8223525472', 464, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wcloakecw@over-blog.com', '4957139825', 465, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pphizackleacx@mozilla.com', '5234542107', 466, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('kconeybearecy@abc.net.au', '9076754014', 467, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pjandakcz@wisc.edu', '4092591825', 468, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fbrosnand0@is.gd', '1709851303', 469, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mteesdaled1@etsy.com', '5081327000', 470, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wmerkeld2@posterous.com', '8576259047', 471, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vskillettd3@bandcamp.com', '1194651936', 472, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('eaffrond4@google.ru', '1027850556', 473, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pbofieldd5@nba.com', '8318259795', 474, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('candricd6@sourceforge.net', '9543463216', 475, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('anewcomend7@theglobeandmail.com', '4734640068', 476, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dprierd8@g.co', '2656158717', 477, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mtailbyd9@blinklist.com', '5961157524', 478, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mabbittda@goo.ne.jp', '6952507545', 479, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dpepyedb@sun.com', '8821943642', 480, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('bsandarsdc@vimeo.com', '4171329122', 481, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mabbeydd@google.co.uk', '2007736165', 482, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('gtucknottde@jalbum.net', '6957135601', 483, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('wleghorndf@gnu.org', '1894975425', 484, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('fcolyerdg@ucsd.edu', '4826057718', 485, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('pborreldh@plala.or.jp', '6845378508', 486, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vshetliffdi@oaic.gov.au', '1408357914', 487, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('agoodbodydj@wp.com', '2226880708', 488, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('aquinnelldk@trellian.com', '5931904306', 489, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('vtaylderdl@usnews.com', '4472570616', 490, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('nfortmandm@aboutads.info', '5234352167', 491, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('ikaydn@blogtalkradio.com', '3751255115', 492, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('sdwelleydo@marriott.com', '5485486555', 493, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('mivanichevdp@shop-pro.jp', '6669984946', 494, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('clippdq@examiner.com', '3173075023', 495, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('lthorbydr@blogspot.com', '7597773733', 496, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cdancerds@java.com', '9696025781', 497, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dmolfinodt@nydailynews.com', '1352744583', 498, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('cwroutdu@ocn.ne.jp', '8517435093', 499, 1);
+insert into CONTACT (email, phone_number, uID, counter) values ('dgravettdv@taobao.com', '6438986604', 500, 1);
 
-------------------- END OF CONTACT INSERTIONS-----------------------------
+-- ----------------- END OF CONTACT INSERTIONS-----------------------------
 
-------------------- BEGINNING OF CITY INSERTIONS--------------------------
---insert into City
+-- ----------------- BEGINNING OF REVIEW INSERTIONS------------------------
+-- Dates follow 'YYYY-MM-DD' format
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 361, 88, '2016-05-25 20:10:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 31, 27, '2017-03-28 05:52:33', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 122, 71, '2017-09-11 14:27:19', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 161, 78, '2018-09-27 14:44:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 189, 91, '2018-08-14 06:12:13', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 44, 27, '2016-04-22 23:21:38', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 74, 34, '2016-05-25 11:59:48', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 353, 22, '2016-04-23 12:45:28', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 475, 30, '2019-01-06 12:21:16', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 92, 100, '2016-07-19 09:26:24', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 213, 56, '2016-07-04 16:51:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 83, 10, '2018-06-17 22:40:52', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 246, 44, '2018-11-25 11:16:32', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 110, 90, '2017-10-13 07:46:28', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 392, 30, '2016-11-29 01:35:47', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 428, 32, '2018-05-18 10:36:49', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 4, 43, '2016-07-17 03:11:37', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 477, 44, '2017-11-20 02:28:30', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 275, 18, '2018-09-21 02:08:57', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 45, 38, '2016-11-04 23:48:48', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 87, 61, '2017-04-10 17:41:39', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 250, 25, '2016-03-27 06:16:26', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 330, 95, '2017-11-12 16:07:09', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 198, 38, '2019-02-24 06:51:38', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 151, 6, '2018-10-09 20:22:34', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 305, 54, '2017-07-21 22:00:57', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 143, 36, '2016-08-27 21:29:38', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 176, 38, '2017-02-12 04:44:25', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 379, 49, '2016-09-09 08:46:34', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 397, 51, '2019-01-10 23:13:01', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 477, 25, '2018-03-24 01:53:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 322, 54, '2016-03-21 16:37:44', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 117, 50, '2016-10-06 17:44:04', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 6, 78, '2018-07-22 04:44:58', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 267, 51, '2017-10-05 17:24:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 249, 16, '2016-03-05 15:20:05', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 87, 61, '2017-12-01 11:06:52', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 437, 40, '2016-10-06 10:14:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 207, 74, '2017-11-21 14:56:35', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 173, 48, '2016-08-23 04:55:47', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 255, 41, '2016-09-17 12:57:47', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 205, 2, '2018-05-06 11:47:45', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 208, 87, '2018-01-05 19:41:42', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 119, 14, '2017-10-30 21:20:51', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 95, 33, '2016-10-07 04:13:05', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 367, 76, '2017-07-21 15:35:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 378, 52, '2017-08-30 01:47:36', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 349, 7, '2017-06-02 00:21:15', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 114, 17, '2017-04-02 05:40:01', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 415, 5, '2017-10-20 08:01:03', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 457, 65, '2019-02-10 00:49:41', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 499, 31, '2016-11-21 20:27:20', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 462, 12, '2016-12-27 21:00:38', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 265, 55, '2018-01-29 19:48:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 478, 22, '2018-02-18 00:06:08', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 466, 56, '2017-11-29 17:44:23', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 129, 4, '2016-02-09 02:13:05', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 332, 53, '2017-12-12 07:29:02', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 112, 7, '2017-10-15 10:39:36', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 326, 85, '2018-10-24 13:38:02', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 38, 5, '2017-01-07 17:23:08', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 150, 75, '2017-02-04 10:32:23', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 242, 70, '2018-12-07 10:27:03', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 74, 72, '2018-06-14 15:49:05', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 289, 74, '2017-10-18 20:28:59', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 65, 97, '2017-03-24 06:09:12', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 53, 85, '2019-02-17 12:09:32', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 489, 11, '2016-06-20 17:48:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 239, 90, '2018-08-11 15:36:00', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 317, 5, '2017-06-24 05:42:18', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 20, 67, '2019-02-12 14:22:00', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 338, 90, '2018-10-04 23:04:51', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 380, 63, '2018-07-24 06:06:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 270, 30, '2017-11-11 14:14:25', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 100, 22, '2017-09-04 18:25:23', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 161, 1, '2016-12-28 22:29:00', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 54, 77, '2017-07-02 21:38:31', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 293, 73, '2016-06-10 07:01:42', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 369, 42, '2016-11-19 14:32:24', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 345, 34, '2018-10-29 11:05:06', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 332, 99, '2017-06-04 00:53:03', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 328, 95, '2016-07-26 04:53:55', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 264, 80, '2017-04-24 22:31:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 298, 32, '2016-10-06 12:14:42', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 131, 92, '2018-08-29 22:00:12', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 219, 60, '2018-12-25 23:10:42', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 432, 42, '2018-06-25 09:21:35', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 411, 66, '2018-06-21 09:25:50', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 397, 86, '2018-12-21 15:26:56', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 160, 58, '2016-10-28 10:46:43', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 211, 29, '2018-06-01 06:52:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 382, 81, '2018-03-28 07:07:23', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 311, 19, '2017-09-25 06:25:29', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 361, 29, '2018-10-11 09:48:22', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 319, 71, '2018-01-13 09:17:56', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 219, 100, '2016-09-30 05:13:18', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 157, 81, '2018-03-26 08:08:46', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 57, 32, '2018-07-12 23:59:38', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 313, 34, '2018-03-03 03:46:33', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 214, 47, '2016-09-28 09:13:36', 'Amazing');
 
-insert into CITY (name, state) values ('Seattle', 'Washington');
-insert into CITY (name, state) values ('Bellevue', 'Washington');
-insert into CITY (name, state) values ('Lynnwood', 'Washington');
-insert into CITY (name, state) values ('Los Angeles', 'California');
-insert into CITY (name, state) values ('San Francisco', 'California');
-------------------- END OF RESTAURANT INSERTIONS--------------------------
+
+-- ----------------- END OF REVIEWS INSERTIONS-----------------------------
 
 
-------------------- BEGINNING OF REVIEW INSERTIONS------------------------
---Dates follow 'YYYY-MM-DD' format
-
-
-------------------- END OF REVIEWS INSERTIONS-----------------------------
-
-------------------- BEGINNING OF RESTAURANT INSERTIONS--------------------
-
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (1, '3519 Gateway Center', 'Bellevue', 'Mexican', 'Lubowitz, Franecki and Little');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (2, '73 Marcy Drive', 'San Francisco', 'Mexican', 'Ullrich, Wintheiser and Gleason');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (3, '8 Florence Point', 'Los Angeles ', 'Mexican', 'Lang LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (4, '771 Dayton Way', 'Bellevue', 'Mexican', 'Wolff, Gibson and Conroy');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (5, '7 Sloan Alley', 'San Francisco', 'Mexican', 'Gleason and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (6, '517 Southridge Trail', 'Lynnwood ', 'Mexican', 'Corwin Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (7, '80263 Morning Parkway', 'Bellevue', 'Mexican', 'Baumbach-Keebler');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (8, '51 Barnett Junction', 'Seattle', 'Mexican', 'Hilll-Turner');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (9, '4872 Kipling Alley', 'Bellevue', 'Mexican', 'Wiegand and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (10, '2492 Elgar Pass', 'Seattle', 'Mexican', 'Senger, Bernier and McDermott');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (11, '40 Kings Hill', 'Los Angeles ', 'Mexican', 'Gaylord-Kunde');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (12, '754 Stang Drive', 'Seattle', 'Mexican', 'Kihn, Kerluke and Kling');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (13, '2 Northland Circle', 'Bellevue', 'Mexican', 'Ankunding, Romaguera and Schneider');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (14, '7051 Shasta Terrace', 'San Francisco', 'Mexican', 'Klein, Cole and Kiehn');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (15, '4481 Utah Place', 'Los Angeles ', 'Mexican', 'Doyle LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (16, '5 Spaight Parkway', 'Seattle', 'Mexican', 'Kiehn, Bauch and Osinski');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (17, '96 Lake View Avenue', 'Bellevue', 'Mexican', 'Streich Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (18, '3 Toban Drive', 'San Francisco', 'Mexican', 'Fahey-Schuppe');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (19, '6 Green Ridge Plaza', 'Los Angeles ', 'Mexican', 'Spencer and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (20, '59 Magdeline Parkway', 'Los Angeles ', 'Mexican', 'Pagac, Conroy and Schmidt');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (21, '39838 Ludington Plaza', 'Los Angeles ', 'Mexican', 'Gleichner-Ziemann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (22, '32 Washington Way', 'Los Angeles ', 'Mexican', 'Goldner and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (23, '15631 Manley Plaza', 'Seattle', 'Mexican', 'Gleason-Schiller');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (24, '0038 Debra Place', 'Los Angeles ', 'Mexican', 'Hoeger, Ziemann and Hettinger');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (25, '76658 Ronald Regan Crossing', 'Los Angeles ', 'Mexican', 'Fadel, Abshire and Borer');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (26, '5 Hayes Terrace', 'Los Angeles ', 'Mexican', 'Williamson, Williamson and Orn');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (27, '86 Homewood Junction', 'Bellevue', 'Mexican', 'Collier-Will');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (28, '8269 Grim Court', 'Bellevue', 'Mexican', 'Kovacek Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (29, '28019 Packers Terrace', 'Lynnwood ', 'Mexican', 'Bogisich LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (30, '6958 Nelson Crossing', 'Seattle', 'Mexican', 'Johns, Murphy and Weimann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (31, '732 Goodland Avenue', 'Seattle', 'Mexican', 'Kihn and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (32, '7652 Bultman Street', 'Seattle', 'Mexican', 'Bergnaum Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (33, '777 Lyons Terrace', 'Lynnwood ', 'Mexican', 'Bartoletti LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (34, '6121 Dexter Pass', 'San Francisco', 'Mexican', 'Hammes Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (35, '74 Main Junction', 'Los Angeles ', 'Mexican', 'Carroll-Lockman');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (36, '50 Redwing Avenue', 'Bellevue', 'Mexican', 'Flatley and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (37, '42359 Independence Crossing', 'Seattle', 'Mexican', 'Rogahn, O''Conner and Morar');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (38, '59 Waxwing Trail', 'Lynnwood ', 'Mexican', 'Gibson Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (39, '012 Summit Circle', 'Bellevue', 'Mexican', 'Stracke, Dibbert and Stracke');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (40, '3851 Vera Plaza', 'Seattle', 'Mexican', 'Marvin, Schuster and Schroeder');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (41, '25742 6th Park', 'Lynnwood ', 'Mexican', 'Hauck, Friesen and Hyatt');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (42, '917 Mayer Parkway', 'San Francisco', 'Mexican', 'Trantow, Connelly and Bernhard');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (43, '032 Stuart Plaza', 'San Francisco', 'Mexican', 'Boehm-Streich');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (44, '0209 Talisman Avenue', 'San Francisco', 'Mexican', 'Stracke-Nolan');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (45, '60 Truax Center', 'San Francisco', 'Mexican', 'Barton-Turcotte');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (46, '04089 Hanover Point', 'Seattle', 'Mexican', 'Hilll, Conroy and Lubowitz');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (47, '8 Lindbergh Court', 'Lynnwood ', 'Mexican', 'Renner, Goldner and Witting');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (48, '5104 Nelson Point', 'Seattle', 'Mexican', 'O''Hara, Abshire and Bruen');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (49, '06 Coleman Point', 'Lynnwood ', 'Mexican', 'Orn, Osinski and Smitham');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (50, '81688 Fairview Point', 'San Francisco', 'Mexican', 'Adams, Tremblay and Pacocha');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (51, '08 Superior Hill', 'Seattle', 'Italian', 'Corkery, Bode and Trantow');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (52, '578 Jana Park', 'Seattle', 'Italian', 'Klocko, Corkery and Ratke');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (53, '23 Dennis Avenue', 'Lynnwood ', 'Italian', 'Koch Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (54, '59408 Farmco Avenue', 'Seattle', 'Italian', 'Bernier Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (55, '46500 Farragut Terrace', 'San Francisco', 'Italian', 'Johnston, Orn and Tremblay');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (56, '93 Mendota Crossing', 'Los Angeles ', 'Italian', 'Koch Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (57, '74152 Graceland Junction', 'Bellevue', 'Italian', 'Reilly Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (58, '26 Sunbrook Place', 'Lynnwood ', 'Italian', 'Ferry and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (59, '21 4th Terrace', 'Bellevue', 'Italian', 'Nitzsche, Collins and Trantow');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (60, '504 Stang Road', 'Bellevue', 'Italian', 'Welch-Wolff');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (61, '6688 Warner Avenue', 'San Francisco', 'Italian', 'Frami LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (62, '843 Caliangt Way', 'Bellevue', 'Italian', 'Orn Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (63, '06 Talisman Circle', 'Los Angeles ', 'Italian', 'Mitchell Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (64, '9 Dryden Park', 'Lynnwood ', 'Italian', 'Greenholt Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (65, '8146 Moland Plaza', 'Bellevue', 'Italian', 'Beahan, Rutherford and Hagenes');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (66, '195 Ridge Oak Crossing', 'Bellevue', 'Italian', 'Bradtke, Robel and Ebert');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (67, '841 Spaight Alley', 'Bellevue', 'Italian', 'Bogan and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (68, '26 Anthes Court', 'San Francisco', 'Italian', 'Wolff Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (69, '93323 Scott Point', 'Los Angeles ', 'Italian', 'Terry and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (70, '237 Arrowood Parkway', 'San Francisco', 'Italian', 'Kshlerin and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (71, '2813 Oak Valley Center', 'San Francisco', 'Italian', 'Schulist and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (72, '6 Vernon Park', 'Los Angeles ', 'Italian', 'Flatley and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (73, '9511 Harper Crossing', 'Seattle', 'Italian', 'Smith Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (74, '955 Colorado Alley', 'Bellevue', 'Italian', 'Dooley, Kuhic and Haley');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (75, '482 Annamark Place', 'Seattle', 'Italian', 'Leuschke LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (76, '5877 Springview Way', 'Lynnwood ', 'Italian', 'Hagenes-Lakin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (77, '1 Hoffman Junction', 'Seattle', 'Italian', 'Schinner LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (78, '984 Raven Trail', 'Lynnwood ', 'Italian', 'Turner-Heathcote');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (79, '87998 Tennessee Way', 'Lynnwood ', 'Italian', 'Spinka, Hilpert and Langosh');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (80, '372 Lighthouse Bay Drive', 'Bellevue', 'Italian', 'Gerhold LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (81, '81 Barby Point', 'Seattle', 'Italian', 'Hilpert Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (82, '1818 Basil Avenue', 'Bellevue', 'Italian', 'Zboncak, Dibbert and Kuhlman');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (83, '66043 Florence Place', 'San Francisco', 'Italian', 'Kuphal LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (84, '92203 Kingsford Point', 'Bellevue', 'Italian', 'Bins and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (85, '9 Mockingbird Trail', 'Bellevue', 'Italian', 'Bergstrom, Schmidt and Pouros');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (86, '69803 Randy Park', 'Los Angeles ', 'Italian', 'Hettinger-Stanton');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (87, '8402 Eastwood Lane', 'San Francisco', 'Italian', 'Zemlak Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (88, '2 Oakridge Terrace', 'San Francisco', 'Italian', 'Hartmann LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (89, '630 1st Lane', 'San Francisco', 'Italian', 'O''Kon, Will and Bauch');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (90, '643 Hooker Way', 'Bellevue', 'Italian', 'O''Hara-Rath');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (91, '7 Anhalt Terrace', 'Lynnwood ', 'Italian', 'Monahan-Cummerata');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (92, '07 Northridge Plaza', 'Bellevue', 'Italian', 'Dach, Jenkins and Cummerata');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (93, '8 Sage Junction', 'Bellevue', 'Italian', 'Gaylord, Strosin and Lind');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (94, '14486 Dexter Court', 'Bellevue', 'Italian', 'Rohan, Langworth and Kshlerin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (95, '47 Bartillon Hill', 'Seattle', 'Italian', 'Padberg Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (96, '26 Comanche Street', 'Lynnwood ', 'Italian', 'Krajcik-Dach');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (97, '37520 2nd Drive', 'Lynnwood ', 'Italian', 'O''Reilly, Feeney and Mann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (98, '505 Vahlen Park', 'Lynnwood ', 'Italian', 'Schultz-Champlin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (99, '84093 Independence Park', 'Los Angeles ', 'Italian', 'Runolfsson-Fadel');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (100, '0 Redwing Plaza', 'Lynnwood ', 'Italian', 'Rolfson-Gibson');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (101, '7 Jenna Lane', 'Lynnwood ', 'American', 'Hickle Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (102, '686 Victoria Parkway', 'Bellevue', 'American', 'Feeney-Macejkovic');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (103, '6 Lakewood Gardens Trail', 'San Francisco', 'American', 'Koch Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (104, '0 Bayside Circle', 'Los Angeles ', 'American', 'Zieme Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (105, '2256 2nd Court', 'Seattle', 'American', 'Bahringer, Kertzmann and Dicki');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (106, '08 Basil Plaza', 'Seattle', 'American', 'Schaefer Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (107, '52 Di Loreto Terrace', 'Los Angeles ', 'American', 'Roberts-Lynch');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (108, '63 Grasskamp Center', 'Bellevue', 'American', 'Oberbrunner-Kautzer');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (109, '1499 Steensland Lane', 'Lynnwood ', 'American', 'Rolfson, Metz and Erdman');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (110, '36 Loomis Drive', 'Seattle', 'American', 'Bednar and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (111, '2915 Meadow Vale Park', 'San Francisco', 'American', 'Huels and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (112, '42346 Utah Place', 'San Francisco', 'American', 'Weissnat-Johnson');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (113, '69 Gulseth Court', 'Los Angeles ', 'American', 'Von, Johns and Sawayn');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (114, '59 Red Cloud Park', 'Bellevue', 'American', 'Johns, Goyette and Aufderhar');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (115, '581 Elgar Parkway', 'Los Angeles ', 'American', 'Schulist-Bogisich');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (116, '26 Lotheville Circle', 'Los Angeles ', 'American', 'Waelchi, Jaskolski and Rutherford');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (117, '448 Evergreen Parkway', 'Seattle', 'American', 'Vandervort Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (118, '45 Comanche Point', 'Los Angeles ', 'American', 'Bins and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (119, '7870 Heath Point', 'Seattle', 'American', 'Harris, Gutmann and Beer');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (120, '7607 Leroy Crossing', 'Seattle', 'American', 'Nader Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (121, '73681 Buell Parkway', 'Seattle', 'American', 'Wilkinson, Champlin and Gerlach');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (122, '19925 Nova Center', 'San Francisco', 'American', 'Shields, Stokes and Borer');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (123, '9 Chinook Avenue', 'San Francisco', 'American', 'O''Hara, Legros and Legros');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (124, '18 Moland Street', 'San Francisco', 'American', 'Schumm-Gulgowski');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (125, '26331 6th Terrace', 'Bellevue', 'American', 'Ruecker Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (126, '11242 Cody Center', 'Bellevue', 'American', 'Lind and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (127, '7236 Bellgrove Terrace', 'San Francisco', 'American', 'Daugherty, Klein and Harvey');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (128, '8819 Scott Terrace', 'Los Angeles ', 'American', 'Adams-Batz');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (129, '582 Milwaukee Park', 'Bellevue', 'American', 'Gerlach LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (130, '52201 Dennis Street', 'San Francisco', 'American', 'Beer, Rowe and Nikolaus');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (131, '9796 Havey Court', 'Lynnwood ', 'American', 'Bahringer-Hayes');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (132, '49598 Evergreen Terrace', 'San Francisco', 'American', 'Hilpert, Howell and Aufderhar');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (133, '0 American Parkway', 'Lynnwood ', 'American', 'Mayer-Goodwin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (134, '9 7th Drive', 'Los Angeles ', 'American', 'Shields and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (135, '106 Shelley Plaza', 'Lynnwood ', 'American', 'Brakus Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (136, '1 Dapin Court', 'Seattle', 'American', 'Turcotte Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (137, '063 Linden Way', 'San Francisco', 'American', 'Waelchi, Bogan and Larkin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (138, '4 Blue Bill Park Road', 'San Francisco', 'American', 'Hammes, Kling and Batz');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (139, '4569 Namekagon Pass', 'Bellevue', 'American', 'Bechtelar-Cruickshank');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (140, '488 Londonderry Plaza', 'Seattle', 'American', 'Mertz Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (141, '3 Red Cloud Parkway', 'Lynnwood ', 'American', 'Becker, Willms and Schuppe');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (142, '06 Jenna Pass', 'Los Angeles ', 'American', 'Volkman, Wisoky and Donnelly');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (143, '05312 Fair Oaks Avenue', 'San Francisco', 'American', 'Barton Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (144, '97249 Thompson Drive', 'Los Angeles ', 'American', 'MacGyver Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (145, '43752 Boyd Plaza', 'San Francisco', 'American', 'Steuber, Moen and Torp');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (146, '51706 Gulseth Terrace', 'Lynnwood ', 'American', 'Olson LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (147, '12 Bowman Alley', 'Seattle', 'American', 'Little-Miller');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (148, '56710 Buena Vista Street', 'Bellevue', 'American', 'Graham, Gorczany and Treutel');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (149, '968 Milwaukee Lane', 'Seattle', 'American', 'Sporer Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (150, '40 Dryden Drive', 'Los Angeles ', 'American', 'Moore, Marquardt and Zulauf');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (151, '23 Pearson Road', 'San Francisco', 'Chinese', 'Bailey, Heaney and Zboncak');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (152, '517 Fisk Place', 'Los Angeles ', 'Chinese', 'Abernathy-Hessel');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (153, '95783 Dennis Hill', 'Bellevue', 'Chinese', 'Morar, Kuphal and Bernhard');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (154, '6391 Stephen Crossing', 'San Francisco', 'Chinese', 'Waelchi-Friesen');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (155, '1454 Sage Trail', 'Los Angeles ', 'Chinese', 'Rolfson LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (156, '194 Vidon Parkway', 'Seattle', 'Chinese', 'Powlowski, Stiedemann and Botsford');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (157, '7586 Vahlen Park', 'Lynnwood ', 'Chinese', 'Quitzon-Feeney');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (158, '4 Shelley Drive', 'Lynnwood ', 'Chinese', 'Little, Nitzsche and Gutmann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (159, '27185 Kings Crossing', 'San Francisco', 'Chinese', 'Purdy-Leffler');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (160, '230 Chinook Hill', 'Lynnwood ', 'Chinese', 'Zboncak-Brown');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (161, '90 Delladonna Pass', 'Seattle', 'Chinese', 'Ebert Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (162, '1561 Doe Crossing Lane', 'Los Angeles ', 'Chinese', 'Heller-Graham');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (163, '68 Logan Circle', 'Los Angeles ', 'Chinese', 'Jaskolski, Goldner and Legros');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (164, '00 Daystar Crossing', 'San Francisco', 'Chinese', 'Bradtke and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (165, '0736 2nd Point', 'San Francisco', 'Chinese', 'Kreiger, Rohan and Koch');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (166, '8 Milwaukee Lane', 'Seattle', 'Chinese', 'Lakin and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (167, '0043 John Wall Place', 'San Francisco', 'Chinese', 'Grady LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (168, '683 Longview Pass', 'Bellevue', 'Chinese', 'Schaden-Thiel');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (169, '080 Cottonwood Street', 'San Francisco', 'Chinese', 'Mann and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (170, '0 Packers Avenue', 'Seattle', 'Chinese', 'Witting LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (171, '99 Northwestern Trail', 'Lynnwood ', 'Chinese', 'Cole Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (172, '1079 Anderson Park', 'Los Angeles ', 'Chinese', 'Schinner Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (173, '27 Melrose Park', 'Los Angeles ', 'Chinese', 'Kohler-Emard');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (174, '5672 Green Ridge Junction', 'Los Angeles ', 'Chinese', 'Brekke, Mayer and Miller');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (175, '346 Anthes Court', 'Los Angeles ', 'Chinese', 'Spinka LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (176, '56 Birchwood Plaza', 'Los Angeles ', 'Chinese', 'Dietrich-Kunde');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (177, '33767 Huxley Pass', 'Bellevue', 'Chinese', 'Jacobs, Schaefer and Oberbrunner');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (178, '885 Farmco Trail', 'Lynnwood ', 'Chinese', 'Langworth and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (179, '058 Cascade Lane', 'Bellevue', 'Chinese', 'Kuhic-Cole');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (180, '7233 Monterey Lane', 'Bellevue', 'Chinese', 'Predovic, Runolfsson and Koss');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (181, '57281 Bayside Lane', 'Bellevue', 'Chinese', 'Greenfelder, Marquardt and Toy');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (182, '3 Canary Place', 'Seattle', 'Chinese', 'Marvin Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (183, '277 Gulseth Crossing', 'Lynnwood ', 'Chinese', 'Reinger LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (184, '6 Haas Lane', 'Lynnwood ', 'Chinese', 'Reinger, King and Labadie');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (185, '2471 Bayside Drive', 'Los Angeles ', 'Chinese', 'Brakus, Lakin and Roberts');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (186, '45535 Pierstorff Junction', 'Bellevue', 'Chinese', 'Borer, Sporer and Gleason');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (187, '2 Anderson Point', 'Bellevue', 'Chinese', 'Kohler LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (188, '3 Huxley Point', 'Lynnwood ', 'Chinese', 'Farrell-Will');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (189, '4574 Heath Pass', 'Los Angeles ', 'Chinese', 'Koepp-Roob');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (190, '88 Pond Place', 'Lynnwood ', 'Chinese', 'Wolf, Lockman and Kuhlman');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (191, '18 Caliangt Point', 'Los Angeles ', 'Chinese', 'Moen-Hahn');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (192, '84350 Banding Center', 'Seattle', 'Chinese', 'Jacobs, Trantow and Treutel');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (193, '034 Rigney Terrace', 'Los Angeles ', 'Chinese', 'Donnelly, Mann and Cormier');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (194, '61865 Jay Parkway', 'Bellevue', 'Chinese', 'Hodkiewicz and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (195, '710 Arkansas Alley', 'Lynnwood ', 'Chinese', 'Marks Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (196, '2788 Eagle Crest Trail', 'San Francisco', 'Chinese', 'Stracke and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (197, '0827 Dunning Junction', 'Bellevue', 'Chinese', 'Haley-Prohaska');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (198, '15 Holmberg Road', 'Seattle', 'Chinese', 'Fahey-Gleason');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (199, '72224 Kim Park', 'Lynnwood ', 'Chinese', 'Gorczany, Graham and Fisher');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (200, '39657 Fisk Plaza', 'San Francisco', 'Chinese', 'Kuhlman-Hermann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (201, '84 Algoma Plaza', 'Bellevue', 'Greek', 'Hettinger, Quigley and Hartmann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (202, '1309 Haas Avenue', 'Seattle', 'Greek', 'Crist and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (203, '060 Independence Lane', 'Los Angeles ', 'Greek', 'Bruen, Christiansen and Koss');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (204, '59103 Dexter Terrace', 'Seattle', 'Greek', 'Bins, Bergstrom and Mraz');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (205, '1960 Valley Edge Street', 'Lynnwood ', 'Greek', 'Powlowski Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (206, '05 Fuller Avenue', 'San Francisco', 'Greek', 'Bartoletti, Nienow and Kirlin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (207, '0 High Crossing Terrace', 'Seattle', 'Greek', 'Luettgen, Boyle and Mante');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (208, '3 Jenifer Center', 'Seattle', 'Greek', 'Bode, Muller and Von');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (209, '055 Johnson Lane', 'Seattle', 'Greek', 'Johnson-Zboncak');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (210, '292 Texas Park', 'Los Angeles ', 'Greek', 'Beatty-Greenholt');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (211, '046 Bartillon Road', 'San Francisco', 'Greek', 'Hodkiewicz-Lebsack');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (212, '3 Sherman Junction', 'Los Angeles ', 'Greek', 'King and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (213, '16988 Shelley Circle', 'Los Angeles ', 'Greek', 'Kemmer, Barton and Dickens');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (214, '49880 Lunder Trail', 'San Francisco', 'Greek', 'Towne LLC');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (215, '129 Merchant Road', 'Bellevue', 'Greek', 'Morissette-Dare');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (216, '152 American Ash Point', 'Seattle', 'Greek', 'Rowe, Beer and Kilback');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (217, '87008 Brentwood Court', 'Seattle', 'Greek', 'Schmitt Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (218, '590 Killdeer Terrace', 'Bellevue', 'Greek', 'Luettgen, Halvorson and Gottlieb');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (219, '60 Sunfield Park', 'Los Angeles ', 'Greek', 'Ryan, Schulist and Pouros');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (220, '310 Meadow Vale Way', 'San Francisco', 'Greek', 'Ledner-Hackett');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (221, '1 Fallview Park', 'Bellevue', 'Greek', 'Bradtke Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (222, '05 International Avenue', 'Lynnwood ', 'Greek', 'Ritchie-Willms');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (223, '538 Mosinee Alley', 'Los Angeles ', 'Greek', 'Baumbach-Mayert');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (224, '1252 Kinsman Point', 'Lynnwood ', 'Greek', 'Swift-Stiedemann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (225, '5939 Hoffman Point', 'Los Angeles ', 'Greek', 'Gaylord Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (226, '13 Daystar Trail', 'Seattle', 'Greek', 'Eichmann Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (227, '09 Parkside Way', 'San Francisco', 'Greek', 'Reichel and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (228, '59785 Forster Pass', 'Lynnwood ', 'Greek', 'Shanahan-Schamberger');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (229, '619 Lotheville Drive', 'Los Angeles ', 'Greek', 'Schultz, Rice and Schmeler');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (230, '110 Dixon Place', 'Bellevue', 'Greek', 'Pagac, Feil and Hyatt');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (231, '168 Schlimgen Park', 'San Francisco', 'Greek', 'Goyette-Nicolas');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (232, '208 Welch Terrace', 'San Francisco', 'Greek', 'Leffler-Kuhlman');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (233, '131 School Court', 'Lynnwood ', 'Greek', 'Hoeger, Monahan and Batz');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (234, '5 Johnson Center', 'Lynnwood ', 'Greek', 'Effertz Inc');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (235, '8911 Aberg Trail', 'San Francisco', 'Greek', 'Turcotte, Kulas and Hammes');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (236, '73 Kensington Avenue', 'Seattle', 'Greek', 'Herman-Friesen');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (237, '0 Maple Trail', 'San Francisco', 'Greek', 'Rempel Group');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (238, '61252 Twin Pines Way', 'Seattle', 'Greek', 'Jakubowski, Cruickshank and Torphy');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (239, '5 Gale Alley', 'Los Angeles ', 'Greek', 'Grimes, Jast and Prohaska');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (240, '97937 Corscot Avenue', 'Lynnwood ', 'Greek', 'Herman, Padberg and Walker');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (241, '77 Commercial Parkway', 'Lynnwood ', 'Greek', 'Satterfield, Wunsch and Corwin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (242, '3858 Rockefeller Court', 'Bellevue', 'Greek', 'Lang-Auer');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (243, '566 Anthes Avenue', 'San Francisco', 'Greek', 'Fay, Hilpert and Marvin');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (244, '650 Swallow Drive', 'San Francisco', 'Greek', 'Gusikowski and Sons');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (245, '99476 Burning Wood Junction', 'Los Angeles ', 'Greek', 'Connelly, Kunde and Lynch');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (246, '6 Coleman Crossing', 'Los Angeles ', 'Greek', 'Green-Rutherford');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (247, '9 Monument Road', 'Seattle', 'Greek', 'Thompson, Reynolds and Bartell');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (248, '51098 Spenser Center', 'San Francisco', 'Greek', 'Labadie-Stiedemann');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (249, '093 Westport Point', 'Los Angeles ', 'Greek', 'Little, Senger and Konopelski');
-insert into RESTAURANT (rID, address, rCity, cuisine, name) values (250, '2991 Colorado Park', 'San Francisco', 'Greek', 'King, Ward and Beer');
-
-------------------- END OF RESTAURANT INSERTIONS-------------------------
-
-------------------- BEGINNING OF HOURS INSERTIONS-------------------------
+-- ----------------- BEGINNING OF HOURS INSERTIONS-------------------------
 insert into HOURS (start_time, end_time, time_name, rest_id) values ('8:21 AM', '8:35 AM', 'Operating Hours', 1);
 insert into HOURS (start_time, end_time, time_name, rest_id) values ('9:05 AM', '12:52 PM', 'Work Hours', 2);
 insert into HOURS (start_time, end_time, time_name, rest_id) values ('8:13 AM', '4:24 AM', 'Work Hours', 3);
@@ -1618,8 +1730,8 @@ insert into HOURS (start_time, end_time, time_name, rest_id) values ('10:22 AM',
 insert into HOURS (start_time, end_time, time_name, rest_id) values ('10:36 AM', '4:51 AM', 'Operating Hours', 249);
 insert into HOURS (start_time, end_time, time_name, rest_id) values ('10:46 AM', '11:43 AM', 'Work Hours', 250);
 
-------------------- END OF HOURS INSERTIONS-------------------------------
-------------------- BEGINNING OF RCONTACT INSERTIONS----------------------
+-- ----------------- END OF HOURS INSERTIONS-------------------------------
+-- ----------------- BEGINNING OF RCONTACT INSERTIONS----------------------
 
 
 insert into RCONTACT (email, phone_number, rest_id) values ('ddoul0@businessweek.com', '5243587137', 1);
@@ -1872,9 +1984,9 @@ insert into RCONTACT (email, phone_number, rest_id) values ('oagnolo6u@java.com'
 insert into RCONTACT (email, phone_number, rest_id) values ('cblanchflower6v@ovh.net', '1353845688', 248);
 insert into RCONTACT (email, phone_number, rest_id) values ('lmoynham6w@columbia.edu', '5918289115', 249);
 insert into RCONTACT (email, phone_number, rest_id) values ('fballach6x@ft.com', '8503283338', 250);
-------------------- END OF RCONTACT INSERTIONS-----------------------------
+-- ----------------- END OF RCONTACT INSERTIONS-----------------------------
 
-------------------- BEGINNING OF MENU INSERTIONS---------------------------
+-- ----------------- BEGINNING OF MENU INSERTIONS---------------------------
 insert into MENU (m_name, r_id, LANGUAGE) values ('Food', 1, 'English');
 insert into MENU (m_name, r_id, LANGUAGE) values ('TastesForTastes', 2, 'English');
 insert into MENU (m_name, r_id, LANGUAGE) values ('TheFood', 3, 'English');
@@ -2126,9 +2238,9 @@ insert into MENU (m_name, r_id, LANGUAGE) values ('Food', 248, 'English');
 insert into MENU (m_name, r_id, LANGUAGE) values ('TheFood', 249, 'English');
 insert into MENU (m_name, r_id, LANGUAGE) values ('Yummy', 250, 'English');
 
-------------------- END OF MENU INSERTIONS--------------------------------
+-- ----------------- END OF MENU INSERTIONS--------------------------------
 
-------------------- BEGINNING OF FOOD_ENTRIES INSERTIONS-------------------
+-- ----------------- BEGINNING OF FOOD_ENTRIES INSERTIONS-------------------
 
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (4.7, 1, 'Tamales');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (19.1, 2, 'Tamales');
@@ -2634,109 +2746,4 @@ insert into FOOD_ENTRIES (price, r_menu_id, name) values (9.36, 248, 'Baklava');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (7.88, 249, 'Baklava');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (16.47, 250, 'Baklava');
 
-------------------- END OF FOOD_ENTRIES INSERTIONS------------------------
-
-------------------- QUERIES ----------------------------------------------
--- Display's all food entires for a certian rest named "El Diablo"
---SELECT *
---FROM FOOD_ENTRIES
---WHERE(r_menu_id = (SELECT rID FROM RESTAURANT WHERE name = "El Diablo"));
---
---SELECT *
---FROM REVIEW
---WHERE rating >= 1;
----- Joins
---SELECT *
---FROM   RCONTACT
---LEFT JOIN REVIEW ON
---RCONTACT.rest_id = REVIEW.rid;
---
---
----- Convoluted join example
---SELECT *
---FROM  RCONTACT,CITY
---LEFT JOIN REVIEW ON
---RCONTACT.rest_id = REVIEW.rid
---INNER JOIN RESTAURANT ON
---CITY.name = RESTAURANT.rCity
---ORDER BY REVIEW.rating DESC;
---
----- Nested
---SELECT *
---FROM  RCONTACT
---WHERE RCONTACT.rest_id =
---    (SELECT RESTAURANT.rid
---    FROM RESTAURANT
---    WHERE RESTAURANT.rid =
---        (SELECT MENU.r_id
---        FROM MENU));
---
----- Simple
---SELECT *
---FROM  CITY
---LEFT JOIN RESTAURANT ON
---CITY.name = RESTAURANT.rCity;
---
----- TODO Display cheapest food
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price = (SELECT MIN(price) FROM FOOD_ENTRIES);
---
----- TODO Display most expensive food
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price = (SELECT MAX(price) FROM FOOD_ENTRIES);
---
----- TODO Display the most expensive food in each enthic catagory
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price IN(SELECT MAX(price)
---                            FROM FOOD_ENTRIES, MENU, RESTAURANT
---                            WHERE r_menu_id = r_id AND r_id = rID
---                            GROUP BY cuisine)
---ORDER BY price ASC;
---
----- TODO Display the least expensive food in each ethnic catagory
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price IN(SELECT MIN(price)
---                            FROM FOOD_ENTRIES, MENU, RESTAURANT
---                            WHERE r_menu_id = r_id AND r_id = rID
---                            GROUP BY cuisine)
---ORDER BY price ASC;
---
----- TODO Display the cheapest food in each town
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price IN(SELECT MIN(price)
---                            FROM FOOD_ENTRIES, MENU, RESTAURANT, CITY
---                            WHERE r_menu_id = r_id AND r_id = rID AND rCity = CITY.name
---                            GROUP BY CITY.name)
---ORDER BY price ASC;
---
----- TODO Display the most expensive food in each town
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price IN(SELECT MAX(price)
---                            FROM FOOD_ENTRIES, MENU, RESTAURANT, CITY
---                            WHERE r_menu_id = r_id AND r_id = rID AND rCity = CITY.name
---                            GROUP BY CITY.name)
---ORDER BY price ASC;
---
----- TODO Display highest rated restaurant in each CITY
---
----- TODO Display highest rated restaurant in each state
---
----- TODO Display highest rated restaurant in each ethnic group and price
---
----- TODO add more functionality
-
-DROP TABLE RUSER;
-DROP TABLE CONTACT;
-DROP TABLE CITY;
-DROP TABLE REVIEW;
-DROP TABLE RESTAURANT;
-DROP TABLE HOURS;
-DROP TABLE RCONTACT;
-DROP TABLE MENU;
-DROP TABLE FOOD_ENTRIES;
+-- ----------------- END OF FOOD_ENTRIES INSERTIONS------------------------
