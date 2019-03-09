@@ -23,46 +23,43 @@ CREATE TABLE IF NOT EXISTS CITY
 
 CREATE TABLE IF NOT EXISTS RESTAURANT
 (
-    rID INT UNIQUE NOT NULL,
+    rID INT UNIQUE NOT NULL CHECK (rID >= 0),
     address VARCHAR(50) NOT NULL,
     rCity VARCHAR(30) NOT NULL,
     cuisine VARCHAR(20) NOT NULL,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (rID),
-    FOREIGN KEY (rCity) REFERENCES CITY(name),
-    CHECK (rID >= 0)
+    FOREIGN KEY (rCity) REFERENCES CITY(name)
 );
 
 CREATE TABLE IF NOT EXISTS RUSER
 (
-    userID int UNIQUE NOT NULL,
+    userID int UNIQUE NOT NULL CHECK (userID >= 0),
     name VARCHAR(30) NOT NULL,
     favorite_restaurant INT,
     PRIMARY KEY (userID),
-    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID),
-    CHECK (userID >= 0)
+    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID)
 );
 
 CREATE TABLE IF NOT EXISTS CONTACT
 (
     email VARCHAR(30) UNIQUE NOT NULL,
     phone_number VARCHAR(10) UNIQUE NOT NULL,
-    uID INT NOT NULL,
-    counter INT NOT NULL ,
+    uID INT NOT NULL CHECK (uID >= 0),
+    counter INT NOT NULL CHECK (counter > 0),
     FOREIGN KEY (uID) REFERENCES RUSER(userID),
     PRIMARY KEY (counter, uID)
 );
 
 CREATE TABLE IF NOT EXISTS REVIEW
 (
-    rating INT NOT NULL,
-    uID INT NOT NULL,
-    rID INT NOT NULL,
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    uID INT NOT NULL CHECK (uID >= 0),
+    rID INT NOT NULL CHECK (rID >= 0),
     review_day DATE NOT NULL,
     message TEXT,
     FOREIGN KEY(uID) REFERENCES RUSER(userID),
-    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID),
-    CHECK (rating >= 1 AND rating <= 5)
+    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID)
 );
 
 CREATE TABLE IF NOT EXISTS HOURS
@@ -70,7 +67,7 @@ CREATE TABLE IF NOT EXISTS HOURS
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     time_name VARCHAR(20) NOT NULL,
-    rest_id INT UNIQUE NOT NULL,
+    rest_id INT UNIQUE NOT NULL CHECK (rest_id >= 0),
     PRIMARY KEY (time_name, rest_id),
     FOREIGN KEY (rest_id) REFERENCES RESTAURANT(rID)
 );
@@ -79,7 +76,7 @@ CREATE TABLE IF NOT EXISTS RCONTACT
 (
     email VARCHAR (50) UNIQUE NOT NULL,
     phone_number VARCHAR(10) UNIQUE NOT NULL,
-    rest_id INT UNIQUE NOT NULL,
+    rest_id INT UNIQUE NOT NULL CHECK (rest_id >= 0),
     PRIMARY KEY (email, phone_number),
     FOREIGN KEY (rest_id) REFERENCES RESTAURANT(rID)
 );
@@ -87,11 +84,20 @@ CREATE TABLE IF NOT EXISTS RCONTACT
 CREATE TABLE IF NOT EXISTS MENU
 (   
     m_name VARCHAR(30) NOT NULL,
-    r_id INT UNIQUE NOT NULL,
+    r_id INT UNIQUE NOT NULL CHECK (r_id >= 0),
     LANGUAGE VARCHAR(30) DEFAULT 'English',
     PRIMARY KEY (m_name, r_id),
     FOREIGN KEY (r_id) REFERENCES RESTAURANT(rID)
 );
+CREATE TABLE IF NOT EXISTS FOOD_ENTRIES
+(
+    price DECIMAL(13,2) NOT NULL CHECK (price > 0.00),
+    r_menu_id INT NOT NULL CHECK (r_menu_id = 0),
+    name VARCHAR(60) NOT NULL,
+    PRIMARY KEY (name, r_menu_id),
+    FOREIGN KEY (r_menu_id) REFERENCES MENU(r_id)
+);
+
 
 -- ----------------- BEGINNING OF CITY INSERTIONS--------------------------
 -- insert into City
@@ -356,14 +362,6 @@ insert into RESTAURANT (rID, address, rCity, cuisine, name) values (249, '093 We
 insert into RESTAURANT (rID, address, rCity, cuisine, name) values (250, '2991 Colorado Park', 'San Francisco', 'Greek', 'King, Ward and Beer');
 
 -- ----------------- END OF RESTAURANT INSERTIONS-------------------------
-CREATE TABLE IF NOT EXISTS FOOD_ENTRIES
-(
-    price DECIMAL(13,2) NOT NULL,
-    r_menu_id INT NOT NULL,
-    name VARCHAR(60) NOT NULL,
-    PRIMARY KEY (name, r_menu_id),
-    FOREIGN KEY (r_menu_id) REFERENCES MENU(r_id)
-);
 
 -- ----------------- BEGINNING OF RUSER INSERTIONS--------------------=====
 
