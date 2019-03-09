@@ -15,6 +15,13 @@ SELECT RESTAURANT.name
  FROM REVIEW
  WHERE REVIEW.rating >= 3 
  AND REVIEW.rating <= 5;
+ 
+ 
+ 
+ -- FROM THIS LINE BELOW I HAVE TESTED
+ 
+ 
+ 
  -- Joins
  SELECT *
  FROM   RCONTACT
