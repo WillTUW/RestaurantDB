@@ -19,10 +19,14 @@ SELECT RESTAURANT.name
  
  
  -- FROM THIS LINE BELOW I HAVE TESTED
+  -- Gives all reviews
+  SELECT *
+ FROM   RCONTACT
+ INNER JOIN REVIEW ON
+ RCONTACT.rest_id = REVIEW.rid;
  
  
- 
- -- Joins
+ -- All reviews including null
  SELECT *
  FROM   RCONTACT
  LEFT JOIN REVIEW ON
@@ -48,7 +52,7 @@ SELECT RESTAURANT.name
         (SELECT MENU.r_id
         FROM MENU));
 --
- -- Simple
+ -- Lists all rest
  SELECT *
  FROM  CITY
  LEFT JOIN RESTAURANT ON
@@ -102,6 +106,14 @@ SELECT RESTAURANT.name
 --
 -- -- TODO Display highest rated restaurant in each CITY
 --
+
+-- Lists all rest above a 3 star rating
+SELECT RESTAURANT.name
+FROM RESTAURANT, REVIEW
+WHERE 3 < (SELECT AVG(REVIEW.rating)
+FROM REVIEW as r, RESTAURANT as rst
+WHERE r.rID = rst.rID)
+GROUP BY RESTAURANT.name;
 -- -- TODO Display highest rated restaurant in each state
 --
 -- -- TODO Display highest rated restaurant in each ethnic group and price
