@@ -10,15 +10,15 @@ Progress Checklist
 
 ## Data Generation
 Should have at least 5 per each table, manually done. Hundreds for spoofed.
-- [ ] Data for RUSER
-- [ ] Data for RESTAURANT
-- [ ] Data for MENU
-- [ ] Data for CONTACT
-- [ ] Data for RCONTACT
-- [ ] Data for CITY
-- [ ] Data for REVIEW
-- [ ] Data for HOURS
-- [ ] Data for FOOD_ENTRIES
+- [X] Data for RUSER
+- [X] Data for RESTAURANT
+- [X] Data for MENU
+- [X] Data for CONTACT
+- [X] Data for RCONTACT
+- [X] Data for CITY
+- [X] Data for REVIEW
+- [X] Data for HOURS
+- [X] Data for FOOD_ENTRIES
 
 ## Querying Logic
 - [X] Querying able to run
