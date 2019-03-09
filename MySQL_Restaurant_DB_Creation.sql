@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS RESTAURANT
     cuisine VARCHAR(20) NOT NULL,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (rID),
-    FOREIGN KEY (rCity) REFERENCES CITY(name)
+    FOREIGN KEY (rCity) REFERENCES CITY(name),
+    CHECK (rID >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS RUSER
@@ -38,7 +39,8 @@ CREATE TABLE IF NOT EXISTS RUSER
     name VARCHAR(30) NOT NULL,
     favorite_restaurant INT,
     PRIMARY KEY (userID),
-    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID)
+    FOREIGN KEY (favorite_restaurant) REFERENCES RESTAURANT (rID),
+    CHECK (userID >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS CONTACT
@@ -59,7 +61,8 @@ CREATE TABLE IF NOT EXISTS REVIEW
     review_day DATE NOT NULL,
     message TEXT,
     FOREIGN KEY(uID) REFERENCES RUSER(userID),
-    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID)
+    FOREIGN KEY(rID) REFERENCES RESTAURANT(rID),
+    CHECK (rating >= 1 AND rating <= 5)
 );
 
 CREATE TABLE IF NOT EXISTS HOURS
@@ -2493,6 +2496,7 @@ insert into FOOD_ENTRIES (price, r_menu_id, name) values (9.25, 248, 'Hummus');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (7.59, 249, 'Hummus');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (5.11, 250, 'Hummus');
 
+
 -- second food list
 
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (15.52, 1, 'Tacos');
@@ -2745,5 +2749,258 @@ insert into FOOD_ENTRIES (price, r_menu_id, name) values (12.29, 247, 'Baklava')
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (9.36, 248, 'Baklava');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (7.88, 249, 'Baklava');
 insert into FOOD_ENTRIES (price, r_menu_id, name) values (16.47, 250, 'Baklava');
+
+-- ---Expensive Food items
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (151.39, 1, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (852.87, 2, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (84.51, 3, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (754.09, 4, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (750.81, 5, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (377.4, 6, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (460.74, 7, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (845.61, 8, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (292.51, 9, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (60.36, 10, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (259.27, 11, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (319.66, 12, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (834.81, 13, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (604.59, 14, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (608.11, 15, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (695.19, 16, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (302.27, 17, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (321.93, 18, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (420.57, 19, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (630.74, 20, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (512.17, 21, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (892.2, 22, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (685.81, 23, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (869.95, 24, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (239.55, 25, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (466.81, 26, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (730.72, 27, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (913.57, 28, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (968.14, 29, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (341.47, 30, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (285.93, 31, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (416.62, 32, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (538.18, 33, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (379.77, 34, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (342.87, 35, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (613.62, 36, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (752.76, 37, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (456.53, 38, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (778.1, 39, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (202.11, 40, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (324.16, 41, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (619.39, 42, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (566.25, 43, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (798.44, 44, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (280.47, 45, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (741.1, 46, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (894.94, 47, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (786.97, 48, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (633.44, 49, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (510.51, 50, 'Nachos');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (112.99, 51, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (152.39, 52, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (232.73, 53, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (21.52, 54, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (841.94, 55, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (413.37, 56, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (530.67, 57, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (905.93, 58, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (182.32, 59, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (226.33, 60, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (210.46, 61, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (441.77, 62, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (701.15, 63, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (822.82, 64, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (219.94, 65, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (999.66, 66, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (853.25, 67, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (403.84, 68, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (949.27, 69, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (994.59, 70, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (374.97, 71, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (677.62, 72, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (416.51, 73, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (754.1, 74, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (738.08, 75, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (313.82, 76, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (721.93, 77, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (670.75, 78, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (853.12, 79, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (314.71, 80, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (910.84, 81, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (722.11, 82, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (425.88, 83, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (100.81, 84, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (332.5, 85, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (792.73, 86, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (138.7, 87, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (980.02, 88, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (75.57, 89, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (438.05, 90, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (257.34, 91, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (137.13, 92, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (449.53, 93, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (421.75, 94, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (561.69, 95, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (735.13, 96, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (542.27, 97, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (930.3, 98, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (973.95, 99, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (776.2, 100, 'Pepperoni Pizza');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (518.1, 101, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (582.86, 102, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (884.24, 103, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (656.87, 104, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (816.92, 105, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (907.63, 106, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (991.04, 107, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (319.66, 108, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (957.96, 109, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (501.78, 110, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (680.85, 111, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (944.43, 112, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (517.7, 113, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (639.83, 114, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (722.32, 115, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (499.33, 116, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (290.75, 117, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (303.66, 118, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (946.4, 119, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (887.58, 120, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (680.71, 121, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (206.94, 122, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (385.27, 123, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (374.54, 124, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (218.48, 125, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (592.38, 126, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (59.26, 127, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (938.22, 128, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (322.63, 129, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (960.24, 130, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (577.91, 131, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (724.87, 132, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (797.8, 133, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (241.38, 134, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (134.55, 135, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (502.89, 136, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (881.86, 137, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (666.96, 138, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (471.48, 139, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (800.95, 140, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (544.28, 141, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (264.65, 142, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (388.61, 143, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (485.86, 144, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (917.45, 145, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (880.28, 146, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (428.53, 147, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (707.53, 148, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (363.68, 149, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (875.41, 150, 'Ribs');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (454.78, 151, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (156.51, 152, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (389.42, 153, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (352.2, 154, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (401.59, 155, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (109.69, 156, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (324.76, 157, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (106.43, 158, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (533.02, 159, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (324.87, 160, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (796.31, 161, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (740.18, 162, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (673.3, 163, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (474.69, 164, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (835.68, 165, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (347.99, 166, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (891.95, 167, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (491.91, 168, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (854.85, 169, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (345.96, 170, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (156.37, 171, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (890.21, 172, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (269.11, 173, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (298.46, 174, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (492.5, 175, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (630.35, 176, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (550.45, 177, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (284.17, 178, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (586.9, 179, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (507.46, 180, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (801.98, 181, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (439.61, 182, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (90.85, 183, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (537.37, 184, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (43.16, 185, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (339.23, 186, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (374.94, 187, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (836.93, 188, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (711.83, 189, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (823.23, 190, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (514.52, 191, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (98.07, 192, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (178.1, 193, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (410.1, 194, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (527.49, 195, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (890.57, 196, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (845.29, 197, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (504.8, 198, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (58.42, 199, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (968.77, 200, 'Chow Mein');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (763.42, 201, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (345.27, 202, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (898.81, 203, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (762.44, 204, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (268.96, 205, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (645.64, 206, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (208.4, 207, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (341.91, 208, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (460.27, 209, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (632.92, 210, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (283.04, 211, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (727.34, 212, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (615.33, 213, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (996.56, 214, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (893.52, 215, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (455.46, 216, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (38.62, 217, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (124.82, 218, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (886.73, 219, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (175.12, 220, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (131.69, 221, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (336.77, 222, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (485.64, 223, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (712.63, 224, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (750.79, 225, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (753.11, 226, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (453.89, 227, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (756.37, 228, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (673.69, 229, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (271.4, 230, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (756.28, 231, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (936.07, 232, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (326.23, 233, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (628.9, 234, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (608.68, 235, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (497.9, 236, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (112.61, 237, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (288.21, 238, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (246.73, 239, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (812.8, 240, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (77.84, 241, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (416.73, 242, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (661.66, 243, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (170.98, 244, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (276.33, 245, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (529.18, 246, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (665.21, 247, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (776.98, 248, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (192.61, 249, 'Youvesti');
+insert into FOOD_ENTRIES (price, r_menu_id, name) values (329.06, 250, 'Youvesti');
+
 
 -- ----------------- END OF FOOD_ENTRIES INSERTIONS------------------------
