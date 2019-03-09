@@ -7,7 +7,7 @@ SELECT RESTAURANT.name
  SELECT *
  FROM FOOD_ENTRIES
  WHERE(FOOD_ENTRIES.r_menu_id = 
-	(SELECT RESTAURANT.rID
+	(SELECT RESTAURANT.rI
     FROM RESTAURANT
     WHERE RESTAURANT.name = "Corwin Inc"));
 -- Displays all review attributes that have a rating between 3 and 5 inclusive
@@ -63,24 +63,24 @@ SELECT RESTAURANT.name
  FROM FOOD_ENTRIES
  WHERE FOOD_ENTRIES.price = (SELECT MIN(price) FROM FOOD_ENTRIES);
 --
--- TODO Display most expensive food
- SELECT *
+-- Display most expensive food
+ SELECT FOOD_ENTRIES.name, FOOD_ENTRIES.price
  FROM FOOD_ENTRIES
  WHERE FOOD_ENTRIES.price = (SELECT MAX(price) FROM FOOD_ENTRIES);
 --
- -- TODO Display the most expensive food in each enthic catagory
- SELECT *
- FROM FOOD_ENTRIES
- WHERE FOOD_ENTRIES.price IN(SELECT MAX(price)
+ -- Display the most expensive food in each enthic catagory
+ SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine
+ FROM FOOD_ENTRIES, RESTAURANT
+ WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MAX(price)
                             FROM FOOD_ENTRIES, MENU, RESTAURANT
                             WHERE r_menu_id = r_id AND r_id = rID
                             GROUP BY cuisine)
  ORDER BY price ASC;
 --
  -- TODO Display the least expensive food in each ethnic catagory
- SELECT *
- FROM FOOD_ENTRIES
- WHERE FOOD_ENTRIES.price IN(SELECT MIN(price)
+ SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.name
+ FROM FOOD_ENTRIES, RESTAURANT
+ WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MAX(price)
                             FROM FOOD_ENTRIES, MENU, RESTAURANT
                             WHERE r_menu_id = r_id AND r_id = rID
                             GROUP BY cuisine)
