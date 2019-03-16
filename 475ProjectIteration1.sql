@@ -2732,8 +2732,9 @@ JOIN (
     FROM RESTAURANT, REVIEW
     WHERE RESTAURANT.rID = REVIEW.rID
     GROUP BY resCity) AS resPerCity
-WHERE CITY.name = resPerCity.resCity
+ON CITY.name = resPerCity.resCity
 ORDER BY CITY.name;
+
 
 ---- TODO Display highest rated restaurant in each state
 
@@ -2744,8 +2745,20 @@ JOIN (
     FROM RESTAURANT, REVIEW, CITY
     WHERE RESTAURANT.rID = REVIEW.rID AND CITY.name = RESTAURANT.rCity
     GROUP BY resState) AS resPerCity
-WHERE CITY.state = resPerCity.resState
+ON CITY.state = resPerCity.resState
 ORDER BY CITY.state;
+
+---- TODO Display all restaurant with its average price
+
+SELECT RESTAURANT.name, RESTAURANT.rCity, eachRest.avgPrice
+FROM RESTAURANT
+JOIN (
+    SELECT AVG(price) AS avgPrice, RESTAURANT.name AS resName
+    FROM RESTAURANT, MENU, FOOD_ENTRIES
+    WHERE r_menu_id = r_id AND r_id = rID AND r_menu_id = rID
+    GROUP BY resName) AS eachRest
+ON RESTAURANT.name = eachRest.resName
+ORDER BY RESTAURANT.name;
 
 ---- TODO Display highest rated restaurant in each ethnic group and price
 --
