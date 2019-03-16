@@ -30,10 +30,11 @@ CREATE TABLE CITY
 CREATE TABLE REVIEW
 (
     rating INT NOT NULL,
-    uID INT UNIQUE NOT NULL,
-    rID INT UNIQUE NOT NULL,
+    uID INT  NOT NULL,
+    rID INT  NOT NULL,
     review_day DATE NOT NULL,
     message TEXT,
+    PRIMARY KEY (uID, rID),
     FOREIGN KEY(uID) REFERENCES RUSER(userID),
     FOREIGN KEY(rID) REFERENCES RESTAURANT(rID)
 );
@@ -1107,8 +1108,106 @@ insert into CITY (name, state) values ('San Francisco', 'California');
 
 ------------------- BEGINNING OF REVIEW INSERTIONS------------------------
 --Dates follow 'YYYY-MM-DD' format
-
-
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 361, 88, '2016-05-25 20:10:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 31, 27, '2017-03-28 05:52:33', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 122, 71, '2017-09-11 14:27:19', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 161, 78, '2018-09-27 14:44:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 189, 91, '2018-08-14 06:12:13', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 44, 27, '2016-04-22 23:21:38', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 74, 34, '2016-05-25 11:59:48', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 353, 22, '2016-04-23 12:45:28', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 475, 30, '2019-01-06 12:21:16', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 92, 100, '2016-07-19 09:26:24', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 213, 56, '2016-07-04 16:51:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 83, 10, '2018-06-17 22:40:52', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 246, 44, '2018-11-25 11:16:32', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 110, 90, '2017-10-13 07:46:28', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 392, 30, '2016-11-29 01:35:47', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 428, 32, '2018-05-18 10:36:49', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 4, 43, '2016-07-17 03:11:37', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 477, 44, '2017-11-20 02:28:30', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 275, 18, '2018-09-21 02:08:57', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 45, 38, '2016-11-04 23:48:48', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 87, 61, '2017-04-10 17:41:39', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 250, 25, '2016-03-27 06:16:26', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 330, 95, '2017-11-12 16:07:09', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 198, 38, '2019-02-24 06:51:38', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 151, 6, '2018-10-09 20:22:34', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 305, 54, '2017-07-21 22:00:57', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 143, 36, '2016-08-27 21:29:38', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 176, 38, '2017-02-12 04:44:25', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 379, 49, '2016-09-09 08:46:34', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 397, 51, '2019-01-10 23:13:01', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 477, 25, '2018-03-24 01:53:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 322, 54, '2016-03-21 16:37:44', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 117, 50, '2016-10-06 17:44:04', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 6, 78, '2018-07-22 04:44:58', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 267, 51, '2017-10-05 17:24:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 249, 16, '2016-03-05 15:20:05', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 87, 61, '2017-12-01 11:06:52', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 437, 40, '2016-10-06 10:14:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 207, 74, '2017-11-21 14:56:35', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 173, 48, '2016-08-23 04:55:47', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 255, 41, '2016-09-17 12:57:47', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 205, 2, '2018-05-06 11:47:45', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 208, 87, '2018-01-05 19:41:42', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 119, 14, '2017-10-30 21:20:51', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 95, 33, '2016-10-07 04:13:05', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 367, 76, '2017-07-21 15:35:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 378, 52, '2017-08-30 01:47:36', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 349, 7, '2017-06-02 00:21:15', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 114, 17, '2017-04-02 05:40:01', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 415, 5, '2017-10-20 08:01:03', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 457, 65, '2019-02-10 00:49:41', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 499, 31, '2016-11-21 20:27:20', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 462, 12, '2016-12-27 21:00:38', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 265, 55, '2018-01-29 19:48:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 478, 22, '2018-02-18 00:06:08', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 466, 56, '2017-11-29 17:44:23', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 129, 4, '2016-02-09 02:13:05', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 332, 53, '2017-12-12 07:29:02', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 112, 7, '2017-10-15 10:39:36', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 326, 85, '2018-10-24 13:38:02', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 38, 5, '2017-01-07 17:23:08', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 150, 75, '2017-02-04 10:32:23', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 242, 70, '2018-12-07 10:27:03', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 74, 72, '2018-06-14 15:49:05', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 289, 74, '2017-10-18 20:28:59', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 65, 97, '2017-03-24 06:09:12', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 53, 85, '2019-02-17 12:09:32', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 489, 11, '2016-06-20 17:48:14', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 239, 90, '2018-08-11 15:36:00', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 317, 5, '2017-06-24 05:42:18', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 20, 67, '2019-02-12 14:22:00', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 338, 90, '2018-10-04 23:04:51', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 380, 63, '2018-07-24 06:06:37', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 270, 30, '2017-11-11 14:14:25', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 100, 22, '2017-09-04 18:25:23', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 161, 1, '2016-12-28 22:29:00', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 54, 77, '2017-07-02 21:38:31', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 293, 73, '2016-06-10 07:01:42', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 369, 42, '2016-11-19 14:32:24', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 345, 34, '2018-10-29 11:05:06', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 332, 99, '2017-06-04 00:53:03', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 328, 95, '2016-07-26 04:53:55', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 264, 80, '2017-04-24 22:31:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 298, 32, '2016-10-06 12:14:42', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 131, 92, '2018-08-29 22:00:12', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 219, 60, '2018-12-25 23:10:42', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 432, 42, '2018-06-25 09:21:35', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 411, 66, '2018-06-21 09:25:50', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 397, 86, '2018-12-21 15:26:56', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 160, 58, '2016-10-28 10:46:43', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 211, 29, '2018-06-01 06:52:21', 'Horrible');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 382, 81, '2018-03-28 07:07:23', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (2, 311, 19, '2017-09-25 06:25:29', 'Amazing');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 361, 29, '2018-10-11 09:48:22', 'Delicious');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 319, 71, '2018-01-13 09:17:56', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 219, 100, '2016-09-30 05:13:18', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (4, 157, 81, '2018-03-26 08:08:46', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (1, 57, 32, '2018-07-12 23:59:38', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (5, 313, 34, '2018-03-03 03:46:33', 'Dry');
+insert into REVIEW (rating, uID, rID, review_day, message) values (3, 214, 47, '2016-09-28 09:13:36', 'Amazing');
 ------------------- END OF REVIEWS INSERTIONS-----------------------------
 
 ------------------- BEGINNING OF RESTAURANT INSERTIONS--------------------
@@ -2677,24 +2776,26 @@ insert into FOOD_ENTRIES (price, r_menu_id, name) values (16.47, 250, 'Baklava')
 --LEFT JOIN RESTAURANT ON
 --CITY.name = RESTAURANT.rCity;
 --
----- TODO Display cheapest food
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price = (SELECT MIN(price) FROM FOOD_ENTRIES);
---
+-- TODO Display cheapest food and price
+SELECT name, price
+FROM FOOD_ENTRIES
+WHERE FOOD_ENTRIES.price = (SELECT MIN(price) FROM FOOD_ENTRIES);
+
 ---- TODO Display most expensive food
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price = (SELECT MAX(price) FROM FOOD_ENTRIES);
+SELECT name, price
+FROM FOOD_ENTRIES
+WHERE FOOD_ENTRIES.price = (SELECT MAX(price) FROM FOOD_ENTRIES);
 --
 ---- TODO Display the most expensive food in each enthic catagory
---SELECT *
---FROM FOOD_ENTRIES
---WHERE FOOD_ENTRIES.price IN(SELECT MAX(price)
---                            FROM FOOD_ENTRIES, MENU, RESTAURANT
---                            WHERE r_menu_id = r_id AND r_id = rID
---                            GROUP BY cuisine)
---ORDER BY price ASC;
+SELECT distinct f.name, price, cuisine
+FROM FOOD_ENTRIES as f, RESTAURANT
+WHERE f.price in (SELECT Distinct MAX(price)
+                            FROM FOOD_ENTRIES as fe, MENU, RESTAURANT as r
+                            WHERE r_menu_id = r_id AND r_id = r.rID
+                            )
+ORDER BY f.price ASC;
+
+--SELECT f.name, pr
 --
 ---- TODO Display the least expensive food in each ethnic catagory
 --SELECT *
@@ -2753,12 +2854,12 @@ ORDER BY CITY.state;
 SELECT RESTAURANT.name, RESTAURANT.rCity, eachRest.avgPrice
 FROM RESTAURANT
 JOIN (
-    SELECT AVG(price) AS avgPrice, RESTAURANT.name AS resName
+    SELECT ROUND( AVG(price), 2 )AS avgPrice, RESTAURANT.name AS resName
     FROM RESTAURANT, MENU, FOOD_ENTRIES
     WHERE r_menu_id = r_id AND r_id = rID AND r_menu_id = rID
     GROUP BY resName) AS eachRest
 ON RESTAURANT.name = eachRest.resName
-ORDER BY RESTAURANT.name;
+ORDER BY RESTAURANT.rCity;
 
 ---- TODO Display highest rated restaurant in each ethnic group and price
 --
