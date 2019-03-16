@@ -2724,9 +2724,29 @@ insert into FOOD_ENTRIES (price, r_menu_id, name) values (16.47, 250, 'Baklava')
 --ORDER BY price ASC;
 --
 ---- TODO Display highest rated restaurant in each CITY
---
+
+SELECT CITY.name, resPerCity.resName, resPerCity.rate
+FROM CITY
+JOIN (
+    SELECT RESTAURANT.name AS resName, MAX(rating) AS rate, RESTAURANT.rCity AS resCity
+    FROM RESTAURANT, REVIEW
+    WHERE RESTAURANT.rID = REVIEW.rID
+    GROUP BY resCity) AS resPerCity
+WHERE CITY.name = resPerCity.resCity
+ORDER BY CITY.name;
+
 ---- TODO Display highest rated restaurant in each state
---
+
+SELECT CITY.state, resPerCity.resName, resPerCity.rate
+FROM CITY
+JOIN (
+    SELECT RESTAURANT.name AS resName, MAX(rating) AS rate, CITY.state AS resState
+    FROM RESTAURANT, REVIEW, CITY
+    WHERE RESTAURANT.rID = REVIEW.rID AND CITY.name = RESTAURANT.rCity
+    GROUP BY resState) AS resPerCity
+WHERE CITY.state = resPerCity.resState
+ORDER BY CITY.state;
+
 ---- TODO Display highest rated restaurant in each ethnic group and price
 --
 ---- TODO add more functionality
