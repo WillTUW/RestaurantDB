@@ -6,7 +6,7 @@ Progress Checklist
 ## Restructuring Data (Part of Normalizing)
 - [X] Remade ER
 - [X] Remade RM
-- [ ] Normalized Tables
+- [ ] Normalized Tables --- Has this been done?
 
 ## Data Generation
 Should have at least 5 per each table, manually done. Hundreds for spoofed.
@@ -33,3 +33,8 @@ Should have at least 5 per each table, manually done. Hundreds for spoofed.
 - [ ] Query for highest rated RESTAURANT in each STATE
 - [ ] Query for highest rated RESTAURANT in each ethnic group and by DESC price
 - [ ] Additional queries
+
+## GUI
+- [X] Make a rough GUI in Java
+- [X] Connect GUI to AWS RDS DB Instance
+- [X] Connect GUI item to an actual query for MySQL
