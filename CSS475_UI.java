@@ -56,10 +56,19 @@ public class CSS475_UI {
 	private Button btnMostExpensiveFoodByCategory;
 	private Button btnLeastExpensiveFoodByCity;
 	private Button btnSubmitReview;
-	private Button btnViewReviews;
 
 	// creates three different Connection objects
 	public static Connection conn = null;
+	private Label lblRestaurantHoursInfo;
+	private Label lblRHrestName;
+	private Label lblRHrestCity;
+	private Button btnGetHours;
+	private Text txtRCrestName;
+	private Text txtRCrestCity;
+	private Text txtRHrestName;
+	private Text txtRHrestCity;
+	private Text text_1;
+	private Text text_2;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -131,7 +140,7 @@ public class CSS475_UI {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(995, 718);
+		shell.setSize(912, 718);
 		shell.setText("Foogle's Application");
 
 		txtCity = new Text(shell, SWT.BORDER);
@@ -190,35 +199,12 @@ public class CSS475_UI {
 				String cuisine = txtCuisine.getText();
 				int minPrice = Integer.parseInt(txtMin.getText());
 				int maxPrice = Integer.parseInt(txtMax.getText());
-				String food = txtFoodItem.getText();
-				boolean reviews = btnViewReviews.getSelection();
+				String food = txtFoodItem.getText();;
 				
-				//find restaurant and reviews for a given food
-				if(reviews && food != "Food Item")
-				{
-					//String query = "SELECT RC."
-				}
-				
-				//find restaurant and reviews
-				else if (reviews && food == "Food Item")
-				{
-					
-				}
-				
-				//find restaurant with a given food
-				else if(!reviews && food != "Food Item")
-				{
-					
-				}
-				
-				//find restaurant
-				else
-				{
-					
-				}
+				//-- TO DO ------------------------------------
 			}
 		});
-		btnSearch.setBounds(64, 236, 90, 30);
+		btnSearch.setBounds(72, 222, 90, 30);
 		btnSearch.setText("Search");
 
 		lblFoogleRestaurantFinder = new Label(shell, SWT.NONE);
@@ -345,7 +331,7 @@ public class CSS475_UI {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnMostExpensiveFood.setBounds(591, 87, 217, 30);
+		btnMostExpensiveFood.setBounds(4, 536, 217, 30);
 		btnMostExpensiveFood.setText("Most Expensive Food");
 
 		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
@@ -397,7 +383,7 @@ public class CSS475_UI {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnMostExpensiveFoodByCategory.setBounds(582, 112, 235, 30);
+		btnMostExpensiveFoodByCategory.setBounds(274, 536, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Most Expensive Food by Ethnicity");
 
 		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
@@ -449,7 +435,7 @@ public class CSS475_UI {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnMostExpensiveFoodByCategory.setBounds(582, 137, 235, 30);
+		btnMostExpensiveFoodByCategory.setBounds(4, 609, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
 
 
@@ -504,7 +490,7 @@ public class CSS475_UI {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnLeastExpensiveFoodByCity.setBounds(582, 162, 235, 30);
+		btnLeastExpensiveFoodByCity.setBounds(4, 572, 235, 30);
 		btnLeastExpensiveFoodByCity.setText("Least Expensive Food in Each City");
 		
 		lblWriteAReview = new Label(shell, SWT.NONE);
@@ -549,10 +535,6 @@ public class CSS475_UI {
 		
 		txtWriteCommentsHere = new Text(shell, SWT.BORDER);
 		txtWriteCommentsHere.setBounds(347, 341, 247, 112);
-		
-		btnViewReviews = new Button(shell, SWT.CHECK);
-		btnViewReviews.setBounds(60, 210, 111, 20);
-		btnViewReviews.setText("View Reviews");
 		
 		lblDentotesRequired = new Label(shell, SWT.NONE);
 		lblDentotesRequired.setBounds(293, 10, 301, 20);
@@ -601,9 +583,91 @@ public class CSS475_UI {
 		label_2.setBounds(548, 36, 2, 240);
 		
 		label_3 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
-		label_3.setBounds(621, 282, 2, 222);
+		label_3.setBounds(621, 282, 2, 357);
 		
 		label_4 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_4.setBounds(10, 282, 845, 2);
+		
+		Label lblRestaurantContactInfo = new Label(shell, SWT.NONE);
+		lblRestaurantContactInfo.setBounds(634, 84, 161, 20);
+		lblRestaurantContactInfo.setText("Restaurant Contact Info");
+		
+		Label lblRCrestName = new Label(shell, SWT.NONE);
+		lblRCrestName.setBounds(592, 110, 123, 20);
+		lblRCrestName.setText("*Restaurant Name:");
+		
+		Label lblRCrestCity = new Label(shell, SWT.NONE);
+		lblRCrestCity.setBounds(593, 140, 112, 20);
+		lblRCrestCity.setText("*Restaurant City:");
+		
+		Button btnGetContact = new Button(shell, SWT.NONE);
+		btnGetContact.setBounds(652, 180, 90, 30);
+		btnGetContact.setText("Get Contact");
+		
+		Label label_5 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_5.setBounds(621, 444, 234, 2);
+		
+		lblRestaurantHoursInfo = new Label(shell, SWT.NONE);
+		lblRestaurantHoursInfo.setBounds(680, 459, 161, 20);
+		lblRestaurantHoursInfo.setText("Restaurant Hours Info");
+		
+		lblRHrestName = new Label(shell, SWT.NONE);
+		lblRHrestName.setText("*Restaurant Name:");
+		lblRHrestName.setBounds(629, 485, 123, 20);
+		
+		lblRHrestCity = new Label(shell, SWT.NONE);
+		lblRHrestCity.setText("*Restaurant City:");
+		lblRHrestCity.setBounds(629, 510, 112, 20);
+		
+		btnGetHours = new Button(shell, SWT.NONE);
+		btnGetHours.setBounds(715, 550, 90, 30);
+		btnGetHours.setText("Get Hours");
+		
+		txtRCrestName = new Text(shell, SWT.BORDER);
+		txtRCrestName.setText("Name");
+		txtRCrestName.setBounds(722, 109, 116, 26);
+		
+		txtRCrestCity = new Text(shell, SWT.BORDER);
+		txtRCrestCity.setText("City Name");
+		txtRCrestCity.setBounds(711, 140, 127, 26);
+		
+		txtRHrestName = new Text(shell, SWT.BORDER);
+		txtRHrestName.setText("Name");
+		txtRHrestName.setBounds(758, 479, 126, 26);
+		
+		txtRHrestCity = new Text(shell, SWT.BORDER);
+		txtRHrestCity.setText("City Name");
+		txtRHrestCity.setBounds(747, 510, 137, 26);
+		
+		Label lblRestaurantReviewsInfo = new Label(shell, SWT.NONE);
+		lblRestaurantReviewsInfo.setText("Restaurant Reviews Info");
+		lblRestaurantReviewsInfo.setBounds(671, 296, 161, 20);
+		
+		Label lblrestaurantName = new Label(shell, SWT.NONE);
+		lblrestaurantName.setText("*Restaurant Name:");
+		lblrestaurantName.setBounds(629, 322, 123, 20);
+		
+		Label lblrestaurantCity = new Label(shell, SWT.NONE);
+		lblrestaurantCity.setText("*Restaurant City:");
+		lblrestaurantCity.setBounds(630, 352, 112, 20);
+		
+		Button button = new Button(shell, SWT.NONE);
+		button.setText("Get Contact");
+		button.setBounds(689, 392, 90, 30);
+		
+		text_1 = new Text(shell, SWT.BORDER);
+		text_1.setText("Name");
+		text_1.setBounds(759, 321, 116, 26);
+		
+		text_2 = new Text(shell, SWT.BORDER);
+		text_2.setText("City Name");
+		text_2.setBounds(748, 352, 127, 26);
+		
+		Label label_6 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_6.setBounds(10, 503, 605, 2);
+		
+		Label lblQuickSearch = new Label(shell, SWT.NONE);
+		lblQuickSearch.setBounds(10, 510, 85, 20);
+		lblQuickSearch.setText("Quick Search");
 	}
 }
