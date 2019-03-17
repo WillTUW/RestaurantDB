@@ -32,7 +32,7 @@ public class CSS475_UI {
 	private Text txtHomeCity;
 	private Text txtPhone;
 	private Text txtEmail;
-	
+
 	private Button btnAddCustomer;
 	private Button btnMostExpensiveFood;
 	private Button btnMostExpensiveFoodByCategory;
@@ -48,27 +48,27 @@ public class CSS475_UI {
 		try {
 			try {
 				// connect way #1
-				
+
 				String url1 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB";
 				String user = "grader";
 				String password = "graderpass";
 
 				conn = DriverManager.getConnection(url1, user, password);
-				
+
 				if (conn != null) {
 					//JOptionPane.showMessageDialog(null,"Successfully Connected to the AWS RDS Restaurant_DB test");
 					System.out.println("Successfully Connected to the AWS RDS Restaurant_DB test");
 				}
-				
-				
+
+
 				//	alternative connections
-	            // connect way #2
-//	            String url2 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB?user=grader&password=graderpass";
-//	            conn = DriverManager.getConnection(url2);
-//	            if (conn != null) {
-//	            	JOptionPane.showMessageDialog(null,"Connected to the AWS RDS Restaurant_DB test 2");
-//	            }
-/*
+				// connect way #2
+				//	            String url2 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB?user=grader&password=graderpass";
+				//	            conn = DriverManager.getConnection(url2);
+				//	            if (conn != null) {
+				//	            	JOptionPane.showMessageDialog(null,"Connected to the AWS RDS Restaurant_DB test 2");
+				//	            }
+				/*
 	            // connect way #3
 	            String url3 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB";
 	            Properties info = new Properties();
@@ -198,10 +198,12 @@ public class CSS475_UI {
 
 		txtName = new Text(shell, SWT.BORDER);
 		txtName.setText("Name");
+		
 		txtName.setBounds(393, 81, 78, 26);
 
 		txtHomeCity = new Text(shell, SWT.BORDER);
 		txtHomeCity.setText("Home City");
+		String homeCity = "%" + txtHomeCity.getText() + "%";
 		txtHomeCity.setBounds(393, 113, 95, 26);
 
 		txtPhone = new Text(shell, SWT.BORDER);
@@ -215,6 +217,43 @@ public class CSS475_UI {
 		btnAddCustomer = new Button(shell, SWT.NONE);
 		btnAddCustomer.setBounds(355, 221, 103, 30);
 		btnAddCustomer.setText("Add Customer");
+		btnAddCustomer.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					String name = txtName.getText();
+					String phoneNumber = txtPhone.getText();
+					String email = txtEmail.getText();
+					int uID = (int)(Math.random() * (Integer.MAX_VALUE - 501) + 501);
+					String query = "INSERT INTO RUSER  (userID, name) " + 
+							"VALUES (?, ?)";
+
+					System.out.println(uID);
+
+					// create the java statement
+					PreparedStatement preparedStmt = conn.prepareStatement(query);
+					preparedStmt.setLong (1, uID);
+					preparedStmt.setString (2, name);
+					System.out.println(name);
+					preparedStmt.execute();
+					
+					query = "INSERT INTO CONTACT (email, phone_number, uID, counter)" +
+							"VALUES (?, ?, ?, ?)";
+					preparedStmt = conn.prepareStatement(query);
+					preparedStmt.setString (1, email);
+					preparedStmt.setString(2, phoneNumber);
+					preparedStmt.setLong (3, uID);
+					preparedStmt.setLong(4, 1);
+					preparedStmt.execute();
+					
+					//JOptionPane.showMessageDialog(null, name + ", your information has been saved.");
+				} 
+				catch(Exception query) {
+					System.err.println("Got an exception! ");
+					System.err.println(query.getMessage());
+				}
+			}
+		});
 
 		btnMostExpensiveFood = new Button(shell, SWT.NONE);
 		btnMostExpensiveFood.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
@@ -231,14 +270,14 @@ public class CSS475_UI {
 
 					// create the java statement
 					Statement st = conn.createStatement();
-					
+
 					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
-					
+
 					// iterate through the java resultset
 					while (rs.next())
 					{
-						double price = rs.getInt("price");
+						String price = rs.getString("price");
 						String food = rs.getString("name");   
 						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
@@ -261,7 +300,7 @@ public class CSS475_UI {
 		});
 		btnMostExpensiveFood.setBounds(61, 287, 217, 30);
 		btnMostExpensiveFood.setText("Most Expensive Food");
-		
+
 		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
 		btnMostExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
@@ -272,24 +311,24 @@ public class CSS475_UI {
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
-					"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
-					"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
-					"WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MAX(price)\r\n" +
-					                            "FROM FOOD_ENTRIES AS FE, MENU AS M, RESTAURANT AS R\r\n" +
-					                            "WHERE FE.r_menu_id = M.r_id AND M.r_id = R.rID\r\n" +
- 					                            "GROUP BY cuisine)\r\n" +
-					"ORDER BY price ASC;";
+							"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
+									"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
+									"WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MAX(price)\r\n" +
+									"FROM FOOD_ENTRIES AS FE, MENU AS M, RESTAURANT AS R\r\n" +
+									"WHERE FE.r_menu_id = M.r_id AND M.r_id = R.rID\r\n" +
+									"GROUP BY cuisine)\r\n" +
+									"ORDER BY price ASC;";
 
 					// create the java statement
 					Statement st = conn.createStatement();
-					
+
 					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
-					
+
 					// iterate through the java resultset
 					while (rs.next())
 					{
-						double price = rs.getInt("price");
+						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String name = rs.getString("cuisine");
 						// print the results
@@ -313,7 +352,7 @@ public class CSS475_UI {
 		});
 		btnMostExpensiveFoodByCategory.setBounds(52, 312, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Most Expensive Food by Ethnicity");
-		
+
 		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
 		btnMostExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
@@ -324,24 +363,24 @@ public class CSS475_UI {
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
-					"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
-					"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
-					"WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MIN(price)\r\n" +
-					                            "FROM FOOD_ENTRIES AS FE, MENU AS M, RESTAURANT AS R\r\n" +
-					                            "WHERE FE.r_menu_id = M.r_id AND M.r_id = R.rID\r\n" +
- 					                            "GROUP BY cuisine)\r\n" +
-					"ORDER BY price ASC;";
+							"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
+									"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
+									"WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MIN(price)\r\n" +
+									"FROM FOOD_ENTRIES AS FE, MENU AS M, RESTAURANT AS R\r\n" +
+									"WHERE FE.r_menu_id = M.r_id AND M.r_id = R.rID\r\n" +
+									"GROUP BY cuisine)\r\n" +
+									"ORDER BY price ASC;";
 
 					// create the java statement
 					Statement st = conn.createStatement();
-					
+
 					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
-					
+
 					// iterate through the java resultset
 					while (rs.next())
 					{
-						double price = rs.getInt("price");
+						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String name = rs.getString("cuisine");
 						// print the results
@@ -365,9 +404,9 @@ public class CSS475_UI {
 		});
 		btnMostExpensiveFoodByCategory.setBounds(52, 337, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
-		
-		
-		
+
+
+
 		//--------------------------DOESNT WORK PROPERLY--------------------------------------
 		btnLeastExpensiveFoodByCity = new Button(shell, SWT.NONE);
 		btnLeastExpensiveFoodByCity.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
@@ -379,26 +418,26 @@ public class CSS475_UI {
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
-							 "SELECT FOOD_ENTRIES.price, FOOD_ENTRIES.name, FOOD_ENTRIES.r_menu_id, CITY.name AS city\r\n" +
-							 "FROM FOOD_ENTRIES, CITY\r\n" +
-							 "WHERE FOOD_ENTRIES.price IN(SELECT MIN(price)\r\n" +
-							                            "FROM FOOD_ENTRIES AS FE, MENU, RESTAURANT, CITY\r\n" +
-							                            "WHERE FE.r_menu_id = r_id AND r_id = rID AND rCity = CITY.name)\r\n" +
-							 "ORDER BY price ASC;";
+							"SELECT *\r\n" +
+									"FROM FOOD_ENTRIES, CITY\r\n" +
+									"WHERE FOOD_ENTRIES.price IN(SELECT MIN(price)\r\n" +
+									"FROM FOOD_ENTRIES AS FE, MENU, RESTAURANT, CITY\r\n" +
+									"WHERE FE.r_menu_id = r_id AND r_id = rID AND rCity = CITY.name)\r\n" +
+									"ORDER BY price ASC;";
 
 					// create the java statement
 					Statement st = conn.createStatement();
-					
+
 					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
-					
+
 					// iterate through the java resultset
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String menu_id = rs.getString("r_menu_id");
-						String city = rs.getString("city");
+						String city = rs.getString("CITY.name");
 						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s, %s\n", price, food, menu_id, city);
@@ -420,6 +459,6 @@ public class CSS475_UI {
 		});
 		btnLeastExpensiveFoodByCity.setBounds(52, 362, 235, 30);
 		btnLeastExpensiveFoodByCity.setText("Least Expensive Food in Each City");
-		
+
 	}
 }
