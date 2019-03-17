@@ -1,4 +1,3 @@
-
 import java.sql.*;
 import java.util.Properties;
 
@@ -17,36 +16,50 @@ import org.eclipse.swt.widgets.Text;
 public class CSS475_UI {
 
 	protected Shell shell;
-	private Text txtCity;
-	private Text txtCuisine;
-	private Text txtPriceRange;
-	private Text txtFoodItem;
-	private Text txtAvgRating;
-	private Text txtMin;
+	
 	private Label lblFoogleRestaurantFinder;
 	private Label lblNewCustomer;
 	private Label lblName;
 	private Label lblHomeCity;
 	private Label lblPhone;
 	private Label lblEmail;
+	private Label lblDentotesRequired;
+	private Label lblRestaurantCity;
+	private Label lblRating;
+	private Label lblYourName;
+	private Label lblRestaurantName;
+	private Label lblWriteAReview;
+	private Label label_1;
+	private Label label_2;
+	private Label label_3;
+	private Label label_4;
+	private Label lblComments;
+	
+	private Text txtCity;
+	private Text txtCuisine;
+	private Text txtMin;
+	private Text txtFoodItem;
+	private Text txtAvgRating;
+	private Text txtMax;
 	private Text txtName;
 	private Text txtHomeCity;
 	private Text txtPhone;
 	private Text txtEmail;
-
-	private Button btnAddCustomer;
-	private Button btnMostExpensiveFood;
-	private Button btnMostExpensiveFoodByCategory;
-	private Button btnLeastExpensiveFoodByCity;
-
-	// creates three different Connection objects
-	public static Connection conn = null;
-	private Label lblComments;
 	private Text txtRestaurant;
 	private Text txtCity_1;
 	private Text txtUserName;
 	private Text text;
 	private Text txtWriteCommentsHere;
+
+	private Button btnAddCustomer;
+	private Button btnMostExpensiveFood;
+	private Button btnMostExpensiveFoodByCategory;
+	private Button btnLeastExpensiveFoodByCity;
+	private Button btnSubmitReview;
+	private Button btnViewReviews;
+
+	// creates three different Connection objects
+	public static Connection conn = null;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -129,9 +142,9 @@ public class CSS475_UI {
 		txtCuisine.setText("Cuisine");
 		txtCuisine.setBounds(118, 84, 78, 26);
 
-		txtPriceRange = new Text(shell, SWT.BORDER);
-		txtPriceRange.setText("0");
-		txtPriceRange.setBounds(118, 116, 42, 26);
+		txtMin = new Text(shell, SWT.BORDER);
+		txtMin.setText("0");
+		txtMin.setBounds(118, 116, 42, 26);
 
 		txtFoodItem = new Text(shell, SWT.BORDER);
 		txtFoodItem.setText("Food Item");
@@ -157,26 +170,56 @@ public class CSS475_UI {
 		lblFoodItem.setBounds(10, 148, 85, 20);
 		lblFoodItem.setText("FOOD ITEM:");
 
-		Label lblAvgRating = new Label(shell, SWT.NONE);
-		lblAvgRating.setBounds(10, 180, 102, 20);
-		lblAvgRating.setText("AVG. RATING:");
+		Label lblMinRating = new Label(shell, SWT.NONE);
+		lblMinRating.setBounds(10, 180, 102, 20);
+		lblMinRating.setText("MIN RATING:");
 
 		Label label = new Label(shell, SWT.NONE);
 		label.setBounds(166, 119, 12, 20);
 		label.setText("-");
 
-		txtMin = new Text(shell, SWT.BORDER);
-		txtMin.setText("1000");
-		txtMin.setBounds(179, 116, 42, 26);
+		txtMax = new Text(shell, SWT.BORDER);
+		txtMax.setText("1000");
+		txtMax.setBounds(179, 116, 42, 26);
 
-		Button btnSearcj = new Button(shell, SWT.NONE);
-		btnSearcj.addSelectionListener(new SelectionAdapter() {
+		Button btnSearch = new Button(shell, SWT.NONE);
+		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String city = txtCity.getText();
+				String cuisine = txtCuisine.getText();
+				int minPrice = Integer.parseInt(txtMin.getText());
+				int maxPrice = Integer.parseInt(txtMax.getText());
+				String food = txtFoodItem.getText();
+				boolean reviews = btnViewReviews.getSelection();
+				
+				//find restaurant and reviews for a given food
+				if(reviews && food != "Food Item")
+				{
+					//String query = "SELECT RC."
+				}
+				
+				//find restaurant and reviews
+				else if (reviews && food == "Food Item")
+				{
+					
+				}
+				
+				//find restaurant with a given food
+				else if(!reviews && food != "Food Item")
+				{
+					
+				}
+				
+				//find restaurant
+				else
+				{
+					
+				}
 			}
 		});
-		btnSearcj.setBounds(64, 236, 90, 30);
-		btnSearcj.setText("Search");
+		btnSearch.setBounds(64, 236, 90, 30);
+		btnSearch.setText("Search");
 
 		lblFoogleRestaurantFinder = new Label(shell, SWT.NONE);
 		lblFoogleRestaurantFinder.setBounds(10, 0, 202, 20);
@@ -204,12 +247,10 @@ public class CSS475_UI {
 
 		txtName = new Text(shell, SWT.BORDER);
 		txtName.setText("Name");
-		
 		txtName.setBounds(393, 81, 78, 26);
 
 		txtHomeCity = new Text(shell, SWT.BORDER);
 		txtHomeCity.setText("Home City");
-		String homeCity = "%" + txtHomeCity.getText() + "%";
 		txtHomeCity.setBounds(393, 113, 95, 26);
 
 		txtPhone = new Text(shell, SWT.BORDER);
@@ -466,21 +507,21 @@ public class CSS475_UI {
 		btnLeastExpensiveFoodByCity.setBounds(582, 162, 235, 30);
 		btnLeastExpensiveFoodByCity.setText("Least Expensive Food in Each City");
 		
-		Label lblWriteAReview = new Label(shell, SWT.NONE);
+		lblWriteAReview = new Label(shell, SWT.NONE);
 		lblWriteAReview.setBounds(271, 296, 103, 20);
 		lblWriteAReview.setText("Write a Review");
 		
-		Label lblRestaurantName = new Label(shell, SWT.NONE);
+		lblRestaurantName = new Label(shell, SWT.NONE);
 		lblRestaurantName.setBounds(25, 321, 129, 20);
 		lblRestaurantName.setText("*Restaurant Name:");
 		
-		Label lblYourName = new Label(shell, SWT.NONE);
+		lblYourName = new Label(shell, SWT.NONE);
 		lblYourName.setBounds(63, 397, 85, 20);
 		lblYourName.setText("*Your Name:");
 		
-		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(42, 433, 112, 20);
-		lblNewLabel.setText("*Rating (out of 5):");
+		lblRating = new Label(shell, SWT.NONE);
+		lblRating.setBounds(42, 433, 112, 20);
+		lblRating.setText("*Rating (out of 5):");
 		
 		lblComments = new Label(shell, SWT.NONE);
 		lblComments.setBounds(347, 321, 78, 20);
@@ -490,7 +531,7 @@ public class CSS475_UI {
 		txtRestaurant.setText("Restaurant");
 		txtRestaurant.setBounds(160, 320, 155, 26);
 		
-		Label lblRestaurantCity = new Label(shell, SWT.NONE);
+		lblRestaurantCity = new Label(shell, SWT.NONE);
 		lblRestaurantCity.setBounds(35, 346, 112, 20);
 		lblRestaurantCity.setText("*Restaurant City:");
 		
@@ -509,28 +550,60 @@ public class CSS475_UI {
 		txtWriteCommentsHere = new Text(shell, SWT.BORDER);
 		txtWriteCommentsHere.setBounds(347, 341, 247, 112);
 		
-		Button btnViewReviews = new Button(shell, SWT.CHECK);
+		btnViewReviews = new Button(shell, SWT.CHECK);
 		btnViewReviews.setBounds(60, 210, 111, 20);
 		btnViewReviews.setText("View Reviews");
 		
-		Label lblDentotesRequired = new Label(shell, SWT.NONE);
+		lblDentotesRequired = new Label(shell, SWT.NONE);
 		lblDentotesRequired.setBounds(293, 10, 301, 20);
 		lblDentotesRequired.setText("IMPORTANT: * dentotes required input fields");
 		
-		Button btnSubmitReview = new Button(shell, SWT.NONE);
-		btnSubmitReview.setBounds(271, 459, 103, 30);
+		btnSubmitReview = new Button(shell, SWT.NONE);
+		btnSubmitReview.setBounds(271, 459, 123, 30);
 		btnSubmitReview.setText("Submit Review");
+		btnSubmitReview.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					String comment = txtWriteCommentsHere.getText();
+					String restName = txtRestaurant.getText();
+					String restCity = txtCity_1.getText();
+					String userName = txtUserName.getText();
+					int rating = Integer.parseInt(text.getText());
+					String query = "INSERT INTO REVIEW (rating, uID, rID, review_day, message) " +
+ 							  "VALUES (?, (SELECT userID FROM RUSER WHERE name = ? ), " + 
+							  "(SELECT rID FROM RESTAURANT WHERE name = ? AND rCity = ? ), curdate(), ? );";
+
+					// create the java statement
+					PreparedStatement preparedStmt = conn.prepareStatement(query);
+					preparedStmt.setLong (1, rating);
+					preparedStmt.setString (2, userName);
+					preparedStmt.setString (3, restName);
+					preparedStmt.setString (4, restCity);
+					preparedStmt.setString (5, comment);
+
+					preparedStmt.execute();
+					
+					//JOptionPane.showMessageDialog(null, name + ", your information has been saved.");
+				} 
+				catch(Exception query) {
+					System.err.println("Got an exception! ");
+					System.err.println(query.getMessage());
+				}
+			}
+		});
 		
-		Label label_1 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+		
+		label_1 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
 		label_1.setBounds(267, 37, 2, 239);
 		
-		Label label_2 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+		label_2 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
 		label_2.setBounds(548, 36, 2, 240);
 		
-		Label label_3 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+		label_3 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
 		label_3.setBounds(621, 282, 2, 222);
 		
-		Label label_4 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_4 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_4.setBounds(10, 282, 845, 2);
 	}
 }
