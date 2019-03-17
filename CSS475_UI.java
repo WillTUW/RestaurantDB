@@ -36,6 +36,7 @@ public class CSS475_UI {
 	private Button btnAddCustomer;
 	private Button btnMostExpensiveFood;
 	private Button btnMostExpensiveFoodByCategory;
+	private Button btnLeastExpensiveFoodByCity;
 
 	// creates three different Connection objects
 	public static Connection conn = null;
@@ -368,8 +369,8 @@ public class CSS475_UI {
 		
 		
 		//--------------------------DOESNT WORK PROPERLY--------------------------------------
-		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
-		btnMostExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
+		btnLeastExpensiveFoodByCity = new Button(shell, SWT.NONE);
+		btnLeastExpensiveFoodByCity.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
@@ -411,13 +412,14 @@ public class CSS475_UI {
 				}
 			}
 		});
-		btnMostExpensiveFoodByCategory.setToolTipText("Queries the least expensive food in each city");
-		btnMostExpensiveFoodByCategory.addSelectionListener(new SelectionAdapter() {
+		btnLeastExpensiveFoodByCity.setToolTipText("Queries the least expensive food in each city");
+		btnLeastExpensiveFoodByCity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnMostExpensiveFoodByCategory.setBounds(52, 362, 235, 30);
-		btnMostExpensiveFoodByCategory.setText("Least Expensive Food in Each City");
+		btnLeastExpensiveFoodByCity.setBounds(52, 362, 235, 30);
+		btnLeastExpensiveFoodByCity.setText("Least Expensive Food in Each City");
+		
 	}
 }
