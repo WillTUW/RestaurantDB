@@ -80,7 +80,7 @@ SELECT RESTAURANT.name
  -- TODO Display the least expensive food in each ethnic catagory
  SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.name
  FROM FOOD_ENTRIES, RESTAURANT
- WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MAX(price)
+ WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MIN(price)
                             FROM FOOD_ENTRIES, MENU, RESTAURANT
                             WHERE r_menu_id = r_id AND r_id = rID
                             GROUP BY cuisine)
