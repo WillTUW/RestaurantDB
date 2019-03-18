@@ -87,13 +87,14 @@ public class CSS475_UI {
 				conn = DriverManager.getConnection(url1, user, password);
 				
 				if (conn != null) {
-					//JOptionPane.showMessageDialog(null,"Successfully Connected to the AWS RDS Restaurant_DB test");
-					System.out.println("Successfully Connected to the AWS RDS Restaurant_DB test");
+					JOptionPane.showMessageDialog(null,"Successfully Connected to the AWS RDS Restaurant_DB test");
+					//System.out.println("Successfully Connected to the AWS RDS Restaurant_DB test");
 				}
 			}
 			//Catch block to showcase an error message on failed connection
 			catch (SQLException ex) {
-				System.out.println("Connection failed, user credentials, host endpoint, database selection may be invalid.");
+				JOptionPane.showMessageDialog(null,"Connection failed, user credentials, host endpoint, database selection may be invalid.");
+				//System.out.println("Connection failed, user credentials, host endpoint, database selection may be invalid.");
 				ex.printStackTrace();
 			}
 			CSS475_UI window = new CSS475_UI();
@@ -166,6 +167,7 @@ public class CSS475_UI {
 		label.setBounds(166, 119, 12, 20);
 		label.setText("-");
 		
+
 		//Text boundary definitions
 		txtMax = new Text(shell, SWT.BORDER);
 		txtMax.setText("1000");
@@ -175,22 +177,39 @@ public class CSS475_UI {
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String city = txtCity.getText();
-				String cuisine = txtCuisine.getText();
-				int minPrice = Integer.parseInt(txtMin.getText());
-				int maxPrice = Integer.parseInt(txtMax.getText());
-				String food = txtFoodItem.getText();;
+				try {
+					String city = txtCity.getText();
+					String cuisine = txtCuisine.getText();
 
-				//-- TO DO ------------------------------------
-				//if they are looking for a particular food item
-				if(food == "Food Item")
-				{
+					String query = "SELECT name, address FROM RESTAURANT "
+							+ "WHERE rCity = '" + city + "' AND cuisine = '" + cuisine + "';";
+
+					// create the java statement
+					Statement st = conn.createStatement();
+
+					// execute the query, and get a java resultset
+					ResultSet rs = st.executeQuery(query);
+
+					// iterate through the java resultset
+					String result = "";
+					while (rs.next())
+					{
+						String name = rs.getString("name");
+						String address = rs.getString("address");  
+						result += "\n" + city + " " + cuisine + " " + name + ", " + address + "\n";
+						//System.out.println("city + " " + cuisine + " " + name + ", " + address ");
+					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					
-				} else {
-					
+					st.close();
+				} 
+				catch(Exception query) {
+					System.err.println("Got an exception! ");
+					System.err.println(query.getMessage());
 				}
 			}
 		});
+		
 		btnSearch.setBounds(72, 222, 90, 30);
 		btnSearch.setText("Search");
 		
@@ -267,7 +286,7 @@ public class CSS475_UI {
 					preparedStmt.setLong(4, 1);
 					preparedStmt.execute();
 
-					//JOptionPane.showMessageDialog(null, name + ", your information has been saved.");
+					JOptionPane.showMessageDialog(null, name + ", your information has been recorded in the successfully.");
 				} 
 				catch(Exception query) {
 					System.err.println("Got an exception! ");
@@ -290,14 +309,15 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+					String result = "";
 					while (rs.next())
 					{
 						String price = rs.getString("price");
-						String food = rs.getString("name");   
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s\n", price, food);
+						String food = rs.getString("name");
+						result += "\n" + price + " " + food + "\n";
+						//System.out.format("%s, %s\n", price, food);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					st.close();
 				}
 				catch (Exception query)
@@ -335,15 +355,16 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+						String result = "";
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String name = rs.getString("cuisine");
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s, %s\n", price, food, name);
+						result += "\n" + price + ", " + food + ", " + name + "\n"; 
+						//System.out.format("%s, %s, %s\n", price, food, name);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					st.close();
 				}
 				catch (Exception query)
@@ -361,7 +382,8 @@ public class CSS475_UI {
 		});
 		btnMostExpensiveFoodByCategory.setBounds(274, 536, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Most Expensive Food by Ethnicity");
-
+		
+		//Button for least expensive food by category
 		btnLeastExpensiveFoodByCategory = new Button(shell, SWT.NONE);
 		btnLeastExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
@@ -380,15 +402,17 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+						String result = "";
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
-						String name = rs.getString("cuisine");
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s, %s\n", price, food, name);
+						String cuisine = rs.getString("cuisine");
+						result += "\n" + price + ", " + food + ", " + cuisine + "\n";
+						//System.out.format("%s, %s, %s\n", price, food, name);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
+					
 					st.close();
 				}
 				catch (Exception query)
@@ -529,7 +553,7 @@ public class CSS475_UI {
 
 					preparedStmt.execute();
 
-					//JOptionPane.showMessageDialog(null, name + ", your information has been saved.");
+					JOptionPane.showMessageDialog(null, userName + ", your review has been been received.");
 				} 
 				catch(Exception query) {
 					System.err.println("Got an exception! ");
@@ -582,14 +606,16 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+						String result = "";
 					while (rs.next())
 					{
 						String email = rs.getString("email");
-						String phone = rs.getString("phone_number");  
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s\n", email, phone);
+						String phone = rs.getString("phone_number");
+						result += "\n" + restName + ", " + cityName + ", " + email + ", " + phone + "\n";
+						//System.out.format("%s, %s\n", email, phone);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
+					
 					st.close();
 				} 
 				catch(Exception query) {
@@ -633,15 +659,17 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+					
+						String result = "";
 					while (rs.next())
 					{
 						String tName = rs.getString("time_name");
 						String sTime = rs.getString("start_time");  
 						String eTime = rs.getString("end_time");
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s, %s\n", tName, sTime, eTime);
+						result += "\n" + tName + ", " + sTime + ", " + eTime + "\n";
+						//System.out.format("%s, %s, %s\n", tName, sTime, eTime);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					st.close();
 				} 
 				catch(Exception query) {
@@ -698,15 +726,16 @@ public class CSS475_UI {
 					Statement st = conn.createStatement();
 
 					ResultSet rs = st.executeQuery(query);
-
+						String result = "";
 					while (rs.next())
 					{
 						String rating = rs.getString("rating");
 						String message = rs.getString("message");  
 						String userName = rs.getString("name");
-						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
-						System.out.format("%s, %s, %s\n", rating, message, userName);
+						result += "\n" + restName + ", " + cityName + ", " + rating + ", "  + message + ", " + userName + "\n";
+						//System.out.format("%s, %s, %s\n", rating, message, userName);
 					}
+					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					st.close();
 				} 
 				catch(Exception query) {
@@ -731,8 +760,38 @@ public class CSS475_UI {
 		lblQuickSearch.setBounds(204, 510, 85, 20);
 		lblQuickSearch.setText("Quick Search");
 		//Button for a random restaurant
-		btnRandomRestaurant = new Button(shell, SWT.NONE);
-		btnRandomRestaurant.setBounds(192, 609, 137, 30);
-		btnRandomRestaurant.setText("Random Restaurant");
-	}
+				btnRandomRestaurant = new Button(shell, SWT.NONE);
+				btnRandomRestaurant.setBounds(192, 609, 150, 30);
+				btnRandomRestaurant.setText("Random Restaurant");
+				btnRandomRestaurant.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						try {
+							int rand = (int)(Math.random() * (248));
+
+							String query = "SELECT name, address, rCity "
+									+ "FROM RESTAURANT WHERE rID = " + rand + ";";
+
+							Statement st = conn.createStatement();
+
+							ResultSet rs = st.executeQuery(query);
+								String result = "";
+							while (rs.next())
+							{
+								String name = rs.getString("name");
+								String address = rs.getString("address");  
+								String city = rs.getString("rCity");
+								result += "\n" + name + ", " + address + ", " + city + "\n";
+								//System.out.format("%s, %s, %s\n", name, address, city);
+							}
+							JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
+							st.close();
+						} 
+						catch(Exception query) {
+							System.err.println("Got an exception! ");
+							System.err.println(query.getMessage());
+						}
+					}
+				});
+			}
 }
