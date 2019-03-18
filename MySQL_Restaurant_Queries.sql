@@ -15,9 +15,7 @@ SELECT RESTAURANT.name
  FROM REVIEW
  WHERE REVIEW.rating >= 3 
  AND REVIEW.rating <= 5;
- 
- 
- 
+--
  -- FROM THIS LINE BELOW I HAVE TESTED
   -- Gives all reviews
   SELECT *
@@ -31,7 +29,6 @@ SELECT RESTAURANT.name
  FROM   RCONTACT
  LEFT JOIN REVIEW ON
  RCONTACT.rest_id = REVIEW.rid;
---
 --
  -- Convoluted join example
  SELECT *
@@ -104,8 +101,6 @@ SELECT RESTAURANT.name
                             GROUP BY CITY.name)
  ORDER BY price ASC;
 --
--- -- TODO Display highest rated restaurant in each CITY
---
 
 -- Lists all rest above a 3 star rating
 SELECT RESTAURANT.name
@@ -114,8 +109,3 @@ WHERE 3 < (SELECT AVG(REVIEW.rating)
 FROM REVIEW as r, RESTAURANT as rst
 WHERE r.rID = rst.rID)
 GROUP BY RESTAURANT.name;
--- -- TODO Display highest rated restaurant in each state
---
--- -- TODO Display highest rated restaurant in each ethnic group and price
---
--- -- TODO add more functionality
