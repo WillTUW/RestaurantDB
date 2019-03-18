@@ -175,22 +175,37 @@ public class CSS475_UI {
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String city = txtCity.getText();
-				String cuisine = txtCuisine.getText();
-				int minPrice = Integer.parseInt(txtMin.getText());
-				int maxPrice = Integer.parseInt(txtMax.getText());
-				String food = txtFoodItem.getText();;
+				try {
+					String city = txtCity.getText();
+					String cuisine = txtCuisine.getText();
 
-				//-- TO DO ------------------------------------
-				//if they are looking for a particular food item
-				if(food == "Food Item")
-				{
-					
-				} else {
-					
+					String query = "SELECT name, address FROM RESTAURANT "
+							+ "WHERE rCity = '" + city + "' AND cuisine = '" + cuisine + "';";
+
+					// create the java statement
+					Statement st = conn.createStatement();
+
+					// execute the query, and get a java resultset
+					ResultSet rs = st.executeQuery(query);
+
+					// iterate through the java resultset
+					while (rs.next())
+					{
+						String name = rs.getString("name");
+						String address = rs.getString("address");  
+						// print the results
+						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
+						System.out.format("%s, %s\n", name, address);
+					}
+					st.close();
+				} 
+				catch(Exception query) {
+					System.err.println("Got an exception! ");
+					System.err.println(query.getMessage());
 				}
 			}
 		});
+
 		btnSearch.setBounds(72, 222, 90, 30);
 		btnSearch.setText("Search");
 		
@@ -732,7 +747,40 @@ public class CSS475_UI {
 		lblQuickSearch.setText("Quick Search");
 		//Button for a random restaurant
 		btnRandomRestaurant = new Button(shell, SWT.NONE);
-		btnRandomRestaurant.setBounds(192, 609, 137, 30);
+		btnRandomRestaurant.setBounds(192, 609, 150, 30);
 		btnRandomRestaurant.setText("Random Restaurant");
+		btnRandomRestaurant.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					int rand = (int)(Math.random() * (248));
+
+					String query = "SELECT name, address, rCity "
+							+ "FROM RESTAURANT WHERE rID = " + rand + ";";
+
+					// create the java statement
+					Statement st = conn.createStatement();
+
+					// execute the query, and get a java resultset
+					ResultSet rs = st.executeQuery(query);
+
+					// iterate through the java resultset
+					while (rs.next())
+					{
+						String name = rs.getString("name");
+						String address = rs.getString("address");  
+						String city = rs.getString("rCity");
+						// print the results
+						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
+						System.out.format("%s, %s, %s\n", name, address, city);
+					}
+					st.close();
+				} 
+				catch(Exception query) {
+					System.err.println("Got an exception! ");
+					System.err.println(query.getMessage());
+				}
+			}
+		});
 	}
 }
