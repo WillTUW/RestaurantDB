@@ -70,6 +70,7 @@ public class CSS475_UI {
 	private Text txtRHrestCity;
 	private Text txtRRVrestName;
 	private Text txtRRVrestCity;
+	private Button btnRandomRestaurant;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -431,7 +432,7 @@ public class CSS475_UI {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnLeastExpensiveFoodByCategory.setBounds(4, 609, 235, 30);
+		btnLeastExpensiveFoodByCategory.setBounds(274, 572, 235, 30);
 		btnLeastExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
 
 
@@ -769,7 +770,11 @@ public class CSS475_UI {
 		label_6.setBounds(10, 503, 605, 2);
 
 		Label lblQuickSearch = new Label(shell, SWT.NONE);
-		lblQuickSearch.setBounds(10, 510, 85, 20);
+		lblQuickSearch.setBounds(204, 510, 85, 20);
 		lblQuickSearch.setText("Quick Search");
+		
+		btnRandomRestaurant = new Button(shell, SWT.NONE);
+		btnRandomRestaurant.setBounds(192, 609, 137, 30);
+		btnRandomRestaurant.setText("Random Restaurant");
 	}
 }
