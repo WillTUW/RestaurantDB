@@ -54,6 +54,7 @@ public class CSS475_UI {
 	private Button btnAddCustomer;
 	private Button btnMostExpensiveFood;
 	private Button btnMostExpensiveFoodByCategory;
+	private Button btnLeastExpensiveFoodByCategory;
 	private Button btnLeastExpensiveFoodByCity;
 	private Button btnSubmitReview;
 
@@ -139,10 +140,12 @@ public class CSS475_UI {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
+		//title of window
 		shell = new Shell();
 		shell.setSize(912, 718);
 		shell.setText("Foogle's Application");
 
+		//Search terms for finding a restaurant.
 		txtCity = new Text(shell, SWT.BORDER);
 		txtCity.setText("City");
 		txtCity.setBounds(118, 52, 78, 26);
@@ -159,10 +162,6 @@ public class CSS475_UI {
 		txtFoodItem.setText("Food Item");
 		txtFoodItem.setBounds(118, 148, 85, 26);
 
-		txtAvgRating = new Text(shell, SWT.BORDER);
-		txtAvgRating.setText("0");
-		txtAvgRating.setBounds(118, 180, 36, 26);
-
 		Label lblCity = new Label(shell, SWT.NONE);
 		lblCity.setBounds(10, 55, 70, 20);
 		lblCity.setText("*CITY:");
@@ -178,10 +177,6 @@ public class CSS475_UI {
 		Label lblFoodItem = new Label(shell, SWT.NONE);
 		lblFoodItem.setBounds(10, 148, 85, 20);
 		lblFoodItem.setText("FOOD ITEM:");
-
-		Label lblMinRating = new Label(shell, SWT.NONE);
-		lblMinRating.setBounds(10, 180, 102, 20);
-		lblMinRating.setText("MIN RATING:");
 
 		Label label = new Label(shell, SWT.NONE);
 		label.setBounds(166, 119, 12, 20);
@@ -202,6 +197,13 @@ public class CSS475_UI {
 				String food = txtFoodItem.getText();;
 
 				//-- TO DO ------------------------------------
+				//if they are looking for a particular food item
+				if(food == "Food Item")
+				{
+					
+				} else {
+					
+				}
 			}
 		});
 		btnSearch.setBounds(72, 222, 90, 30);
@@ -260,14 +262,11 @@ public class CSS475_UI {
 					int uID = (int)(Math.random() * (Integer.MAX_VALUE - 501) + 501);
 					String query = "INSERT INTO RUSER  (userID, name) " + 
 							"VALUES (?, ?)";
-
-					System.out.println(uID);
-
+					
 					// create the java statement
 					PreparedStatement preparedStmt = conn.prepareStatement(query);
 					preparedStmt.setLong (1, uID);
 					preparedStmt.setString (2, name);
-					System.out.println(name);
 					preparedStmt.execute();
 
 					query = "INSERT INTO CONTACT (email, phone_number, uID, counter)" +
@@ -294,7 +293,6 @@ public class CSS475_UI {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					System.out.println("DONE");
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = "SELECT name, price\r\n" + 
@@ -340,7 +338,6 @@ public class CSS475_UI {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					System.out.println("DONE");
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
@@ -386,13 +383,12 @@ public class CSS475_UI {
 		btnMostExpensiveFoodByCategory.setBounds(274, 536, 235, 30);
 		btnMostExpensiveFoodByCategory.setText("Most Expensive Food by Ethnicity");
 
-		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
-		btnMostExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
+		btnLeastExpensiveFoodByCategory = new Button(shell, SWT.NONE);
+		btnLeastExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					System.out.println("DONE");
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
@@ -429,14 +425,14 @@ public class CSS475_UI {
 				}
 			}
 		});
-		btnMostExpensiveFoodByCategory.setToolTipText("Queries the least expensive food by ethnicity");
-		btnMostExpensiveFoodByCategory.addSelectionListener(new SelectionAdapter() {
+		btnLeastExpensiveFoodByCategory.setToolTipText("Queries the least expensive food by ethnicity");
+		btnLeastExpensiveFoodByCategory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnMostExpensiveFoodByCategory.setBounds(4, 609, 235, 30);
-		btnMostExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
+		btnLeastExpensiveFoodByCategory.setBounds(4, 609, 235, 30);
+		btnLeastExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
 
 
 
@@ -447,7 +443,6 @@ public class CSS475_UI {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					System.out.println("DONE");
 					// our SQL SELECT query. 
 					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
