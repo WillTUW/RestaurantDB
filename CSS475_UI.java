@@ -12,11 +12,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-
+//This class is made to be a GUI for the Foogle MySQL AWS RDS DB regarding Restaurant
 public class CSS475_UI {
-
+	//This is for the Application shell file that is the overall Foogle window
 	protected Shell shell;
-
+	//These are all the labels used in the GUI
 	private Label lblFoogleRestaurantFinder;
 	private Label lblNewCustomer;
 	private Label lblName;
@@ -34,7 +34,10 @@ public class CSS475_UI {
 	private Label label_3;
 	private Label label_4;
 	private Label lblComments;
-
+	private Label lblRestaurantHoursInfo;
+	private Label lblRHrestName;
+	private Label lblRHrestCity;
+	//These are the text boxes used in the GUI
 	private Text txtCity;
 	private Text txtCuisine;
 	private Text txtMin;
@@ -50,85 +53,66 @@ public class CSS475_UI {
 	private Text txtUserName;
 	private Text text;
 	private Text txtWriteCommentsHere;
-
-	private Button btnAddCustomer;
-	private Button btnMostExpensiveFood;
-	private Button btnMostExpensiveFoodByCategory;
-	private Button btnLeastExpensiveFoodByCategory;
-	private Button btnLeastExpensiveFoodByCity;
-	private Button btnSubmitReview;
-
-	// creates three different Connection objects
-	public static Connection conn = null;
-	private Label lblRestaurantHoursInfo;
-	private Label lblRHrestName;
-	private Label lblRHrestCity;
-	private Button btnGetHours;
 	private Text txtRCrestName;
 	private Text txtRCrestCity;
 	private Text txtRHrestName;
 	private Text txtRHrestCity;
 	private Text txtRRVrestName;
 	private Text txtRRVrestCity;
+	
+	//These are the buttons used in the GUI
 	private Button btnRandomRestaurant;
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			try {
-				// connect way #1
+	private Button btnAddCustomer;
+	private Button btnMostExpensiveFood;
+	private Button btnMostExpensiveFoodByCategory;
+	private Button btnLeastExpensiveFoodByCategory;
+	private Button btnLeastExpensiveFoodByCity;
+	private Button btnSubmitReview;
+	private Button btnGetHours;
+	//This the Connection object used to establish a connection	
+	public static Connection conn = null;
 
+	 //Main program to run the GUI and attempt to connect to the AWS RDS instance.
+	public static void main(String[] args) {
+		//First try block catch to make a new Window
+		try {
+			//Second try block to connect to the AWS RDS instance
+			try {
+				//This url is the hostname of the AWS RDS instance and has the provided DB name
 				String url1 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB";
+				//Grader credentials are used for login
 				String user = "grader";
 				String password = "graderpass";
-
+				//Connection object is initialized based on prior credentials
 				conn = DriverManager.getConnection(url1, user, password);
-
+				
 				if (conn != null) {
 					//JOptionPane.showMessageDialog(null,"Successfully Connected to the AWS RDS Restaurant_DB test");
 					System.out.println("Successfully Connected to the AWS RDS Restaurant_DB test");
 				}
-
-
-				//	alternative connections
-				// connect way #2
-				//	            String url2 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB?user=grader&password=graderpass";
-				//	            conn = DriverManager.getConnection(url2);
-				//	            if (conn != null) {
-				//	            	JOptionPane.showMessageDialog(null,"Connected to the AWS RDS Restaurant_DB test 2");
-				//	            }
-				/*
-	            // connect way #3
-	            String url3 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB";
-	            Properties info = new Properties();
-	            info.put("user", "grader");
-	            info.put("password", "graderpass");
-	            conn = DriverManager.getConnection(url3, info);
-	            if (conn != null) {
-	            	JOptionPane.showMessageDialog(null,"Connected to the AWS RDS Restaurant_DB test 3");
-	            }
-				 */
-			} catch (SQLException ex) {
+			}
+			//Catch block to showcase an error message on failed connection
+			catch (SQLException ex) {
 				System.out.println("Connection failed, user credentials, host endpoint, database selection may be invalid.");
 				ex.printStackTrace();
 			}
 			CSS475_UI window = new CSS475_UI();
-			window.open();
-
-		} catch (Exception windowIssue) {
+			window.open();	
+		} 
+		//Catch block for an issue with opening the Window
+		catch (Exception windowIssue) {
 			windowIssue.printStackTrace();
 		}
 	}
-
-	/**
-	 * Open the window.
-	 */
+	
+	// Open the window for the GUI 
 	public void open() {
+		//Make a new display
 		Display display = Display.getDefault();
 		createContents();
+		//Open the shell
 		shell.open();
+		//Make the shell layout
 		shell.layout();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -137,9 +121,7 @@ public class CSS475_UI {
 		}
 	}
 
-	/**
-	 * Create contents of the window.
-	 */
+	//Create the contents within the shell
 	protected void createContents() {
 		//title of window
 		shell = new Shell();
@@ -150,7 +132,7 @@ public class CSS475_UI {
 		txtCity = new Text(shell, SWT.BORDER);
 		txtCity.setText("City");
 		txtCity.setBounds(118, 52, 78, 26);
-
+		
 		txtCuisine = new Text(shell, SWT.BORDER);
 		txtCuisine.setText("Cuisine");
 		txtCuisine.setBounds(118, 84, 78, 26);
@@ -162,7 +144,8 @@ public class CSS475_UI {
 		txtFoodItem = new Text(shell, SWT.BORDER);
 		txtFoodItem.setText("Food Item");
 		txtFoodItem.setBounds(118, 148, 85, 26);
-
+		
+		//Label creations for text boxes
 		Label lblCity = new Label(shell, SWT.NONE);
 		lblCity.setBounds(10, 55, 70, 20);
 		lblCity.setText("*CITY:");
@@ -182,11 +165,12 @@ public class CSS475_UI {
 		Label label = new Label(shell, SWT.NONE);
 		label.setBounds(166, 119, 12, 20);
 		label.setText("-");
-
+		
+		//Text boundary definitions
 		txtMax = new Text(shell, SWT.BORDER);
 		txtMax.setText("1000");
 		txtMax.setBounds(179, 116, 42, 26);
-
+		//Button creation
 		Button btnSearch = new Button(shell, SWT.NONE);
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -209,7 +193,8 @@ public class CSS475_UI {
 		});
 		btnSearch.setBounds(72, 222, 90, 30);
 		btnSearch.setText("Search");
-
+		
+		//Additional labels to help define the GUI
 		lblFoogleRestaurantFinder = new Label(shell, SWT.NONE);
 		lblFoogleRestaurantFinder.setBounds(10, 0, 202, 20);
 		lblFoogleRestaurantFinder.setText("FOOGLE RESTAURANT FINDER");
@@ -249,7 +234,8 @@ public class CSS475_UI {
 		txtEmail = new Text(shell, SWT.BORDER);
 		txtEmail.setText("Email");
 		txtEmail.setBounds(393, 177, 78, 26);
-
+		
+		//Button to add a customer
 		btnAddCustomer = new Button(shell, SWT.NONE);
 		btnAddCustomer.setBounds(369, 209, 116, 30);
 		btnAddCustomer.setText("Add Customer");
@@ -260,12 +246,14 @@ public class CSS475_UI {
 					String name = txtName.getText();
 					String phoneNumber = txtPhone.getText();
 					String email = txtEmail.getText();
+					// Randomize the user ID
 					int uID = (int)(Math.random() * (Integer.MAX_VALUE - 501) + 501);
+					//SQL query
 					String query = "INSERT INTO RUSER  (userID, name) " + 
 							"VALUES (?, ?)";
 					
-					// create the java statement
-					PreparedStatement preparedStmt = conn.prepareStatement(query);
+					//Prepares the Java statement
+				    PreparedStatement preparedStmt = conn.prepareStatement(query);
 					preparedStmt.setLong (1, uID);
 					preparedStmt.setString (2, name);
 					preparedStmt.execute();
@@ -287,31 +275,26 @@ public class CSS475_UI {
 				}
 			}
 		});
-
+		
+		//Button to showcase the most expensive food on click
 		btnMostExpensiveFood = new Button(shell, SWT.NONE);
 		btnMostExpensiveFood.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					// our SQL SELECT query. 
-					// if you only need a few columns, specify them by name instead of using "*"
 					String query = "SELECT name, price\r\n" + 
 							"FROM FOOD_ENTRIES\r\n" + 
 							"WHERE FOOD_ENTRIES.price = (SELECT MAX(price) FROM FOOD_ENTRIES);";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");   
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s\n", price, food);
 					}
@@ -332,15 +315,14 @@ public class CSS475_UI {
 		});
 		btnMostExpensiveFood.setBounds(4, 536, 217, 30);
 		btnMostExpensiveFood.setText("Most Expensive Food");
-
+		
+		//Query for most expensive food by category
 		btnMostExpensiveFoodByCategory = new Button(shell, SWT.NONE);
 		btnMostExpensiveFoodByCategory.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					// our SQL SELECT query. 
-					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
 							"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
 									"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
@@ -350,19 +332,15 @@ public class CSS475_UI {
 									"GROUP BY cuisine)\r\n" +
 									"ORDER BY price ASC;";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String name = rs.getString("cuisine");
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s\n", price, food, name);
 					}
@@ -390,8 +368,6 @@ public class CSS475_UI {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					// our SQL SELECT query. 
-					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
 							"SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.cuisine\r\n" +
 									"FROM FOOD_ENTRIES, RESTAURANT\r\n" +
@@ -401,19 +377,15 @@ public class CSS475_UI {
 									"GROUP BY cuisine)\r\n" +
 									"ORDER BY price ASC;";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String name = rs.getString("cuisine");
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s\n", price, food, name);
 					}
@@ -436,16 +408,13 @@ public class CSS475_UI {
 		btnLeastExpensiveFoodByCategory.setText("Least Expensive Food by Ethnicity");
 
 
-
-		//--------------------------DOESNT WORK PROPERLY--------------------------------------
+		//Queries the least expensive food by city
 		btnLeastExpensiveFoodByCity = new Button(shell, SWT.NONE);
 		btnLeastExpensiveFoodByCity.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			@Override
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 				try
 				{ 
-					// our SQL SELECT query. 
-					// if you only need a few columns, specify them by name instead of using "*"
 					String query = 
 							"SELECT *\r\n" +
 									"FROM FOOD_ENTRIES, CITY\r\n" +
@@ -454,20 +423,16 @@ public class CSS475_UI {
 									"WHERE FE.r_menu_id = r_id AND r_id = rID AND rCity = CITY.name)\r\n" +
 									"ORDER BY price ASC;";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String price = rs.getString("price");
 						String food = rs.getString("name");  
 						String menu_id = rs.getString("r_menu_id");
 						String city = rs.getString("CITY.name");
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s, %s\n", price, food, menu_id, city);
 					}
@@ -488,7 +453,8 @@ public class CSS475_UI {
 		});
 		btnLeastExpensiveFoodByCity.setBounds(4, 572, 235, 30);
 		btnLeastExpensiveFoodByCity.setText("Least Expensive Food in Each City");
-
+		
+		//Labels to write a review
 		lblWriteAReview = new Label(shell, SWT.NONE);
 		lblWriteAReview.setBounds(271, 296, 103, 20);
 		lblWriteAReview.setText("Write a Review");
@@ -535,7 +501,8 @@ public class CSS475_UI {
 		lblDentotesRequired = new Label(shell, SWT.NONE);
 		lblDentotesRequired.setBounds(293, 10, 301, 20);
 		lblDentotesRequired.setText("IMPORTANT: * dentotes required input fields");
-
+		
+		//Button to submit a review
 		btnSubmitReview = new Button(shell, SWT.NONE);
 		btnSubmitReview.setBounds(271, 459, 123, 30);
 		btnSubmitReview.setText("Submit Review");
@@ -595,7 +562,8 @@ public class CSS475_UI {
 		Label lblRCrestCity = new Label(shell, SWT.NONE);
 		lblRCrestCity.setBounds(593, 140, 112, 20);
 		lblRCrestCity.setText("*Restaurant City:");
-
+		
+		//Button to get the contact information
 		Button btnGetContact = new Button(shell, SWT.NONE);
 		btnGetContact.setBounds(652, 180, 110, 30);
 		btnGetContact.setText("Get Contact");
@@ -611,18 +579,14 @@ public class CSS475_UI {
 							"WHERE rest_ID IN (SELECT rID FROM RESTAURANT WHERE\r\n" + 
 							"name = '" + restName + "' AND rCity = '" + cityName + "' );";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String email = rs.getString("email");
 						String phone = rs.getString("phone_number");  
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s\n", email, phone);
 					}
@@ -649,7 +613,8 @@ public class CSS475_UI {
 		lblRHrestCity = new Label(shell, SWT.NONE);
 		lblRHrestCity.setText("*Restaurant City:");
 		lblRHrestCity.setBounds(629, 510, 112, 20);
-
+		
+		//Button to get hours
 		btnGetHours = new Button(shell, SWT.NONE);
 		btnGetHours.setBounds(715, 550, 90, 30);
 		btnGetHours.setText("Get Hours");
@@ -665,19 +630,15 @@ public class CSS475_UI {
 							"WHERE rest_ID IN (SELECT rID FROM RESTAURANT WHERE\r\n" + 
 							"name = '" + restName + "' AND rCity = '" + cityName + "' );";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String tName = rs.getString("time_name");
 						String sTime = rs.getString("start_time");  
 						String eTime = rs.getString("end_time");
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s\n", tName, sTime, eTime);
 					}
@@ -717,7 +678,8 @@ public class CSS475_UI {
 		Label lblrestaurantCity = new Label(shell, SWT.NONE);
 		lblrestaurantCity.setText("*Restaurant City:");
 		lblrestaurantCity.setBounds(630, 352, 112, 20);
-
+		
+		//Button to get reviews
 		Button btnGetReviews = new Button(shell, SWT.NONE);
 		btnGetReviews.setText("Get Reviews");
 		btnGetReviews.setBounds(689, 392, 110, 30);
@@ -733,19 +695,15 @@ public class CSS475_UI {
 							"WHERE RV.uID = U.userID AND RV.rID IN (SELECT rID FROM RESTAURANT WHERE\r\n" + 
 							"name = '" + restName + "' AND rCity = '" + cityName + "' );";
 
-					// create the java statement
 					Statement st = conn.createStatement();
 
-					// execute the query, and get a java resultset
 					ResultSet rs = st.executeQuery(query);
 
-					// iterate through the java resultset
 					while (rs.next())
 					{
 						String rating = rs.getString("rating");
 						String message = rs.getString("message");  
 						String userName = rs.getString("name");
-						// print the results
 						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
 						System.out.format("%s, %s, %s\n", rating, message, userName);
 					}
@@ -757,7 +715,7 @@ public class CSS475_UI {
 				}
 			}
 		});
-
+		//Text box for restaurant names and cities
 		txtRRVrestName = new Text(shell, SWT.BORDER);
 		txtRRVrestName.setText("Name");
 		txtRRVrestName.setBounds(759, 321, 116, 26);
@@ -772,7 +730,7 @@ public class CSS475_UI {
 		Label lblQuickSearch = new Label(shell, SWT.NONE);
 		lblQuickSearch.setBounds(204, 510, 85, 20);
 		lblQuickSearch.setText("Quick Search");
-		
+		//Button for a random restaurant
 		btnRandomRestaurant = new Button(shell, SWT.NONE);
 		btnRandomRestaurant.setBounds(192, 609, 137, 30);
 		btnRandomRestaurant.setText("Random Restaurant");
