@@ -191,16 +191,24 @@ public class CSS475_UI {
 					ResultSet rs = st.executeQuery(query);
 
 					// iterate through the java resultset
+
 					String result = "";
+
 					while (rs.next())
 					{
 						String name = rs.getString("name");
 						String address = rs.getString("address");  
+
 						result += "\n" + city + " " + cuisine + " " + name + ", " + address + "\n";
 						//System.out.println("city + " " + cuisine + " " + name + ", " + address ");
 					}
 					JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult:" + result);
 					
+						// print the results
+						//JOptionPane.showMessageDialog(null, "Your query: \n" + query + "\nResult: \n" + price + " " + food);
+						System.out.format("%s, %s\n", name, address);
+					}
+
 					st.close();
 				} 
 				catch(Exception query) {
@@ -209,7 +217,9 @@ public class CSS475_UI {
 				}
 			}
 		});
+
 		
+
 		btnSearch.setBounds(72, 222, 90, 30);
 		btnSearch.setText("Search");
 		
@@ -760,6 +770,7 @@ public class CSS475_UI {
 		lblQuickSearch.setBounds(204, 510, 85, 20);
 		lblQuickSearch.setText("Quick Search");
 		//Button for a random restaurant
+
 				btnRandomRestaurant = new Button(shell, SWT.NONE);
 				btnRandomRestaurant.setBounds(192, 609, 150, 30);
 				btnRandomRestaurant.setText("Random Restaurant");
@@ -795,3 +806,4 @@ public class CSS475_UI {
 				});
 			}
 }
+
