@@ -38,10 +38,10 @@ Should have at least 5 per each table, manually done. Hundreds for spoofed.
 - [X] Make a rough GUI in Java
 - [X] Connect GUI to AWS RDS DB Instance
 - [X] Connect GUI item to an actual query for MySQL
-- [ ] Finalize queries in GUI
-- [ ] Finalize GUI in Java
+- [x] Finalize queries in GUI
+- [x] Finalize GUI in Java
 
 ## Documentation
 - [X] Iteration 4 Documentation Finished
 - [X] Poster Materials Acquired
-- [()] Poster finished
+- [x] Poster finished
