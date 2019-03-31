@@ -80,9 +80,9 @@ public class CSS475_UI {
 			try {
 				//This url is the hostname of the AWS RDS instance and has the provided DB name
 				String url1 = "jdbc:mysql://mysql-uwb-css475-db.civewz6zb6nl.us-west-2.rds.amazonaws.com/Restaurant_DB";
-				//Grader credentials are used for login
-				String user = "grader";
-				String password = "graderpass";
+				//Guest credentials with restricted access, prior credentials have been deleted
+				String user = "guest";
+				String password = "";
 				//Connection object is initialized based on prior credentials
 				conn = DriverManager.getConnection(url1, user, password);
 				
