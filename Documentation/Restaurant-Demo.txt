@@ -1,0 +1,29 @@
+Restaurant: Lubowitz, Franecki and Little
+Cuisine:    Mexican
+City:	    Bellevue
+Address:    3519 Gateway Center
+rID:	    1
+
+Restaurant: Rolfson-Gibson
+Cuisine:    Italian
+City:	    Lynnwood 
+Address:    0 Redwing Plaza
+rID:	    100
+
+Restaurant: Cole Group
+Cuisine:    Chinese
+City:	    Lynnwood  
+Address:    99 Northwestern Trail
+rID:	    171
+
+Restaurant: King and Sons
+Cuisine:    Greek
+City:	    Los Angeles   
+Address:    3 Sherman Junction
+rID:	    212
+
+Respective Queries
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (1, '3519 Gateway Center', 'Bellevue', 'Mexican', 'Lubowitz, Franecki and Little');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (100, '0 Redwing Plaza', 'Lynnwood ', 'Italian', 'Rolfson-Gibson');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (171, '99 Northwestern Trail', 'Lynnwood ', 'Chinese', 'Cole Group');
+insert into RESTAURANT (rID, address, rCity, cuisine, name) values (212, '3 Sherman Junction', 'Los Angeles ', 'Greek', 'King and Sons');
