@@ -1,7 +1,7 @@
 # Restaurant-DB
-Restaurant Database created for CSS 475. Aims to reduce the amount of time people spend to pick restaurants and is akin to Yelp in terms of determing what restaurants to select.
+Restaurant Database created for CSS 475. Aims to reduce the amount of time people spend to pick restaurants and is a pseudo-Yelp in terms of determing what restaurants to select, without the geopgrahical location measures.
 
-Created by Team Foogle. Documentation is provided in a separate folder.
+Created by *Team Foogle*. Documentation is provided in a separate folder.
 
 ## Features
 * Users may rate, comment, and review restaurants at their own jurisdiction through the provided interface.
@@ -10,6 +10,13 @@ Created by Team Foogle. Documentation is provided in a separate folder.
 * Simple queries are already premade on the bottom left of the UI for easy searching.
 * Otherwise inputted searching is performed through the variable search fields.
 * Current database has several hundreds of data-spoofed restaurants through Mockaroo.
+
+# Langauges Used
+* **Frontend:** &nbsp;*Java -- Eclipse SWT*    
+* **Backend:** &nbsp;&nbsp;*Java -- JDBC* 
+* **Querying:** *SQL -- MySQL Syntax*
+* **Data Generation:** *C++*
+
 
 # Editors Used
 <img align = "left" height = "100" width = "100" src = "https://user-images.githubusercontent.com/22665268/55294557-67149200-53b8-11e9-96c2-3fc0b08aa3ab.png">
