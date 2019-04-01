@@ -1,47 +1,25 @@
 # Restaurant-DB
-Restaurant Database created for CSS 475
+Restaurant Database created for CSS 475. Aims to reduce the amount of time people spend to pick restaurants and is akin to Yelp in terms of determing what restaurants to select.
 
-Progress Checklist
+Created by Team Foogle. Documentation is provided in a separate folder.
 
-## Restructuring Data (Part of Normalizing)
-- [X] Remade ER
-- [X] Remade RM
-- [X] Normalized Tables --- Has this been done?
+## Features
+* Users may rate, comment, and review restaurants at their own jurisdiction through the provided interface.
+* Users may find out the contact, operating hours, and information of restaurants.
+* Users may add themselves in as another customer in the restaurant.
+* Simple queries are already premade on the bottom left of the UI for easy searching.
+* Otherwise inputted searching is performed through the variable search fields.
+* Current database has several hundreds of data-spoofed restaurants through Mockaroo.
 
-## Data Generation
-Should have at least 5 per each table, manually done. Hundreds for spoofed.
-- [X] Data for RUSER
-- [X] Data for RESTAURANT
-- [X] Data for MENU
-- [X] Data for CONTACT
-- [X] Data for RCONTACT
-- [X] Data for CITY
-- [X] Data for REVIEW
-- [X] Data for HOURS
-- [X] Data for FOOD_ENTRIES
+# Editors Used
+<img align = "left" height = "100" width = "100" src = "https://user-images.githubusercontent.com/22665268/55294557-67149200-53b8-11e9-96c2-3fc0b08aa3ab.png">
+<img align = "left" height = "100" width = "100" src = "https://user-images.githubusercontent.com/22665268/55294559-6a0f8280-53b8-11e9-9eb3-3d182fa018fc.png">
+<img height ="100" width = "100"  src = "https://user-images.githubusercontent.com/22665268/55294560-6c71dc80-53b8-11e9-8e04-7cc8d3a88443.png">
+<pre>Eclipse     Visual Studio Code   Visual Studio</pre>
 
-## Querying Logic
-- [X] Querying able to run
-- [X] Nested Query Examples
-- [X] Join Query Examples
-- [X] Query for most expensive food
-- [X] Query for most expensive food in each ethnic category
-- [X] Query for most least food in each ethnic category
-- [X] Query for most least expensive food per CITY
-- [X] Query for most expensive food
-- [X] Query for highest rated RESTAURANT in each CITY
-- [X] Query for highest rated RESTAURANT in each STATE
-- [X] Query for highest rated RESTAURANT in each ethnic group and by DESC price
-- [X] Additional queries
-
-## GUI
-- [X] Make a rough GUI in Java
-- [X] Connect GUI to AWS RDS DB Instance
-- [X] Connect GUI item to an actual query for MySQL
-- [x] Finalize queries in GUI
-- [x] Finalize GUI in Java
-
-## Documentation
-- [X] Iteration 4 Documentation Finished
-- [X] Poster Materials Acquired
-- [x] Poster finished
+# Tools Used
+![Web Hosting](https://user-images.githubusercontent.com/22665268/55294706-24ec5000-53ba-11e9-9892-f6989696fe35.png)
+![Database Management System](https://user-images.githubusercontent.com/22665268/55294713-3afa1080-53ba-11e9-9f89-7cfac8eb440a.png)
+![Data Generation](https://user-images.githubusercontent.com/22665268/55294710-37668980-53ba-11e9-84f5-3fbbc1676dff.png)
+# User Interface
+![Java Database GUI](https://user-images.githubusercontent.com/22665268/55344708-e8286380-5462-11e9-8bf1-d76b0fc857bb.JPG)
