@@ -55,7 +55,7 @@ SELECT RESTAURANT.name
  LEFT JOIN RESTAURANT ON
  CITY.name = RESTAURANT.rCity;
 
--- -- TODO Display cheapest food
+-- Display cheapest food
  SELECT *
  FROM FOOD_ENTRIES
  WHERE FOOD_ENTRIES.price = (SELECT MIN(price) FROM FOOD_ENTRIES);
@@ -74,7 +74,7 @@ SELECT RESTAURANT.name
                             GROUP BY cuisine)
  ORDER BY price ASC;
 --
- -- TODO Display the least expensive food in each ethnic catagory
+ -- Display the least expensive food in each ethnic catagory
  SELECT FOOD_ENTRIES.price , FOOD_ENTRIES.name, RESTAURANT.name
  FROM FOOD_ENTRIES, RESTAURANT
  WHERE FOOD_ENTRIES.r_menu_id = RESTAURANT.rID AND FOOD_ENTRIES.price IN(SELECT MIN(price)
