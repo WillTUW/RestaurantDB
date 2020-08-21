@@ -1,3 +1,6 @@
+# Google Docs Link For Report
+https://docs.google.com/document/d/18ySTnExaN1rsFqi1nMZcnBEoIGdvXOA0iPGxb1op9u4/edit?usp=sharing
+
 # Restaurant-DB
 Restaurant Database created for CSS 475. Aims to reduce the amount of time people spend to pick restaurants and is a pseudo-Yelp in terms of determing what restaurants to select, without the geopgrahical location measures.
 
